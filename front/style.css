@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+h1 {
+  margin: 5px;
+  margin-top: -5px;
+}
+body {
+ margin: 0px;
+}
+.container {
+  border: 1px solid red;
+  border-radius: 15px;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  text-align: center;
+}
+.button-home-join,.button-home-login {
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(151, 250, 255);
+  color: green;
+  display: block;
+  margin: auto;
+  margin-top: 10px;
+  width: 200px;
+  font-size: 20px;
+  transition: 0.3s;
+}
+.button-home-join:hover,.button-home-login:hover {
+  color:red;
+  background-color: rgb(114, 255, 107);
+}
+
