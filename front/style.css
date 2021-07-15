@@ -1,35 +1,119 @@
+
 * {
   box-sizing: border-box;
 }
-h1 {
-  margin: 5px;
-  margin-top: -5px;
-}
-body {
- margin: 0px;
-}
-.container {
-  border: 1px solid red;
-  border-radius: 15px;
-  width: 100%;
-  background-color: rgb(255, 255, 255);
-  padding: 20px;
-  text-align: center;
-}
-.button-home-join,.button-home-login {
-  border: none;
-  border-radius: 5px;
-  background-color: rgb(151, 250, 255);
-  color: green;
-  display: block;
-  margin: auto;
+/*###################### Home ###########################*/
+.home button {
   margin-top: 10px;
   width: 200px;
-  font-size: 20px;
-  transition: 0.3s;
-}
-.button-home-join:hover,.button-home-login:hover {
-  color:red;
-  background-color: rgb(114, 255, 107);
 }
 
+
+
+/*###################### Login Home ###########################*/
+.loginHome .user-spot {
+  border: 2px solid rgb(191, 191, 255);
+  border-radius: 5px;
+  width: 380px;
+  height: 270px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(210, 234, 255);
+  margin: auto;
+
+}
+.loginHome .spot-info, .loginHome .user-info
+{
+  display: inline-block;
+}
+.loginHome .spot-info{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 220px;
+  /*border: 1px solid red;*/
+  padding: 5px;
+  
+}
+
+.loginHome .spot-info img{
+  width: 200px
+}
+
+.loginHome .user-info{
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  margin-right: 10px;
+  /*border: 1px solid red;*/
+}
+
+.loginHome .user-info .img{
+  margin-bottom : 10px;
+}
+.loginHome .user-info img{
+  margin: auto;
+}
+
+.footer {
+  background-color: rgb(199, 236, 189);
+}
+
+
+.loginHome .my-spot {
+
+  border-radius: 15px;
+  width: 360px;
+  height: 270px;
+  position: relative;
+  overflow: hidden;
+  background-color: rgb(210, 238, 197);
+
+}
+
+.loginHome .my-spot-info, .loginHome .my-user-info
+{
+  display: inline-block;
+}
+.loginHome .my-spot-info{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  width: 220px;
+  /*border: 1px solid red;*/
+  padding: 5px;
+  
+}
+
+.loginHome .my-spot-info img{
+  width: 200px
+}
+
+.loginHome .my-user-info{
+  width: 120px;
+  height: 100%;
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  /*border: 1px solid red;*/
+}
+
+.loginHome .my-user-info .img{
+  margin-bottom : 10px;
+}
+
+.user-spot-slider div {
+  text-align: center;
+}
+
+.slick-slide div div {
+  text-align: center;
+}
+
+.loginHome .slick-next, .slick-prev {
+  background-color: rgb(211, 226, 255);
+}
