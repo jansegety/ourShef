@@ -1,3 +1,5 @@
+
+/*##################### LoginHome ########################*/
 $(function(){
 
     /* slcik.js : history*/
@@ -39,4 +41,28 @@ $(function(){
       ]
     })
 
+
+
+    
+
 })
+
+/*####################### joinFomr ##############################*/
+
+let input = document.getElementById("join-profile-img-file");
+let preview = document.getElementById("join-profile-img");
+input.addEventListener("change", showImageFile, false);
+console.log(input);
+console.log(preview);
+
+
+function showImageFile(){
+  const selectedFile = input.files[0];
+  const showImg = preview;
+  const url = URL.createObjectURL(input.files[0]);
+  showImg.src = url;
+}
+
+
+
+

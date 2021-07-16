@@ -117,3 +117,142 @@
 .loginHome .slick-next, .slick-prev {
   background-color: rgb(211, 226, 255);
 }
+
+/*######################joinForm##########################*/
+
+.joinForm input[type="file"]{
+  display:inline-block
+}
+#join-profile-img {
+  width: 100px;
+  border-radius: 50px;
+}
+.joinForm form {
+  overflow: hidden;
+  width: 500px;
+  margin: 50px 0;
+  display: inline-block;
+}
+.joinForm form div{
+  float: left;
+}
+
+
+/*########################## loginForm ###########################*/
+.loginForm h1 {
+  margin-top: 100px;
+  font-size: 50px;
+}
+
+.loginForm form > div{
+  /* border: 1px solid red; */
+  margin: auto;
+  width: 300px;
+  margin-top: 10px;
+  position: relative;
+}
+.loginForm .form {
+  margin-top: 20px;
+}
+.loginForm .form input{
+  border: 1px solid lightgray;
+  height: 40px;
+  width: inherit;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  padding-left: 50px;
+  outline: none;
+  transition: 0.3s;
+}
+.loginForm .form input:focus {
+  border: 1px solid dodgerblue;
+  box-shadow: 0 0 5px dodgerblue;
+}
+
+.loginForm .form input:focus::placeholder {
+  visibility: hidden;
+}
+
+.loginForm .form input:focus + label {
+  background-color: dodgerblue;
+}
+
+.loginForm form label {
+ display: inline-block;
+ position: absolute;
+ top:0;
+ left:0;
+ color:rgb(255, 255, 255);
+ font-size: 20px;
+ width: 40px;
+ height: 40px;
+ /* border: 1px solid blue; */
+ line-height: 40px;
+ transition: 0.3s;
+ background-color: lightgray;
+ border-radius: 5px 0 0 5px;
+}
+
+.loginForm button {
+  width: 170px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.loginForm button[type="submit"] {
+  margin-top: 17px;
+}
+
+/* ############################### Spot ################################ */
+
+.spot #main-spot-img {
+  width: 250px;
+}
+.spot .spot-images img{
+  width: 100px;
+  margin: 10px;
+}
+.spot .img-frame{
+  display: inline-block;
+  height: 300px;
+  border: 1px solid blue;
+}
+.spot .visitor-info-area{
+  height : 250px;
+  position: relative;
+}
+.spot #visitor-profile-img{
+  width: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left:30px;
+}
+.spot #visitor-nickName {
+  position: absolute;
+  top: 220px;
+  left: 80px;
+}
+.spot .visitor-info{
+  display: inline-block;
+  width: 280px;
+  padding-top:20px;
+  position: absolute;
+  top:10px;
+  left: 240px; 
+}
+.spot .home-list {
+  padding: 10px;
+}
+.spot .home-list div{
+  display: inline-block;
+}
+.spot .home-list div:first-child button{
+ width: 200px;
+ height: 40px;
+}
+.spot .home-list div:last-child button{
+  width: 150px;
+ height: 40px;
+}

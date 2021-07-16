@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--jQuery-->
+        <script src="../js/jquery-2.1.4.js"></script>
+
+        <!--부트 스트랩-->
+        <link rel="stylesheet" href="../bootstrap.css">
+        <link rel="stylesheet" href="../bootstrap-theme.css">
+
+        <!-- slick slider-->
+        <link rel="stylesheet" href="../js/slick/slick.css">
+        <link rel="stylesheet" href="../js/slick/slick-theme.css">
+
+        <!--custom-->
+        <link rel="stylesheet" href="../style.css">
+
+        <title>회원가입</title>
+    </head>
+    <body class="joinForm">
+        <div class="container">
+            <div class="subject text-center">
+                <h3>회원가입</h3>
+
+            </div>
+            <div class="text-center">
+                <form action="join.html">
+                    <div>
+                        <p>
+                            <img id="join-profile-img" src="../img/shefmark.jpg">
+                        </p>
+                        <p>
+                            <input type="file" id="join-profile-img-file" accept=".jpg, .png" style="margin:0;">
+                        </p>
+                        <p>
+                            <button class="btn btn-primary">프로필 등록</button>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <input type="text" id="loginId" placeholder="아이디">
+                        </p>
+                        <p>
+                            <input type="password" id="password" placeholder="비밀번호">
+                        </p>
+                        <p>
+                            <input type="text" id="password" placeholder="비밀번호 확인">
+                        </p>
+                        <p>
+                            <input type="text" id="password" placeholder="닉네임">
+                        </p>
+                        <p>
+                            <textarea
+                                name="self-introduction"
+                                cols="30"
+                                rows="5"
+                                placeholder="150자 이내의 짦은 소개를 써주세요"
+                                maxlength="150"
+                                style="resize: none;"></textarea>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--부트 스트랩-->
+        <script src="../js/bootstrap.js"></script>
+        <!--custom.js-->
+        <script src="../custom.js"></script>
+        <!--slik slider-->
+        <script src="../js/slick/slick.js"></script>
+    </body>
+</html>
