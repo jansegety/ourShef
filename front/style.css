@@ -8,7 +8,9 @@
   width: 200px;
 }
 
-
+.home .verticality {
+  height: 130px;
+}
 
 /*###################### Login Home ###########################*/
 .loginHome .user-spot {
@@ -51,9 +53,7 @@
   /*border: 1px solid red;*/
 }
 
-.loginHome .user-info .img{
-  margin-bottom : 10px;
-}
+
 .loginHome .user-info img{
   margin: auto;
 }
@@ -125,16 +125,7 @@
 }
 #join-profile-img {
   width: 100px;
-  border-radius: 50px;
-}
-.joinForm form {
-  overflow: hidden;
-  width: 500px;
-  margin: 50px 0;
-  display: inline-block;
-}
-.joinForm form div{
-  float: left;
+  border-radius: 50%;
 }
 
 
@@ -210,7 +201,7 @@
   width: 250px;
 }
 .spot .spot-images img{
-  width: 100px;
+  width: 120px;
   margin: 10px;
 }
 .spot .img-frame{
@@ -256,3 +247,69 @@
   width: 150px;
  height: 40px;
 }
+
+/* ###################### spotRegisteration ########################## */
+.spotRegisteration .main-col div{
+  text-align: center;
+}
+.spotRegisteration #main-spot-img {
+  width: 300px;
+}
+
+.spotRegisteration .img-button-frame {
+  padding-top: 10px;
+}
+.spotRegisteration .img-button-frame input{
+  display: none;
+}
+
+.spotRegisteration .spot-imgs-area {
+  overflow: hidden;
+}
+
+.spotRegisteration .spot-img-frame {
+  width: 150px;
+  margin: 10px;
+  float: left;
+}
+.spotRegisteration .spot-img {
+  width: inherit;
+}
+
+.spotRegisteration .spot-info-area {
+  padding-top:30px;
+}
+.spotRegisteration .spot-info-area textarea {
+  margin-top: 10px;
+}
+/* #### 별점바 영역 시작####*/
+.spotRegisteration .star-area {
+  display: inline-block;
+  /* border: 1px solid blue; */
+  position: relative;
+  height: 23px;
+  width: 120px;
+  overflow: hidden;
+}
+
+.spotRegisteration .star-front, .spotRegisteration .star-back {
+  font-size: 20px;
+}
+.spotRegisteration .star-back{
+  /* border: 1px solid red; */
+  height: 40px;
+  width: 120px;
+  background:url(/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+}
+.spotRegisteration .star-front{
+  position: absolute;
+  top: -20px;
+  left: 0;
+  /* border: 1px solid green; */
+  background:url(/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+  height: 40px;
+  width: 70%;
+}
+/* #### 별점바 영역 끝####*/

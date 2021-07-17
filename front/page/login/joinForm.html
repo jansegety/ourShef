@@ -5,39 +5,36 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--jQuery-->
-        <script src="../js/jquery-2.1.4.js"></script>
-
         <!--부트 스트랩-->
-        <link rel="stylesheet" href="../bootstrap.css">
-        <link rel="stylesheet" href="../bootstrap-theme.css">
-
-        <!-- slick slider-->
-        <link rel="stylesheet" href="../js/slick/slick.css">
-        <link rel="stylesheet" href="../js/slick/slick-theme.css">
+        <link rel="stylesheet" href="../../bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" href="../../bootStrap/bootstrap.css">
 
         <!--custom-->
-        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="../../style.css">
 
         <title>회원가입</title>
     </head>
     <body class="joinForm">
-        <div class="container">
-            <div class="subject text-center">
-                <h3>회원가입</h3>
-
-            </div>
-            <div class="text-center">
-                <form action="join.html">
+        <form action="#none">
+            <div class="container">
+                <div class="row text-center">
+                    <h3>회원가입</h3>
+                </div>
+                <div class="row text-center">
                     <div>
                         <p>
-                            <img id="join-profile-img" src="../img/shefmark.jpg">
+                            <img class="demo-img" id="join-profile-img" alt="쉐프 마크">
                         </p>
                         <p>
-                            <input type="file" id="join-profile-img-file" accept=".jpg, .png" style="margin:0;">
+                            <input
+                                type="file"
+                                id="join-profile-img-file"
+                                accept=".jpg, .png"
+                                style="margin:0; display: none;"
+                                required>
                         </p>
                         <p>
-                            <button class="btn btn-primary">프로필 등록</button>
+                            <button class="btn btn-primary" id="btn-profile-img">프로필 등록</button>
                         </p>
                     </div>
                     <div>
@@ -56,21 +53,23 @@
                         <p>
                             <textarea
                                 name="self-introduction"
-                                cols="30"
+                                cols="25"
                                 rows="5"
-                                placeholder="150자 이내의 짦은 소개를 써주세요"
-                                maxlength="150"
+                                placeholder="100자 이내의 짦은 소개를 써주세요"
+                                maxlength="100"
                                 style="resize: none;"></textarea>
                         </p>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="row text-center">
+                    <button class="btn btn-primary" id="btn-before">이전으로</button>
+                    <button class="btn btn-primary" id="btn-join">가입하기</button>
+                </div>
+            </form>
         </div>
         <!--부트 스트랩-->
         <script src="../js/bootstrap.js"></script>
-        <!--custom.js-->
-        <script src="../custom.js"></script>
-        <!--slik slider-->
-        <script src="../js/slick/slick.js"></script>
+        <!--common.js-->
+        <script src="../../common.js"></script>
     </body>
 </html>
