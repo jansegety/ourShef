@@ -98,3 +98,34 @@ function preViewImg2(event){
   event.stopPropagation();
 }
 
+//############### Star point system Start#####################
+
+//point with click on the Star point System
+let arrNum = document.getElementById("star-point-area-i1").getElementsByClassName("click-area").length;
+for(var i=0; i<arrNum; i++)
+{
+  // i is click-area index //use Closer
+  setEventListenerPointByClick(i);
+}
+
+
+function setEventListenerPointByClick(idx){
+
+  var temp = document.getElementById("star-point-area-i1").getElementsByClassName("click-area")[idx];
+  temp.addEventListener("click",update ,false);
+
+  function update(event){
+  //updat input value
+  var score = (idx+1)*10;
+  document.getElementById("input-star-point-i1").value = score;  
+
+  //star pointer point link with input value
+  let starFront = document.getElementById("star-point-area-i1").getElementsByClassName("star-front")[0];
+  starFront.style.width = score + "%";
+
+  event.stopPropagation();
+  }
+ 
+}
+
+//############### Star point system End#####################

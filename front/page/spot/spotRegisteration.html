@@ -38,7 +38,7 @@
                         </div>
                         <div>
                             <div class="img-button-frame">
-                                <input id="input-main-img" type="file" accept=".jpg, .txt" name="main-img">
+                                <input id="input-main-img" type="file" accept=".jpg, .txt" name="main-img" required>
                                 <button id="btn-main-img" class="btn btn-primary" type="button">메인 사진 등록</button>
                             </div>
                             <div class="img-button-frame">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-4 spot-info-area" style="border: 1px solid green;">
                         <div>
-                            <input type="text" name="spot-name" placeholder="맛집 이름을 써주세요.">
+                            <input type="text" name="spot-name" placeholder="맛집 이름을 써주세요." required>
                         </div>
                         <div>
                             <textarea
@@ -65,17 +65,40 @@
                                 maxlength="400"
                                 style="resize: none;"></textarea>
                         </div>
-                        <div class="star-area">
-                            <div class="star-front">
-                            </div>
-                            <div class="star-back">
+                        <input id="input-star-point-i1" class="input-star-point" type="text" value="" required>
+                        <div id="star-point-area-i1" class="star-point-area">
+                            <div class="star-front"></div>
+                            <div class="star-back"></div>
+                            <div class="click-areas">
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
+                                <div class="click-area"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row"></div>
+                <div class="row footer">
+                    <div class="col-md-1"></div>
+                    <div class="col-xs-8 col-md-2">
+                        <button class="btn btn-primary" type="button">이전으로</button>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-xs-4 col-md-2">
+                        <button class="btn btn-primary" type="submit">등록하기</button>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
             </div>
         </form>
+        <!--JQuery-->
+        <script src="../../library/jquery-2.1.4.js"></script>
         <!--fontawesome-->
         <script src="../../library/fontawesome/all.js"></script>
         <!--부트 스트랩-->

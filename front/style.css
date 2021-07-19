@@ -58,7 +58,7 @@
   margin: auto;
 }
 
-.footer {
+.loginHome .footer {
   background-color: rgb(199, 236, 189);
 }
 
@@ -282,8 +282,8 @@
 .spotRegisteration .spot-info-area textarea {
   margin-top: 10px;
 }
-/* #### 별점바 영역 시작####*/
-.spotRegisteration .star-area {
+/* ############### Star point system Start##################### */
+.spotRegisteration .star-point-area {
   display: inline-block;
   /* border: 1px solid blue; */
   position: relative;
@@ -292,17 +292,17 @@
   overflow: hidden;
 }
 
-.spotRegisteration .star-front, .spotRegisteration .star-back {
+.spotRegisteration .star-point-area .star-front, .spotRegisteration .star-point-area .star-back {
   font-size: 20px;
 }
-.spotRegisteration .star-back{
+.spotRegisteration .star-point-area .star-back{
   /* border: 1px solid red; */
   height: 40px;
   width: 120px;
   background:url(/img/star/star.png) no-repeat;
   background-size: 120px 40px;
 }
-.spotRegisteration .star-front{
+.spotRegisteration .star-point-area .star-front{
   position: absolute;
   top: -20px;
   left: 0;
@@ -310,6 +310,105 @@
   background:url(/img/star/star.png) no-repeat;
   background-size: 120px 40px;
   height: 40px;
-  width: 70%;
+  width: 0%;
 }
-/* #### 별점바 영역 끝####*/
+/* star pointer Click Area default CSS */
+.spotRegisteration .star-point-area .click-areas {
+  position: absolute;
+  height: inherit;
+  top: 0;
+  left:0;
+}
+.spotRegisteration .star-point-area .click-area {
+  /* border: 1px solid red; */
+  height: inherit;
+  width:12px;
+  float: left;
+}
+.spotRegisteration #input-star-point-i1 {
+  display: none;
+}
+
+.spotRegisteration .footer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.spotRegisteration .footer button {
+  width: 130px;
+}
+
+/* ############### Star point system End ##################### */
+
+
+/* #################################### spotListOfUser ############################################## */
+/* #################################### spotListOfUser ############################################## */
+
+/* visitor info */
+.spotListOfUser .visitor-info{
+  width: 200px;
+  margin: auto;
+}
+.spotListOfUser .visitor-info div {
+  margin-top: 20px;
+}
+.spotListOfUser .visitor-info img{
+  width: 130px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
+/* spots */
+.spotListOfUser .spot-area {
+  margin-top: 50px;
+}
+.spotListOfUser .spot-info {
+  text-align: center;
+  float: left;
+  width: 170px;
+}
+.spotListOfUser .spot-info img{
+  width: 150px;
+}
+.spotListOfUser .footer {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+
+/* ########################## acquaintanceList ############################# */
+/* ########################## acquaintanceList ############################# */
+.acquaintanceList ul {
+  list-style-type: none;
+  padding: 0;
+}
+.acquaintanceList ul img {
+  width: 90px;
+}
+
+.acquaintanceList ul li {
+  height: 100px;
+}
+
+.acquaintanceList ul span {
+  display: inline-block;
+  border: 1px solid red;
+  height: 100px;
+}
+
+.acquaintanceList .testBox {
+  border: 1px solid blue;
+  display: inline-block;
+}
+/* .acquaintanceList ul .user-info {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+.acquaintanceList ul .user-info .wrapper{
+  position: absolute;
+}
+
+.acquaintanceList ul li button {
+  padding: 2px;
+  margin-left: 10px;
+} */
