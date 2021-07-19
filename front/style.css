@@ -9,18 +9,18 @@
 }
 
 .home .verticality {
-  height: 130px;
+  height: 90px;
 }
 
 /*###################### Login Home ###########################*/
 .loginHome .user-spot {
-  border: 2px solid rgb(191, 191, 255);
+  border: 2px solid rgb(228, 228, 228);
   border-radius: 5px;
   width: 380px;
   height: 270px;
   position: relative;
   overflow: hidden;
-  background-color: rgb(210, 234, 255);
+  background-color: rgb(255, 255, 255);
   margin: auto;
 
 }
@@ -59,18 +59,18 @@
 }
 
 .loginHome .footer {
-  background-color: rgb(199, 236, 189);
+  background-color: rgb(255, 255, 255);
 }
 
 
 .loginHome .my-spot {
 
-  border-radius: 15px;
+  
   width: 360px;
-  height: 270px;
+  height: 380px;
   position: relative;
   overflow: hidden;
-  background-color: rgb(210, 238, 197);
+  background-color: rgb(248, 248, 248);
 
 }
 
@@ -99,11 +99,18 @@
   position: absolute;
   top: 20px;
   left: 10px;
-  /*border: 1px solid red;*/
+  /* border: 1px solid red; */
 }
 
 .loginHome .my-user-info .img{
   margin-bottom : 10px;
+}
+
+.loginHome .my-user-info button {
+  height: 30px;
+  width: 70px;
+  font-size: 11px;
+  margin-top: 20px;
 }
 
 .user-spot-slider div {
@@ -117,6 +124,19 @@
 .loginHome .slick-next, .slick-prev {
   background-color: rgb(211, 226, 255);
 }
+
+#btn-spot-registration-i1{
+
+  display: block;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 200px;
+}
+#btn-my-spot-i1 {
+  margin-right: 13px;
+}
+
 
 /*######################joinForm##########################*/
 
@@ -207,7 +227,7 @@
 .spot .img-frame{
   display: inline-block;
   height: 300px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 .spot .visitor-info-area{
   height : 250px;
@@ -235,9 +255,11 @@
 }
 .spot .home-list {
   padding: 10px;
+  /* border: 1px solid red; */
 }
 .spot .home-list div{
   display: inline-block;
+  margin-right: 10px;
 }
 .spot .home-list div:first-child button{
  width: 200px;
@@ -383,32 +405,41 @@
 }
 .acquaintanceList ul img {
   width: 90px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 5px;
 }
 
 .acquaintanceList ul li {
   height: 100px;
+  width: 400px;
+  border-radius: 16px;
+  border-bottom: 1px solid gray;
+  background-color: rgb(236, 236, 236);
+  margin: auto;
+  margin-top: 2px;
 }
 
 .acquaintanceList ul span {
   display: inline-block;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   height: 100px;
+  vertical-align: top;
 }
-
-.acquaintanceList .testBox {
-  border: 1px solid blue;
+.acquaintanceList ul .user-info {
+  line-height: 100px;
+}
+.acquaintanceList ul .wrapper {
+  /* border: 1px solid red; */
+  line-height: normal;
   display: inline-block;
+  vertical-align: middle;
+  text-align: center;
 }
-/* .acquaintanceList ul .user-info {
-  position: relative;
-  width: 100px;
-  height: 100px;
+.acquaintanceList ul .wrapper div {
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
-.acquaintanceList ul .user-info .wrapper{
-  position: absolute;
+.acquaintanceList ul .btn-frame {
+  line-height: 100px;
 }
-
-.acquaintanceList ul li button {
-  padding: 2px;
-  margin-left: 10px;
-} */
