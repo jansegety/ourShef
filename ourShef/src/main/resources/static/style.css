@@ -2,11 +2,7 @@
 * {
   box-sizing: border-box;
 }
-
-
-
 /*###################### Home ###########################*/
-
 .home button {
   margin-top: 10px;
   width: 200px;
@@ -17,7 +13,6 @@
 }
 
 /*###################### Login Home ###########################*/
-
 .loginHome .user-spot {
   border: 2px solid rgb(228, 228, 228);
   border-radius: 5px;
@@ -142,8 +137,8 @@
   margin-right: 13px;
 }
 
-/*######################joinForm##########################*/
 
+/*######################joinForm##########################*/
 
 .joinForm input[type="file"]{
   display:inline-block
@@ -153,8 +148,8 @@
   border-radius: 50%;
 }
 
-/*########################## loginForm ###########################*/
 
+/*########################## loginForm ###########################*/
 .loginForm h1 {
   margin-top: 100px;
   font-size: 50px;
@@ -222,7 +217,6 @@
 
 /* ############################### Spot ################################ */
 
-
 .spot #main-spot-img {
   width: 250px;
 }
@@ -235,12 +229,6 @@
   height: 300px;
   /* border: 1px solid blue; */
 }
-
-.spot .comment-area {
-  /* border: 1px solid red; */
-  margin: 20px 0;
-}
-
 .spot .visitor-info-area{
   height : 250px;
   position: relative;
@@ -273,22 +261,16 @@
   display: inline-block;
   margin-right: 10px;
 }
-
-.spot .home-list button{
-  font-size: 12px;
-  padding: 5px;
-  width: 120px;
-  height: 30px;
+.spot .home-list div:first-child button{
+ width: 200px;
+ height: 40px;
+}
+.spot .home-list div:last-child button{
+  width: 150px;
+ height: 40px;
 }
 
-.spot .footer button{
-  margin-bottom: 10px;
-  width: 120px;
-} 
-
 /* ###################### spotRegisteration ########################## */
-
-
 .spotRegisteration .main-col div{
   text-align: center;
 }
@@ -318,12 +300,55 @@
 
 .spotRegisteration .spot-info-area {
   padding-top:30px;
-  width: 302px;
-  margin: auto;
 }
 .spotRegisteration .spot-info-area textarea {
   margin-top: 10px;
-  width: 300px;
+}
+/* ############### Star point system Start##################### */
+.spotRegisteration .star-point-area {
+  display: inline-block;
+  /* border: 1px solid blue; */
+  position: relative;
+  height: 23px;
+  width: 120px;
+  overflow: hidden;
+}
+
+.spotRegisteration .star-point-area .star-front, .spotRegisteration .star-point-area .star-back {
+  font-size: 20px;
+}
+.spotRegisteration .star-point-area .star-back{
+  /* border: 1px solid red; */
+  height: 40px;
+  width: 120px;
+  background:url(/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+}
+.spotRegisteration .star-point-area .star-front{
+  position: absolute;
+  top: -20px;
+  left: 0;
+  /* border: 1px solid green; */
+  background:url(/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+  height: 40px;
+  width: 0%;
+}
+/* star pointer Click Area default CSS */
+.spotRegisteration .star-point-area .click-areas {
+  position: absolute;
+  height: inherit;
+  top: 0;
+  left:0;
+}
+.spotRegisteration .star-point-area .click-area {
+  /* border: 1px solid red; */
+  height: inherit;
+  width:12px;
+  float: left;
+}
+.spotRegisteration #input-star-point-i1 {
+  display: none;
 }
 
 .spotRegisteration .footer {
@@ -334,11 +359,11 @@
   width: 130px;
 }
 
-
+/* ############### Star point system End ##################### */
 
 
 /* #################################### spotListOfUser ############################################## */
-
+/* #################################### spotListOfUser ############################################## */
 
 /* visitor info */
 .spotListOfUser .visitor-info{
@@ -372,6 +397,7 @@
 }
 
 
+/* ########################## acquaintanceList ############################# */
 /* ########################## acquaintanceList ############################# */
 .acquaintanceList ul {
   list-style-type: none;
@@ -410,100 +436,10 @@
   vertical-align: middle;
   text-align: center;
 }
-
+.acquaintanceList ul .wrapper div {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 .acquaintanceList ul .btn-frame {
   line-height: 100px;
 }
-
-
-
-
-
-
-
-/* ############### Starpoint System Start##################### */
-.starPointSystem .star-point-area {
-  display: inline-block;
-  position: relative;
-  height: 21px;
-  width: 120px;
-  overflow: hidden;
-}
-
-.starPointSystem .star-front, .starPointSystem  .star-back {
-  font-size: 20px;
-}
-.starPointSystem .star-back{
-  height: 40px;
-  width: 120px;
-  background:url(/img/star/star.png) no-repeat;
-  background-size: 120px 40px;
-}
-.starPointSystem .star-front{
-  position: absolute;
-  top: -20px;
-  left: 0;
-  background:url(/img/star/star.png) no-repeat;
-  background-size: 120px 40px;
-  height: 40px;
-  width: 0%;
-}
-
-.starPointSystem  .click-areas {
-  position: absolute;
-  height: inherit;
-  top: 0;
-  left:0;
-}
-.starPointSystem .click-area {
-  /* border: 1px solid red; */
-  height: inherit;
-  width:12px;
-  float: left;
-}
-.starPointSystem  input {
-  display: none;
-}
-/* ############### Starpoint System End ##################### */
-/* #############Reliability System Start #################### */
-.reliabilitySystem {
-  height: 10px;
-  width: 50px;
-  position: relative;
-}
-
-.reliabilityText {
-  position:absolute;
-  font-size: 7px;
-  font-weight: bold;
-  color: aliceblue;
-  top: 50%;
-  left: 50%;
-  z-index: 1;
-  transform: translate(-50%, -50%);
-}
-
-.gaugeBar {
-  height: inherit;
-  width: inherit;
-  position: relative;
-}
-
-.gaugeBar .front {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgb(98, 152, 218);
-  height: inherit;
-  width: 50%;
-}
-
-.gaugeBar .back {
-  /* border: 2px solid blue; */
-  background-color: rgb(120, 120, 120);
-  height: inherit;
-  width: inherit;
-}
-
-
-/* #############Reliability System End #################### */

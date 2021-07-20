@@ -1,0 +1,73 @@
+@startuml
+/'domain'/
+
+class User <<Entity>>{
+ -id : Long
+ -nickName : String
+-password : Int
+-introduction : String
+-profileImg : UploadFile
+-reliability: float
+-registeredSpots: List<spot>
+-visitedSpots: List<spot>
+
++getter()
++setter()
+}
+
+class Spot <<Entity>> {
+  -id : Long
+  -spotName : String
+  -mainSpotImg : UploadFile
+  -addedSpotImgs : List<UploadFile>
+  -spotIntroduction : String
+  -comments : List<comment>
+  -registrant : User
+  -visitors : List<User>
+  -visited : int 
+  -visiterStarPoint : float
+  -UsersStarPoint : float
+
+
+  +getter()
+  +setter()
+}
+
+ /'값 타입은 기본 생성자 필수'/
+class UploadFile <<Value Type>> {
+  -id : Long
+  -uploadFileName : String
+	-storeFileName : String
+
+  +UploadFile() 
+  +UploadFile(String uploadFileName, String storeFileName)
+}
+
+class Comment {
+  -id : Long
+  -commentUser : User
+  -starPoint : float
+  -comment : String
+  -commentedSpot : Spot
+
+  + Comment(User user, float starPoint)
+}
+
+/'Class relationShip'/
+Spot -- User
+note on link: visitors N:M visitedSpots
+Spot -- User
+note on link: registrant 1:N registeredSpots
+
+User *--> UploadFile
+note on link: profileImg
+Spot *--> UploadFile
+note on link: mainSpotImg
+Spot *--> UploadFile
+note on link: addedSpotImgs 1:N
+
+Spot -- Comment
+note on link: comments 1:N commentedSpot
+
+
+@enduml

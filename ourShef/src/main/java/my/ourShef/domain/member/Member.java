@@ -17,6 +17,5 @@ public class Member {
 	private String userid;
 	private String nickName;
 	private String password;
-	private UploadFile profilePhoto;
 
 }
