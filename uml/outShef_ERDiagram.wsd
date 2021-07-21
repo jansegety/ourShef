@@ -1,0 +1,84 @@
+@startuml
+
+entity User {
+*USER_ID : Long (PK)
+  --
+nickName : vchar
+password : vchar
+introduction : vchar
+reliability: float
+profileImg: UUID(VCHAR)(FK) 
+}
+
+entity Visitors_VisitedSpots {
+  *User_visitedSpot_ID : Long (PK)
+  --
+  USER_ID (FK) : Long (FK)
+  SPOT_ID (FK) : Long (FK)
+}
+
+entity Spot {
+  *SPOT_ID : Long (PK)
+  --
+  spotName : vchar;
+  spotIntroduction : text
+  registrant_ID : number (FK)
+  visited: number
+  visiterStarPoint : float 
+  UserStarPoint: float
+  mainSpotImg_ID : UUID(vchar)(FK) 
+  addedSpotImgs_ID : UUID(vchar)(FK)
+}
+
+
+entity UploadFileInfo {
+*uploadFileInfo_ID : (VCHAR)UUDI (PK)
+ --
+  uploadFileName : vchar
+  storeFileName : vchar
+}
+
+entity addedSpotImgs {
+ *addedSpotImgs_ID : UUID(vchar)(PK)
+ --
+  uploadFileInfo_ID : VCHAR(UUID)(FK)
+}
+
+entity Comment {
+*Comment_ID : Long (PK)
+--
+commentUser_ID : Long (FK)
+startPoint: float
+comment: text
+commentedSpot_ID : Long (FK)
+}
+
+
+
+
+
+User ||--|{ Visitors_VisitedSpots
+note on link : visitedSpots & visitors
+
+User ||--o{ Spot
+note on link : registeredSpots & registrant
+
+Visitors_VisitedSpots }|--|| Spot
+note on link : visitedSpots & visitors
+
+User ||--|| UploadFileInfo
+note on link : profileImg
+
+Spot ||--|| UploadFileInfo
+note on link : mainSpotImg
+
+Spot ||--o{ addedSpotImgs
+
+UploadFileInfo ||--o{ addedSpotImgs
+
+User ||--o{ Comment
+
+Spot ||--o{ Comment
+
+
+@enduml

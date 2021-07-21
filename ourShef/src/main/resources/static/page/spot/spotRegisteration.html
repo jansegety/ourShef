@@ -32,13 +32,18 @@
                         <!-- <div class="spot-imgs-area"> <div class="spot-img-frame"><img
                         class="spot-img demo-img" alt="장소 사진"></div> </div> -->
                     </div>
-                    <div class="col-md-4 main-col" style="border: 1px solid green;">
+                    <div class="col-md-4 main-col">
                         <div>
                             <img class="demo-img" id="main-spot-img" alt="" onchange="loadFile(e)">
                         </div>
                         <div>
                             <div class="img-button-frame">
-                                <input id="input-main-img" type="file" accept=".jpg, .txt" name="main-img" required>
+                                <input
+                                    id="input-main-img"
+                                    type="file"
+                                    accept=".jpg, .txt"
+                                    name="main-img"
+                                    required="required">
                                 <button id="btn-main-img" class="btn btn-primary" type="button">메인 사진 등록</button>
                             </div>
                             <div class="img-button-frame">
@@ -52,35 +57,48 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 spot-info-area" style="border: 1px solid green;">
-                        <div>
-                            <input type="text" name="spot-name" placeholder="맛집 이름을 써주세요." required>
-                        </div>
-                        <div>
-                            <textarea
-                                name="spot-introduction"
-                                cols="45"
-                                rows="10"
-                                placeholder="400자 이내의 짦은 맛집 소개를 써주세요."
-                                maxlength="400"
-                                style="resize: none;"></textarea>
-                        </div>
-                        <input id="input-star-point-i1" class="input-star-point" type="text" value="" required>
-                        <div id="star-point-area-i1" class="star-point-area">
-                            <div class="star-front"></div>
-                            <div class="star-back"></div>
-                            <div class="click-areas">
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
-                                <div class="click-area"></div>
+                    <div class="col-md-4">
+                        <div class="spot-info-area">
+                            <div>
+                                <input
+                                    type="text"
+                                    name="spot-name"
+                                    placeholder="맛집 이름을 써주세요."
+                                    required="required">
                             </div>
+                            <div>
+                                <textarea
+                                    name="spot-introduction"
+                                    cols="45"
+                                    rows="10"
+                                    placeholder="400자 이내의 짦은 맛집 소개를 써주세요."
+                                    maxlength="400"
+                                    style="resize: none;"></textarea>
+                            </div>
+                            <div id="startPointSystem-i1" class="starPointSystem">
+                                <input
+                                    class="input-star-point"
+                                    type="text"
+                                    value=""
+                                    required="required">
+                                <div class="star-point-area">
+                                    <div class="star-front"></div>
+                                    <div class="star-back"></div>
+                                    <div class="click-areas">
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
