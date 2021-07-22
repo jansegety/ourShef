@@ -22,11 +22,7 @@ class OurShefApplicationTests {
 		//EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 		//EntityManager em = emf.createEntityManager();
 		
-		Member member = new Member();
-		em.persist(member);
-
-		em.close(); 
-		//emf.close();
+	
 	}
 
 }

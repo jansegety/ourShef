@@ -6,7 +6,7 @@ import javax.persistence.Id;
 
 
 import lombok.Data;
-import my.ourShef.domain.UploadFile;
+
 
 @Entity
 @Data

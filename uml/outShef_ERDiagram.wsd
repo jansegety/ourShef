@@ -1,7 +1,7 @@
 @startuml
 
 entity User {
-*USER_ID : Long (PK)
+*id : Long (PK)
   --
 nickName : vchar
 password : vchar
@@ -10,60 +10,60 @@ reliability: float
 profileImg: UUID(VCHAR)(FK) 
 }
 
-entity Visitors_VisitedSpots {
-  *User_visitedSpot_ID : Long (PK)
+entity Visitor_VisitedSpot {
+  *id : Long (PK)
   --
-  USER_ID (FK) : Long (FK)
-  SPOT_ID (FK) : Long (FK)
+  visitorId : Long (FK) (User_ID)
+  visitedSpotId : Long (FK) (Spot_ID)
 }
 
 entity Spot {
-  *SPOT_ID : Long (PK)
+  *id : Long (PK)
   --
   spotName : vchar;
   spotIntroduction : text
-  registrant_ID : number (FK)
+  registrantId : number (FK)
   visited: number
   visiterStarPoint : float 
-  UserStarPoint: float
-  mainSpotImg_ID : UUID(vchar)(FK) 
-  addedSpotImgs_ID : UUID(vchar)(FK)
+  userStarPoint: float
+  mainSpotImgId : UUID(vchar)(FK) 
 }
 
 
 entity UploadFileInfo {
-*uploadFileInfo_ID : (VCHAR)UUDI (PK)
+*id : (VCHAR)UUDI (PK)
  --
   uploadFileName : vchar
   storeFileName : vchar
 }
 
-entity addedSpotImgs {
- *addedSpotImgs_ID : UUID(vchar)(PK)
+entity added_spot_img {
+ *id : Long (PK)
  --
-  uploadFileInfo_ID : VCHAR(UUID)(FK)
+ spotId : Long (FK)
+  uploadFileInfoId : VCHAR(UUID)(FK)
 }
 
 entity Comment {
-*Comment_ID : Long (PK)
+*id : Long (PK)
 --
-commentUser_ID : Long (FK)
+commentUserId : Long (FK)
 startPoint: float
 comment: text
-commentedSpot_ID : Long (FK)
+commentedSpotId : Long (FK)
 }
 
 
 
 
 
-User ||--|{ Visitors_VisitedSpots
+User ||--|{ Visitor_VisitedSpot
 note on link : visitedSpots & visitors
 
 User ||--o{ Spot
 note on link : registeredSpots & registrant
 
-Visitors_VisitedSpots }|--|| Spot
+Visitor_VisitedSpot }|--|| Spot
 note on link : visitedSpots & visitors
 
 User ||--|| UploadFileInfo
@@ -72,9 +72,9 @@ note on link : profileImg
 Spot ||--|| UploadFileInfo
 note on link : mainSpotImg
 
-Spot ||--o{ addedSpotImgs
+Spot ||--o{ added_spot_img
 
-UploadFileInfo ||--o{ addedSpotImgs
+UploadFileInfo ||--|| added_spot_img
 
 User ||--o{ Comment
 
