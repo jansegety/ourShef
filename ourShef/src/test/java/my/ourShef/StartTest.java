@@ -28,17 +28,7 @@ class StartTest {
 	@Rollback(false)
 	void startTest()
 	{
-		//EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
 		
-		
-		Member member = new Member();
-		member.setUserid("홍길동");
-		Long savedId = memberRepository.save(member);
-	
-		Member findMember = memberRepository.find(savedId);
-		
-		Assertions.assertThat(findMember.getUserid()).isEqualTo(member.getUserid());
-	
 	}
 
 }

@@ -16,35 +16,38 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import my.ourShef.domain.bridge.AddedSpotImg;
 import my.ourShef.domain.bridge.VisitorVisitedSpot;
 
 //@SequenceGenerator(name = "SPOT_SEQ_GENERATOR", sequenceName = "SPOT_SEQ", initialValue = 1, allocationSize = 1)
 @Entity
-@Data
+@Getter
 @Table(name = "spot")
 public class Spot {
 
 	@Id
 	@Column(name="spot_id")
 	@GeneratedValue
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="SPOT_SEQ_GENERATOR")
 	private Long id;
 	
+	@Setter
 	@Column(name="spot_name")
 	private String spotName;
 	
-	
+	@Setter
 	@OneToOne
 	@JoinColumn(name="main_spot_img_info")
 	private UploadFileInfo mainSpotImgInfo;
-//	private List<UploadFile> addedSpotImgs;
 	
+
+	@Setter
 	@Column(columnDefinition = "TEXT")
 	private String spotIntroduction;
 
-	
-	//	private List<Comment> comments;
+	@OneToMany(mappedBy="commentedSpot")
+	private List<Comment> comments =new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -55,18 +58,27 @@ public class Spot {
 	private List<VisitorVisitedSpot> visitorVisitedSpots=new ArrayList<>();
 	
 	
-	@Column(name="visited_number")
-	private int visitedNumber;
-	
+    @Setter
 	@Column(name="registrant_star_point")
 	private float registrantStarPoint;
 	
+    @Setter
 	@Column(name="users_star_point")
 	private float usersStarPoint;
 	
 	
 	@OneToMany(mappedBy="spot")
 	private List<AddedSpotImg> addedSpotImgs = new ArrayList<>();
+	
+	
+	protected Spot() {
+		
+	}
+	
+	public Spot(User user, String spotName) {
+		this.registrant = user;
+		this.spotName = spotName;
+	}
 		
 	
 	

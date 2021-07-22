@@ -96,10 +96,8 @@ public class UserTest {
 			user.setNickName("철수");
 			em.persist(user);
 
-			Spot spot = new Spot();
-			spot.setSpotName("하와이");
+			Spot spot = new Spot(user, "하와이");
 
-			user.addRegisteredSpots(spot);
 
 			em.persist(spot);
 

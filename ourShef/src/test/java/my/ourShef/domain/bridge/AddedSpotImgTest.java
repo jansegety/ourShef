@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
+import my.ourShef.domain.User;
 
 public class AddedSpotImgTest {
 
@@ -26,8 +27,9 @@ public class AddedSpotImgTest {
 	    tx.begin();
 	    
 	    try {
-	    	
-	    	Spot spot1 = new Spot();
+	    	User user = new User("홍길동");
+	    	em.persist(user);
+	    	Spot spot1 = new Spot(user, "맛있는 식당");
 	    	em.persist(spot1);
 	    	UploadFileInfo ufi1 = new UploadFileInfo("업로드 파일 A", "저장된 파일 A");
 	    	em.persist(ufi1);

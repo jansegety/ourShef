@@ -27,21 +27,20 @@ public class VisitorVisitedSpotTest {
 	    
 	    try {
 	    	
-	    	Spot spotA = new Spot();
-	    	spotA.setSpotName("유럽");
-	    	Spot spotB = new Spot();
-	    	spotB.setSpotName("미국");
+	    	User userA = new User("영희");
+	    	User userB = new User("철수");
+
+	    	
+	    	em.persist(userA);
+	    	em.persist(userB);
+	    	
+	    	Spot spotA = new Spot(userA, "유럽");
+	    	Spot spotB = new Spot(userB, "미국");
+	   
 	    	
 	    	em.persist(spotA);
 	    	em.persist(spotB);
 	    	
-	    	User userA = new User();
-	    	userA.setNickName("영희");
-	    	User userB = new User();
-	    	userB.setNickName("철수");
-	    	
-	    	em.persist(userA);
-	    	em.persist(userB);
 	    	
 	    	VisitorVisitedSpot vvs1= new VisitorVisitedSpot(userA, spotA);
 	    	VisitorVisitedSpot vvs2 = new VisitorVisitedSpot(userA, spotB);

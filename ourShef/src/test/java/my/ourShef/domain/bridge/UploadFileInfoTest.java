@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
+import my.ourShef.domain.User;
 
 public class UploadFileInfoTest {
 
@@ -62,7 +63,9 @@ public class UploadFileInfoTest {
 	    	UploadFileInfo fi = new UploadFileInfo("업로드 메인 스폿 이미지", "저장된 메인 스폿 이미지");
 	    	em.persist(fi);
 	    	
-	    	Spot spot = new Spot();
+	    	User user = new User("다람쥐");
+	    	Spot spot = new Spot(user, "해물탕집");
+	    	em.persist(user);
 	    	em.persist(spot);
 	    	
 	    	spot.setMainSpotImgInfo(fi);
