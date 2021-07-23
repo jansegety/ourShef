@@ -14,8 +14,6 @@ function popChooseFile(){
 let input = document.getElementById("join-profile-img-file");
 let preview = document.getElementById("join-profile-img");
 input.addEventListener("change", showImageFile, false);
-console.log(input);
-console.log(preview);
 
 
 function showImageFile(){

@@ -1,7 +1,7 @@
 // shef 이미지 초기화
 const demoImageElements = document.getElementsByClassName("demo-img");
 for (var i = 0; i < demoImageElements.length; i++) {
-    demoImageElements[i].src = "http://localhost:5501/img/shefmark.jpg";
+    demoImageElements[i].src = "/img/shefmark.jpg";
 }
 
 // 확장자 검사기 file extension check, if file's extentsion exist in list, the

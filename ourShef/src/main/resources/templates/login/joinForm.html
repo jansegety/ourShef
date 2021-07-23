@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--부트 스트랩-->
+<link rel="stylesheet" href="../../bootStrap/bootstrap-theme.css">
+<link rel="stylesheet" href="../../bootStrap/bootstrap.css">
+
+<!--custom-->
+<link rel="stylesheet" href="../../style.css">
+
+<title>회원가입</title>
+</head>
+<style>
+.error-border-style {
+	border: 1px solid red;
+}
+</style>
+<body class="joinForm">
+	<form action="#none" th:action method="post" th:object="${joinForm}"
+		enctype="multipart/form-data">
+		<div class="container">
+			<div class="row text-center">
+				<h3>회원가입</h3>
+			</div>
+			<div class="row text-center">
+				<div>
+					<p>
+						<img class="demo-img" id="join-profile-img" alt="쉐프 마크">
+					</p>
+					<p>
+						<input th:name="joinProfileImg" value="" type="file"
+							id="join-profile-img-file" accept=".jpg, .png"
+							style="margin: 0; display: none;">
+					</p>
+					<div th:if="${errors?.containsKey('joinProfileImgRequiredError')}">
+						<div class="text-danger"
+							th:text="${errors['joinProfileImgRequiredError']}">프로필 이미지는
+							필수입니다.</div>
+					</div>
+					<div th:if="${errors?.containsKey('joinProfileImgExtError')}">
+						<div class="text-danger"
+							th:text="${errors['joinProfileImgExtError']}">이미지 파일만
+							가능합니다.</div>
+					</div>
+					<p>
+						<button class="btn btn-primary" id="btn-profile-img" type="button"
+							th:classappend="${errors?.containsKey('joinProfileImgRequiredError')}?'error-border-style':_">프로필
+							등록</button>
+					</p>
+				</div>
+				<div>
+					<p>
+						<input type="text" id="loginId" placeholder="아이디"
+							th:name="accountId" th:value="*{accountId}">
+					</p>
+					<div
+						th:if="${errors?.containsKey('passwordContainsNickNameError')}">
+						<div class="global-error text-danger"
+							th:text="${errors['passwordContainsNickNameError']}">패스워드
+							닉네임 포함 오류 메시지</div>
+					</div>
+					<div th:if="${errors?.containsKey('password')}">
+						<div class="text-danger" th:text="${errors['password']}">패스워드
+							오류 메시지</div>
+					</div>
+					<p>
+						<input type="password" id="password" placeholder="비밀번호"
+							th:name="password" th:value="*{password}"
+							th:classappend="${errors?.containsKey('password')}or${errors?.containsKey('passwordContainsNickNameError')}?'error-border-style':_">
+					</p>
+					<p>
+						<input type="password" id="confirmPassword" placeholder="비밀번호 확인"
+							th:name="confirmPassword" th:value="*{confirmPassword}">
+					</p>
+					<div th:if="${errors?.containsKey('nickName')}">
+						<div class="text-danger" th:text="${errors['nickName']}">닉네임
+							오류 메시지</div>
+					</div>
+					<p>
+						<input type="text" id="nickName" placeholder="닉네임"
+							th:name="nickName" th:value="*{nickName}"
+							th:classappend="${errors?.containsKey('nickName')}?'error-border-style':_">
+					</p>
+					<div th:if="${errors?.containsKey('selfIntroduction')}">
+						<div class="text-danger" th:text="${errors['selfIntroduction']}">자기소개
+							오류 메시지</div>
+					</div>
+					<p>
+						<textarea th:name="selfIntroduction"
+							th:value="*{selfIntroduction}" name="self-introduction" cols="25"
+							rows="5" placeholder="100자 이내의 짦은 소개를 써주세요" maxlength="100"
+							style="resize: none;"
+							th:classappend="${errors?.containsKey('selfIntroduction')}?'error-border-style':_"></textarea>
+					</p>
+				</div>
+			</div>
+			<div class="row text-center">
+				<button class="btn btn-primary" id="btn-before" type="button"
+					onclick="location.href='/'">이전으로</button>
+				<button class="btn btn-primary" id="btn-join" type="submit">가입하기</button>
+			</div>
+		</div>
+	</form>
+	<!--부트 스트랩-->
+	<script src="../js/bootstrap.js"></script>
+	<!--common.js-->
+	<script src="../../common.js"></script>
+	<!-- specific -->
+	<script src="/js/joinForm.js"></script>
+</body>
+</html>
