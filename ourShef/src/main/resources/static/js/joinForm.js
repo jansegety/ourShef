@@ -1,7 +1,7 @@
 /*####################### joinForm ##############################*/
 
 // 프로필 등록 누르면 파일 선택창 뜨기
-let profileBtn = document.getElementById("btn-profile-img");
+let profileBtn = document.getElementById("joinForm-btn-profile-img");
 profileBtn.addEventListener("click", popChooseFile, false);
 
 function popChooseFile(){
@@ -12,7 +12,7 @@ function popChooseFile(){
 
 // 사진 미리보기
 let input = document.getElementById("joinFormProfileImgFile");
-let preview = document.getElementById("join-profile-img");
+let preview = document.getElementById("joinForm-profile-img");
 input.addEventListener("change", showImageFile, false);
 
 

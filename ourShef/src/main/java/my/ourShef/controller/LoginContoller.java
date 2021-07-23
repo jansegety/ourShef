@@ -100,7 +100,7 @@ public class LoginContoller {
 		
 		//검증 로직
 		if(joinForm.getJoinFormProfileImgFile().isEmpty()) {
-			bindingResult.addError(new FieldError("joinForm","joinFormProfileImgFile", "프로필 이미지는 필수입니다."));
+			bindingResult.addError(new FieldError("joinForm","joinFormProfileImgFile", joinForm.getJoinFormProfileImgFile(), false, new String[]{"required.joinForm.profileImgFile"}, null, null));
 			
 		}else {
 			String temp = joinForm.getJoinFormProfileImgFile().getOriginalFilename(); //ex 7.jpg
@@ -108,22 +108,21 @@ public class LoginContoller {
 			String lowerCaseExt = ext.toLowerCase();
 			if(!lowerCaseExt.equals("jpg")&&!lowerCaseExt.equals("png"))
 			{
-				errors.put("joinProfileImgExtError", "이미지 파일만 가능합니다.");
-				bindingResult.addError(new FieldError("joinForm","joinFormjoinProfileImg", "이미지 파일만 가능합니다."));
+				bindingResult.addError(new FieldError("joinForm","joinFormProfileImgFile", joinForm.getJoinFormProfileImgFile(), false, new String[]{"only.img"}, null, null));
 			}
 			
 		}
 		
 		if(!StringUtils.hasText(joinForm.getJoinFormNickName())) {
-			bindingResult.addError(new FieldError("joinForm","joinFormNickName", "닉네임은 필수입니다."));
+			bindingResult.addError(new FieldError("joinForm","joinFormNickName", joinForm.getJoinFormNickName(), false, new String[] {"required.joinForm.nickName"}, null, null));
 		}
 		if (joinForm.getJoinFormPassword() == null || joinForm.getJoinFormPassword().length()>16|| joinForm.getJoinFormPassword().length()<8)
 		{
-			bindingResult.addError(new FieldError("joinForm","joinFormPassword", "비밀번호 문자수는 8자리에서 16자리까지입니다."));
+			bindingResult.addError(new FieldError("joinForm","joinFormPassword", joinForm.getJoinFormPassword(), false, new String[] {"range.password"}, new Object[] {8, 16}, null));
 		}
 		if (joinForm.getJoinFormSelfIntroduction().length() >100)
 		{
-			bindingResult.addError(new FieldError("joinForm","joinFormSelfIntroduction", "100자 이하로 써주세요."));
+			bindingResult.addError(new FieldError("joinForm","joinFormSelfIntroduction", joinForm.getJoinFormSelfIntroduction(), false, new String[] {"min.text"}, new Object[] {100}, null));
 		}
 		
 		//특정 필드가 아닌 복합 룰 검증
@@ -131,7 +130,7 @@ public class LoginContoller {
 		if(joinForm.getJoinFormPassword().length() != 0 && joinForm.getJoinFormNickName().length() != 0)
 		{
 			if(joinForm.getJoinFormPassword().contains(joinForm.getJoinFormNickName())) {
-				bindingResult.addError(new ObjectError("joinForm","패스워드는 닉네임을 포함할 수 없습니다."));
+				bindingResult.addError(new ObjectError("joinForm", new String[] {"dont.passwordContainsNickName"}, null, null));
 			}
 		}
 		
