@@ -5,13 +5,13 @@ let profileBtn = document.getElementById("btn-profile-img");
 profileBtn.addEventListener("click", popChooseFile, false);
 
 function popChooseFile(){
-  var input = document.getElementById("join-profile-img-file");
+  var input = document.getElementById("joinFormProfileImgFile");
   var event = new MouseEvent('click');
   input.dispatchEvent(event);
 };
 
 // 사진 미리보기
-let input = document.getElementById("join-profile-img-file");
+let input = document.getElementById("joinFormProfileImgFile");
 let preview = document.getElementById("join-profile-img");
 input.addEventListener("change", showImageFile, false);
 

@@ -8,12 +8,12 @@ import lombok.Data;
 @Data
 public class JoinForm {
 	
-	private MultipartFile joinProfileImg;
-	private String accountId;
-	private String password;
-	private String confirmPassword;
-	private String nickName;
-	private String selfIntroduction;
+	private MultipartFile joinFormProfileImgFile;
+	private String joinFormAccountId;
+	private String joinFormPassword;
+	private String joinFormConfirmPassword;
+	private String joinFormNickName;
+	private String joinFormSelfIntroduction;
 	
 	
 }

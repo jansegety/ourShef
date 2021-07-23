@@ -148,7 +148,7 @@
 .joinForm input[type="file"]{
   display:inline-block
 }
-#join-profile-img {
+#joinForm-profile-img {
   width: 100px;
   border-radius: 50%;
 }
