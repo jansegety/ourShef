@@ -32,8 +32,8 @@ public class BeanValidationTest {
 		
 		MultipartFile multi;
 		try {
-			File file = new File("./test.txt");
-			multi = new MockMultipartFile("joinFormProfileImgFile", "test.txt", null, new FileInputStream(file));
+			File file = new File("src/main/resources/static/img/test/test.txt");
+			multi = new MockMultipartFile("joinFormProfileImgFile", "hello.txt", null, new FileInputStream(file));
 			joinForm.setJoinFormProfileImgFile(multi); //텍스트 파일 삽입
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

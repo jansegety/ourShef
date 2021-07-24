@@ -1,28 +1,48 @@
 package my.ourShef.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import my.ourShef.domain.User;
 
 
 
 
-
+@Slf4j
 @Repository
+@Transactional
+@Component
+@RequiredArgsConstructor
 public class UserRepository {
 
-	@PersistenceContext
-	private EntityManager em;
+	private final EntityManager em;
+	
 	
 	public Long save(User user) {
 		em.persist(user);
+		
 		return user.getId();
 	}
 	
 	public User find(Long id) {
 		return em.find(User.class, id);
 	}
+	
+	
+	public List<User> findAll() {
+		 List<User> resultList = em.createQuery("select m from User m",User.class).getResultList();
+		 return resultList;
+	}
+	
+	
+	
 }

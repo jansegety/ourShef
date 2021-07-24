@@ -47,9 +47,7 @@ public class LoginContoller {
 	
 	@PostMapping("/join")
 	public String create(@Validated @ModelAttribute JoinForm joinForm, BindingResult bindingResult, Model model){
-		System.out.println("들어온 데이터 = " + joinForm);
 		
-
 		
 		//검증에 실패하면 다시 입력 폼으로
 		if(bindingResult.hasErrors()) {

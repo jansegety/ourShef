@@ -30,7 +30,7 @@ public class User {
 	private String accountId;
 	
 	@Setter
-	private Integer password;
+	private String password;
 	
 	@Setter
 	@Column(name="nick_name")
@@ -57,8 +57,8 @@ public class User {
 		
 	}
 	
-	public User(String nickName) {
-		this.nickName = nickName;
+	public User(String accountId) {
+		this.accountId = accountId;
 	}
 	
 }

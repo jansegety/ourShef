@@ -14,11 +14,11 @@ public class JoinForm {
 	private MultipartFile joinFormProfileImgFile;
 	private String joinFormAccountId;
 	
-	@NotBlank
-	@Range(min = 8, max = 16)
+	//@NotBlank
+	//@Range(min = 8, max = 16)
 	private String joinFormPassword;
 	private String joinFormConfirmPassword;
-	@NotBlank
+	//@NotBlank
 	private String joinFormNickName;
 	private String joinFormSelfIntroduction;
 	
