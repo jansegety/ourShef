@@ -44,6 +44,8 @@
 				</div>
 				<div>
 					<p>
+					<div class="text-danger" th:errors="*{joinFormAccountId}">아이디
+						오류 메시지</div>
 						<input th:field="*{joinFormAccountId}" type="text"
 							placeholder="아이디" th:errorclass="error-border">
 					</p>

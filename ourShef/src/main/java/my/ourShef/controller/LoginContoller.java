@@ -1,15 +1,11 @@
 package my.ourShef.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +14,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+ 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.controller.form.JoinForm;
 import my.ourShef.controller.validator.JoinFormValidator;
+import my.ourShef.domain.UploadFileInfo;
+import my.ourShef.domain.User;
+import my.ourShef.file.FileStore;
+import my.ourShef.repository.UserRepository;
+import my.ourShef.service.UserService;
+
+
 
 @Controller
 @RequestMapping("/login")
@@ -30,6 +34,11 @@ import my.ourShef.controller.validator.JoinFormValidator;
 public class LoginContoller {
 	
 	private final JoinFormValidator joinFormValidator;
+	private final FileStore fileStore;
+	
+	private final UserService userService;
+	private final UserRepository ur;
+
 	
 	//@IntiBinder->해당 컨트롤러에만 영향을 준다. 글로벌 설정은 별도로 해야한다.
 	@InitBinder //요청이 올 때마다 dataBinder는 새로 만들어진다. //이 컨트롤러에서만 적용된다.
@@ -46,7 +55,7 @@ public class LoginContoller {
 	
 	
 	@PostMapping("/join")
-	public String create(@Validated @ModelAttribute JoinForm joinForm, BindingResult bindingResult, Model model){
+	public String create(@Validated @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws IOException{
 		
 		
 		//검증에 실패하면 다시 입력 폼으로
@@ -55,9 +64,25 @@ public class LoginContoller {
 			return "login/joinForm";
 		}
 		
-		
 		//성공 로직
+		User user = new User(joinForm.getJoinFormAccountId());
+		user.setPassword(joinForm.getJoinFormPassword());
 		
+		//UploadFileInfo 객체를 영속화 시켜줘야함
+		//userService.join()에서 영속화 시켜줌
+		UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile()); 
+		user.setProfileImgInfo(storeFile);
+		
+		
+		
+		try {
+			userService.join(user);
+		} catch (Exception e) {
+			//중복된 accountid가 존재할 경우
+			bindingResult.rejectValue("joinFormAccountId", "duplication");
+			System.out.println("두번째 중복 검증에서 걸림" + e.getMessage());
+			return "login/joinForm";
+		}
 		
 		return "redirect:/";
 	}

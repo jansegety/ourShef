@@ -1,6 +1,7 @@
 package my.ourShef.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +20,6 @@ import my.ourShef.domain.User;
 
 @Slf4j
 @Repository
-@Transactional
 @Component
 @RequiredArgsConstructor
 public class UserRepository {
@@ -33,16 +33,18 @@ public class UserRepository {
 		return user.getId();
 	}
 	
-	public User find(Long id) {
-		return em.find(User.class, id);
+	public Optional<User> findById(Long id) {
+		return Optional.ofNullable(em.find(User.class, id));
 	}
 	
+	public Optional<User> findByAccountId(String accountId){
+		return findAll().stream().filter(m->m.getAccountId().equals(accountId)).findFirst();
+	}
 	
 	public List<User> findAll() {
 		 List<User> resultList = em.createQuery("select m from User m",User.class).getResultList();
 		 return resultList;
 	}
-	
 	
 	
 }

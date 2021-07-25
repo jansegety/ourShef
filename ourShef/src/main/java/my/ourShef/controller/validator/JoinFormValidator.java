@@ -5,10 +5,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import lombok.RequiredArgsConstructor;
 import my.ourShef.controller.form.JoinForm;
+import my.ourShef.service.UserService;
+
 
 @Component
+@RequiredArgsConstructor
 public class JoinFormValidator implements Validator {
+	
+	private final UserService us;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -20,6 +26,15 @@ public class JoinFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		JoinForm joinForm = (JoinForm) target;
+		
+		//중복된 AccountId가 있는지 검증
+		try {
+			us.validateDuplicateAccountId(joinForm.getJoinFormAccountId());
+		} catch (Exception e) {
+			//e.printStackTrace();
+			errors.rejectValue("joinFormAccountId", "duplication");
+		}
+		
 
 		if (joinForm.getJoinFormProfileImgFile().isEmpty()) {
 			// 프로필 이미지 파일이 들어오지 않은 경우
@@ -36,7 +51,8 @@ public class JoinFormValidator implements Validator {
 			}
 
 		}
-
+		
+		//닉네임이 필수인데 들어오지 않은 경우
 		if (!StringUtils.hasText(joinForm.getJoinFormNickName())) {
 			errors.rejectValue("joinFormNickName", "required");
 		}
@@ -45,12 +61,13 @@ public class JoinFormValidator implements Validator {
 				|| joinForm.getJoinFormPassword().length() < 8) {// 비밀번호가 제대로 입력되지 않은 경우
 			errors.rejectValue("joinFormPassword", "range", new Object[] { 8, 16 }, null);
 		} else {// 비밀번호가 입력되었지만 비밀번호 확인 번호와 다를 경우
-			if (!joinForm.getJoinFormAccountId().equals(joinForm.getJoinFormConfirmPassword())) {
+			if (!joinForm.getJoinFormPassword().equals(joinForm.getJoinFormConfirmPassword())) {
 				errors.rejectValue("joinFormPassword", "notEqal", null, null);
 			}
 
 		}
-
+		
+		//자기소개가 100자보다 많은 경우
 		if (joinForm.getJoinFormSelfIntroduction().length() > 100) {
 			errors.rejectValue("joinFormSelfIntroduction", "min.java.lang.String", new Object[] { 100 }, null);
 		}

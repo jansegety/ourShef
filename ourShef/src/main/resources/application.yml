@@ -1,3 +1,5 @@
+#server:#  tomcat:#    basedir: C:/OurShefTestFoleder      
+
 spring:
   messages:
     basename: errors
@@ -27,3 +29,6 @@ logging:
   level:
    org.hibernate.SQL: debug
   
+  
+file:
+  dir: C:/OurShefTestFoleder/
