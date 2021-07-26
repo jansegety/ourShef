@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,16 +26,22 @@
             </div>
             <div class="row">
                 <div class="form text-center">
-                    <form>
+                    <form action th:object="${loginForm}" method="post">
+                    <div th:if="${#fields.hasGlobalErrors()}">
+						<p class="text-danger" th:each="err : ${#fields.globalErrors()}"
+							th:text="${err}">글로벌 오류 메시지</p>
+					</div>
+                		<div class="text-danger" th:errors="*{loginFormId}"></div>
                         <div>
-                            <input id="" type="text" placeholder="id" name="">
-                            <label for="loginForm-id">
+                            <input id="loginFormId" type="text" placeholder="id" name="" th:field="*{loginFormId}">
+                            <label for="loginFormId">
                                 <i class="fas fa-user"></i>
                             </label>
                         </div>
+                       	<div class="text-danger" th:errors="*{loginFormPassword}"></div>
                         <div>
-                            <input id="" type="text" placeholder="password" name="">
-                            <label for="loginForm-password">
+                            <input id="loginFormPassword" type="password" placeholder="password" name="" th:field="*{loginFormPassword}">
+                            <label for="loginFormPassword">
                                 <i class="fas fa-key"></i>
                             </label>
                         </div>

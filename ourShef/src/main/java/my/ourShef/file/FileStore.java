@@ -40,7 +40,6 @@ public class FileStore {
 		}
 		String originalFilename = multipartFile.getOriginalFilename();
 		String storeFileName = createStoreFileName(originalFilename);
-		System.out.println("파일저장 실행됨!!!!!!!!!!!!!!!!!!");
 		multipartFile.transferTo(new File(getFullPath(storeFileName)));
 		return new UploadFileInfo(originalFilename, storeFileName);
 	}

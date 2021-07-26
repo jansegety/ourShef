@@ -1,11 +1,19 @@
 package my.ourShef.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +26,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.controller.form.JoinForm;
+import my.ourShef.controller.form.LoginForm;
 import my.ourShef.controller.validator.JoinFormValidator;
+import my.ourShef.controller.validator.LoginFormValidator;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
 import my.ourShef.file.FileStore;
 import my.ourShef.repository.UserRepository;
+import my.ourShef.service.LoginService;
 import my.ourShef.service.UserService;
+import my.ourShef.session.SessionManager;
 
 
 
@@ -34,16 +46,32 @@ import my.ourShef.service.UserService;
 public class LoginContoller {
 	
 	private final JoinFormValidator joinFormValidator;
+	private final LoginFormValidator loginFormValidator;
 	private final FileStore fileStore;
+	private final SessionManager sessionManager;
 	
 	private final UserService userService;
+	private final LoginService loginService;
 	private final UserRepository ur;
 
 	
 	//@IntiBinder->해당 컨트롤러에만 영향을 준다. 글로벌 설정은 별도로 해야한다.
 	@InitBinder //요청이 올 때마다 dataBinder는 새로 만들어진다. //이 컨트롤러에서만 적용된다.
 	public void init(WebDataBinder dataBinder) {
-		dataBinder.addValidators(joinFormValidator);
+		
+		if(dataBinder.getTarget() == null) return;
+		
+		final List<Validator> validatorsList = new ArrayList<>();
+		validatorsList.add(joinFormValidator);
+		validatorsList.add(loginFormValidator);
+		
+		for(Validator validator : validatorsList) {
+			if(validator.supports(dataBinder.getTarget().getClass())) {
+				dataBinder.addValidators(validator);
+			}
+		}
+
+		
 	}
 	
 
@@ -55,7 +83,7 @@ public class LoginContoller {
 	
 	
 	@PostMapping("/join")
-	public String create(@Validated @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws IOException{
+	public String create(@Valid @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws IOException{
 		
 		
 		//검증에 실패하면 다시 입력 폼으로
@@ -86,6 +114,44 @@ public class LoginContoller {
 		
 		return "redirect:/";
 	}
+	
+	
+	
+	
+	
+	@GetMapping("/login")
+	public String loginForm(Model model){
+		model.addAttribute("loginForm", new LoginForm());
+		return "login/loginForm";
+	}
+	
+	@PostMapping("/login")
+	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult, HttpServletResponse response) {
+		
+		
+		if(bindingResult.hasErrors()) {
+			log.info("errors={} ", bindingResult);
+			return "login/loginForm";
+		}
+			
+		
+		//로그인 성공 처리 TODO
+		//sessionManager를 사용하여 유저 아이디로 세션 생성
+		sessionManager.createSession(loginform.getLoginFormId(), response);
+		
+		
+		return "redirect:/";
+				
+		
+	}
+	
+	@PostMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		sessionManager.expire(request);
+		return "redirect:/";
+		
+	}
+	
 	
 	
 	
