@@ -26,4 +26,12 @@ public class SpotController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/spot")
+	public String spot() {
+		
+		return "spot/spot";
+	}
+	
+	
+	
 }

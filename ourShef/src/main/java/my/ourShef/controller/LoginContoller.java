@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
- 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.SessionConst;
@@ -128,7 +128,8 @@ public class LoginContoller {
 	}
 	
 	@PostMapping("/login")
-	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult, HttpServletRequest request) {
+	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult, HttpServletRequest request,
+			@RequestParam(defaultValue = "/") String redirectURL) {
 		
 		
 		if(bindingResult.hasErrors()) {
@@ -154,8 +155,8 @@ public class LoginContoller {
 		HttpSession session = request.getSession();
 		session.setAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID, loginform.getLoginFormId());
 		
-		
-		return "redirect:/";
+		//redirectURL는 유저가 세션없이 로그인을 했을 때 접속을 원했던 페이지로 로그인 성공시 다시 보내주기 위한 조치
+		return "redirect:" + redirectURL;
 				
 		
 	}
