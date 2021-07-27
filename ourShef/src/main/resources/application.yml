@@ -1,5 +1,5 @@
-#server:#  tomcat:#    basedir: C:/OurShefTestFoleder      
-
+#server:#  tomcat:#    basedir: C:/OurShefTestFoleder      server:      
+  servlet:    session:      tracking-modes: cookie      timeout: 1800 #기본은 1800초(30분), 60초보다 작은 값은 설정 불가      
 spring:
   messages:
     basename: errors

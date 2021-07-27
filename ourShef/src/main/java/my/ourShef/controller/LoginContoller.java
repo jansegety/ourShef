@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import my.ourShef.SessionConst;
 import my.ourShef.controller.form.JoinForm;
 import my.ourShef.controller.form.LoginForm;
 import my.ourShef.controller.validator.JoinFormValidator;
@@ -126,7 +128,7 @@ public class LoginContoller {
 	}
 	
 	@PostMapping("/login")
-	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult, HttpServletResponse response) {
+	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult, HttpServletRequest request) {
 		
 		
 		if(bindingResult.hasErrors()) {
@@ -135,9 +137,22 @@ public class LoginContoller {
 		}
 			
 		
+		
+		/*
+		 * 세션 메니저를 사용한 세션 생성
+		 */
 		//로그인 성공 처리 TODO
 		//sessionManager를 사용하여 유저 아이디로 세션 생성
-		sessionManager.createSession(loginform.getLoginFormId(), response);
+		//sessionManager.createSession(loginform.getLoginFormId(), response);
+		
+		/*
+		 * servlet에서 제공하는 session 사용
+		 * accountId 정보를 세션에 저장
+		 */
+		// request.getSession(true) : default 세션이 없으면 새로 생성, 있으면 있는 것을 반환
+		// request.getSession(false) : 세션이 있으면 기존 세션을 반환, 없으면 새로 생성하지 않고 null 반환
+		HttpSession session = request.getSession();
+		session.setAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID, loginform.getLoginFormId());
 		
 		
 		return "redirect:/";
@@ -147,7 +162,20 @@ public class LoginContoller {
 	
 	@PostMapping("/logout")
 	public String logout(HttpServletRequest request) {
-		sessionManager.expire(request);
+		/*
+		 * 세션 매니저 로그아웃 
+		 */
+		//sessionManager.expire(request);
+		
+		/*
+		 * servlet 세션 사용
+		 */
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			session.invalidate(); //세션 무효화
+		}
+		
+		
 		return "redirect:/";
 		
 	}
