@@ -37,7 +37,7 @@ import my.ourShef.file.FileStore;
 import my.ourShef.repository.UserRepository;
 import my.ourShef.service.LoginService;
 import my.ourShef.service.UserService;
-import my.ourShef.session.SessionManager;
+
 
 
 
@@ -50,7 +50,7 @@ public class LoginContoller {
 	private final JoinFormValidator joinFormValidator;
 	private final LoginFormValidator loginFormValidator;
 	private final FileStore fileStore;
-	private final SessionManager sessionManager;
+	
 	
 	private final UserService userService;
 	private final LoginService loginService;
@@ -137,14 +137,7 @@ public class LoginContoller {
 			return "login/loginForm";
 		}
 			
-		
-		
-		/*
-		 * 세션 메니저를 사용한 세션 생성
-		 */
-		//로그인 성공 처리 TODO
-		//sessionManager를 사용하여 유저 아이디로 세션 생성
-		//sessionManager.createSession(loginform.getLoginFormId(), response);
+
 		
 		/*
 		 * servlet에서 제공하는 session 사용
@@ -161,12 +154,9 @@ public class LoginContoller {
 		
 	}
 	
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
-		/*
-		 * 세션 매니저 로그아웃 
-		 */
-		//sessionManager.expire(request);
+
 		
 		/*
 		 * servlet 세션 사용

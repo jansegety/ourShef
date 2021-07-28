@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@
         <title>spotRegisteration</title>
     </head>
     <body class="spotRegisteration">
-        <form action="#none" method="post" enctype="multipart/form-data">
+        <form action="#none" th:action method="post" enctype="multipart/form-data">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-2"></div>
@@ -39,20 +39,23 @@
                         <div>
                             <div class="img-button-frame">
                                 <input
+                                	th:name="spotMainImgInfo"
                                     id="input-main-img"
                                     type="file"
                                     accept=".jpg, .txt"
-                                    name="main-img"
-                                    required="required">
+                                    name="main-img">
+                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotMainImgInfo}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn btn-primary" type="button">메인 사진 등록</button>
                             </div>
                             <div class="img-button-frame">
                                 <input
+                                	th:name="spotAddedImgsInfo"
                                     id="input-added-imgs"
                                     type="file"
                                     accept=".jpg, .txt"
                                     multiple="multiple"
                                     name="added-img">
+                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotAddedImgsInfo}">추가 사진 오류 메시지</div>
                                 <button id="btn-added-imgs" class="btn btn-primary" type="button">추가 사진 등록</button>
                             </div>
                         </div>
@@ -60,14 +63,20 @@
                     <div class="col-md-4">
                         <div class="spot-info-area">
                             <div>
+                            <div class="text-danger" th:errors="${spotRegisterationForm.spotName}">맛집 이름 오류</div>
                                 <input
+                                	th:value="${spotRegisterationForm.spotName}"
+                                	th:name="spotName"
                                     type="text"
                                     name="spot-name"
                                     placeholder="맛집 이름을 써주세요."
-                                    required="required">
+                                    >
                             </div>
                             <div>
+                            <div class="text-danger" th:errors="${spotRegisterationForm.spotIntroduction}">맛집 소개 오류</div>
                                 <textarea
+                                	th:name="spotIntroduction"
+                                	th:text="${spotRegisterationForm.spotIntroduction}"
                                     name="spot-introduction"
                                     cols="45"
                                     rows="10"
@@ -75,11 +84,13 @@
                                     maxlength="400"
                                     style="resize: none;"></textarea>
                             </div>
+                            <div class="text-danger" th:errors="${spotRegisterationForm.starPoint}">별점 시스템 오류</div>
                             <div id="startPointSystem-i1" class="starPointSystem">
                                 <input
+                                	th:name="starPoint"
                                     class="input-star-point"
                                     type="text"
-                                    value=""
+                                    value="10"
                                     required="required">
                                 <div class="star-point-area">
                                     <div class="star-front"></div>
@@ -105,7 +116,7 @@
                 <div class="row footer">
                     <div class="col-md-1"></div>
                     <div class="col-xs-8 col-md-2">
-                        <button class="btn btn-primary" type="button">이전으로</button>
+                        <button class="btn btn-primary" type="button" onclick="location.href='/'">홈으로</button>
                     </div>
                     <div class="col-md-6"></div>
                     <div class="col-xs-4 col-md-2">

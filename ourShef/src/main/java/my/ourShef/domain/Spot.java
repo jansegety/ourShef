@@ -1,5 +1,6 @@
 package my.ourShef.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,11 +27,17 @@ import my.ourShef.domain.bridge.VisitorVisitedSpot;
 @Getter
 @Table(name = "spot")
 public class Spot {
+	
 
 	@Id
 	@Column(name="spot_id")
 	@GeneratedValue
 	private Long id;
+	
+	
+	@Column(name="registered_time")
+	private LocalDateTime registeredTime;
+	
 	
 	@Setter
 	@Column(name="spot_name")
