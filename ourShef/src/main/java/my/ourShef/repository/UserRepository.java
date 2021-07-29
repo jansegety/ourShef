@@ -20,7 +20,6 @@ import my.ourShef.domain.User;
 
 @Slf4j
 @Repository
-@Component
 @RequiredArgsConstructor
 public class UserRepository {
 

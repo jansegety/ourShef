@@ -26,9 +26,9 @@ public class UserService {
 		public Long join(User user) throws Exception{
 			validateDuplicateAccountId(user.getAccountId());
 			
-			System.out.println("111111111");
+		
 			ur.save(user);
-			System.out.println("22222222");
+	
 			ufir.save(user.getProfileImgInfo()); //프로필 이미지 영속화
 			return user.getId();
 			

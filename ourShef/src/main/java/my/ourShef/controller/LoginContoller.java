@@ -33,6 +33,7 @@ import my.ourShef.controller.validator.JoinFormValidator;
 import my.ourShef.controller.validator.LoginFormValidator;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
+import my.ourShef.file.FilePath;
 import my.ourShef.file.FileStore;
 import my.ourShef.repository.UserRepository;
 import my.ourShef.service.LoginService;
@@ -100,9 +101,8 @@ public class LoginContoller {
 		
 		//UploadFileInfo 객체를 영속화 시켜줘야함
 		//userService.join()에서 영속화 시켜줌
-		UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile()); 
+		UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile(), FilePath.USER_PROFILE_IMG); 
 		user.setProfileImgInfo(storeFile);
-		
 		
 		
 		try {

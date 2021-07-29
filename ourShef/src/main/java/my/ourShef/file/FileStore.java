@@ -16,31 +16,47 @@ import my.ourShef.domain.UploadFileInfo;
 @Component
 public class FileStore {
 	
-	@Value("${file.dir}")
-	private String fileDir;
+	@Value("${file.dir.userProfileImg}")
+	private String userProfileImgDirPath;
+	@Value("${file.dir.spotMainImg}")
+	private String spotMainImgDirPath;
+	@Value("${file.dir.spotAddedImg}")
+	private String spotAddedImgDirPath;
 
-	public String getFullPath(String filename) {
-		return fileDir + filename;
+	public String getFullPath(String filename, FilePath fileDirPath) {
+		
+		switch(fileDirPath) {
+		case USER_PROFILE_IMG :
+			return userProfileImgDirPath + filename;
+		case SPOT_MAIN_IMG :
+			return spotMainImgDirPath + filename;
+		case SPOT_ADDED_IMG :
+			return spotAddedImgDirPath + filename;
+		default :
+			throw new IllegalStateException("설정되지 않은 FilePath입니다.");
+		}
+		
+		
 	}
 
-	public List<UploadFileInfo> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+	public List<UploadFileInfo> storeFiles(List<MultipartFile> multipartFiles, FilePath fileDirPath) throws IOException {
 		List<UploadFileInfo> storeFileResult = new ArrayList<>();
 		
 		for (MultipartFile multipartFile : multipartFiles) {
 			if (!multipartFiles.isEmpty()) {
-				storeFileResult.add(storeFile(multipartFile));
+				storeFileResult.add(storeFile(multipartFile, fileDirPath));
 			}
 		}
 		return storeFileResult;
 	}
 
-	public UploadFileInfo storeFile(MultipartFile multipartFile) throws IOException {
+	public UploadFileInfo storeFile(MultipartFile multipartFile, FilePath fileDirPath) throws IOException {
 		if (multipartFile.isEmpty()) {
 			return null;
 		}
 		String originalFilename = multipartFile.getOriginalFilename();
 		String storeFileName = createStoreFileName(originalFilename);
-		multipartFile.transferTo(new File(getFullPath(storeFileName)));
+		multipartFile.transferTo(new File(getFullPath(storeFileName, fileDirPath)));
 		return new UploadFileInfo(originalFilename, storeFileName);
 	}
 
