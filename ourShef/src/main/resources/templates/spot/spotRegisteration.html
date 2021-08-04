@@ -39,23 +39,23 @@
                         <div>
                             <div class="img-button-frame">
                                 <input
-                                	th:name="spotMainImgInfo"
+                                	th:name="spotMainImg"
                                     id="input-main-img"
                                     type="file"
                                     accept=".jpg, .txt"
                                     name="main-img">
-                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotMainImgInfo}">메인 사진 오류 메시지</div>
+                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotMainImg}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn btn-primary" type="button">메인 사진 등록</button>
                             </div>
                             <div class="img-button-frame">
                                 <input
-                                	th:name="spotAddedImgsInfo"
+                                	th:name="spotAddedImgs"
                                     id="input-added-imgs"
                                     type="file"
                                     accept=".jpg, .txt"
                                     multiple="multiple"
                                     name="added-img">
-                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotAddedImgsInfo}">추가 사진 오류 메시지</div>
+                                    <div class="text-danger" th:errors="${spotRegisterationForm.spotAddedImgs}">추가 사진 오류 메시지</div>
                                 <button id="btn-added-imgs" class="btn btn-primary" type="button">추가 사진 등록</button>
                             </div>
                         </div>

@@ -29,7 +29,9 @@ public class HomeController {
 	
 	//@SessionAttribute 스프링이 제공하는 이 기능은 세션을 생성하지 않기 때문에, 세션을 찾아올 때 사용하면 된다.
 	@RequestMapping("/")
-	public String home(@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId, Model model) {
+	public String home(
+			@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId
+			, Model model) {
 		
 		
 		

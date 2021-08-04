@@ -40,7 +40,7 @@ public class User {
 	private String introduction;
 	
 	@Setter
-	@JoinColumn(name="good")
+	@JoinColumn(name="profile_img_info")
 	@OneToOne
 	private UploadFileInfo profileImgInfo;
 	

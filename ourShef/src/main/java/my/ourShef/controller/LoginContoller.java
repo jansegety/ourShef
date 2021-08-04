@@ -37,6 +37,7 @@ import my.ourShef.file.FilePath;
 import my.ourShef.file.FileStore;
 import my.ourShef.repository.UserRepository;
 import my.ourShef.service.LoginService;
+import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 
 
@@ -52,10 +53,10 @@ public class LoginContoller {
 	private final LoginFormValidator loginFormValidator;
 	private final FileStore fileStore;
 	
-	
+	private final UploadFileInfoService uploadFileInfoService;
 	private final UserService userService;
-	private final LoginService loginService;
-	private final UserRepository ur;
+	
+	
 
 	
 	//@IntiBinder->해당 컨트롤러에만 영향을 준다. 글로벌 설정은 별도로 해야한다.
@@ -99,9 +100,12 @@ public class LoginContoller {
 		User user = new User(joinForm.getJoinFormAccountId());
 		user.setPassword(joinForm.getJoinFormPassword());
 		
-		//UploadFileInfo 객체를 영속화 시켜줘야함
-		//userService.join()에서 영속화 시켜줌
+		//USER_PROFILE_IMG 경로에 프로필 이미지 저장
 		UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile(), FilePath.USER_PROFILE_IMG); 
+		//UploadFileInfo 영속화
+		uploadFileInfoService.save(storeFile);
+		
+		//User + ProfileImgInfo 연결
 		user.setProfileImgInfo(storeFile);
 		
 		

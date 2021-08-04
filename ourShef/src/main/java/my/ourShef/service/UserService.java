@@ -18,8 +18,8 @@ import my.ourShef.repository.UserRepository;
 @RequiredArgsConstructor
 public class UserService {
 	
-	private final UserRepository ur;
-	private final UploadFileInfoRepository ufir;
+	private final UserRepository userRepository;
+	private final UploadFileInfoRepository uploadFileInfoRepository;
 	
 	
 		@Transactional
@@ -27,37 +27,36 @@ public class UserService {
 			validateDuplicateAccountId(user.getAccountId());
 			
 		
-			ur.save(user);
+			userRepository.save(user);
 	
-			ufir.save(user.getProfileImgInfo()); //프로필 이미지 영속화
 			return user.getId();
 			
 		}
 		
 		public void validateDuplicateAccountId(String accountId) throws Exception{
-			Optional<User> findUser = ur.findByAccountId(accountId);
+			Optional<User> findUser = userRepository.findByAccountId(accountId);
 			if(!findUser.isEmpty()) {
 				throw new Exception(new IllegalStateException("이미 존재하는 계정아이디입니다."));
 			}
 		}
 		
 		public List<User> findAll() {
-			return ur.findAll();
+			return userRepository.findAll();
 		}
 		
 		public Optional<User> findById(Long userId) {
-			return ur.findById(userId);
+			return userRepository.findById(userId);
 		}
 		
 		public Optional<User> findByAccountId(String userAccountId) {
-			return ur.findByAccountId(userAccountId);
+			return userRepository.findByAccountId(userAccountId);
 		}
 		
 
 		@Transactional
 		public void update(Long id, String nickName, String password, UploadFileInfo profileImgInfo ) {
 			try {
-			User findUser = ur.findById(id).orElseThrow(()->(new IllegalStateException("존재하지 않는 ID입니다.")));
+			User findUser = userRepository.findById(id).orElseThrow(()->(new IllegalStateException("존재하지 않는 ID입니다.")));
 			findUser.setNickName(nickName);
 			findUser.setPassword(password);
 			findUser.setProfileImgInfo(profileImgInfo);

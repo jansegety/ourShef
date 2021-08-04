@@ -12,8 +12,8 @@ import lombok.Data;
 @Data
 public class SpotRegisterationForm {
 
-	private MultipartFile spotMainImgInfo;
-	private List<MultipartFile> spotAddedImgsInfo;
+	private MultipartFile spotMainImg;
+	private List<MultipartFile> spotAddedImgs;
 	
 	@NotBlank
 	private String spotName;

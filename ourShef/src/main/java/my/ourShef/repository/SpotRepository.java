@@ -16,6 +16,9 @@ public class SpotRepository {
 	
 	private final EntityManager em;
 	
-
+	public Long save(Spot spot) {
+		em.persist(spot);
+		return spot.getId();
+	}
 	
 }

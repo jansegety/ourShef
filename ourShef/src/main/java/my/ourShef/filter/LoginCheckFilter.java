@@ -31,14 +31,14 @@ public class LoginCheckFilter implements Filter{
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		
 		try {
-			log.info("인증 체크 필터 시작{}", requestURI);
+//			log.info("인증 체크 필터 시작{}", requestURI);
 			if (isLoginCheckPath(requestURI)) {
-				log.info("인증 체크 로직 실행 {}", requestURI);
+//				log.info("인증 체크 로직 실행 {}", requestURI);
 				HttpSession session = httpRequest.getSession(false);
 				
 				//세션이 없거나 세션에 사용자 계정 정보가 없으면
 				if(session == null || session.getAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID) == null) {
-					log.info("미인증 사용자 요청 {}", requestURI);
+//					log.info("미인증 사용자 요청 {}", requestURI);
 					//로그인으로 redirect
 					httpResponse.sendRedirect("/login/login?redirectURL=" + requestURI);
 					return;

@@ -24,7 +24,7 @@ public class SpotRegisterationFormValidator implements Validator{
 	
 		
 		//만약 mainSpotImg가 없다면
-		if(spotRegisterationForm.getSpotMainImgInfo().isEmpty()) {
+		if(spotRegisterationForm.getSpotMainImg().isEmpty()) {
 			errors.rejectValue("spotMainImgInfo", "NotEmpty");
 		}
 		
