@@ -8,7 +8,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
@@ -35,10 +39,12 @@ import my.ourShef.domain.bridge.AddedSpotImg;
 import my.ourShef.domain.bridge.VisitorVisitedSpot;
 import my.ourShef.file.FilePath;
 import my.ourShef.file.FileStore;
+import my.ourShef.service.CommentService;
 import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 import my.ourShef.service.bridge.AddedSpotImgService;
+import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @Component
 @RequiredArgsConstructor
@@ -73,6 +79,8 @@ public class InitDb {
 		private final UploadFileInfoService uploadFileInfoService;
 		private final AddedSpotImgService addedSpotImgService;
 		private final UserService userService;
+		private final CommentService commentService;
+		private final VisitorVisitedSpotService visitorVisitedSpotService;
 
 		public ArrayList<JoinForm> makeJoinForm(int formNum) throws IOException {
 
@@ -166,9 +174,10 @@ public class InitDb {
 				SpotRegisterationForm spotRegisterationForm = new SpotRegisterationForm();
 				spotRegisterationForm.setSpotMainImg(makeImgMultipartFile(i));
 				spotRegisterationForm.setSpotAddedImgs(makeImgMultipartFiles(i, 6)); // 2번째 파라미터는 만드는 MultipartFile 객체 수
-				spotRegisterationForm.setSpotIntroduction("여기는 스폿_" + i + "입니다! 음식 맛이 좋아요!");
-				spotRegisterationForm.setSpotName("스폿_" + i);
-				spotRegisterationForm.setStarPoint((i * 2 * 100) % 100 + 10);// 10~100
+				Random r=new Random(); //난수 생성기
+				spotRegisterationForm.setSpotName("스폿_" + r.nextInt(10000)); //랜덤한 숫자 스폿 이름 
+				spotRegisterationForm.setSpotIntroduction("여기는 " + spotRegisterationForm.getSpotName() + "입니다! 음식 맛이 좋아요!");
+				spotRegisterationForm.setStarPoint((r.nextInt(10)+1)*10);// 10~100, 10 20 30 40...90 100
 
 				spotRegisterationFromList.add(spotRegisterationForm);
 			}
@@ -260,22 +269,22 @@ public class InitDb {
 		public void dbInit() throws Exception {
 
 			// All User List
-			ArrayList<User> userList = new ArrayList<User>();
+			ArrayList<User> allUserList = new ArrayList<User>();
 			// All Spot List
-			ArrayList<Spot> spotList = new ArrayList<Spot>();
+			ArrayList<Spot> allSpotList = new ArrayList<Spot>();
 
 			// initUser
-			userList = initUsers(10);
+			allUserList = initUsers(10);
 
 			// initSpot
-			for (User user : userList) {
-				System.out.println("initSpot 실행됨");
+			for (User user : allUserList) {
 				ArrayList<Spot> spotListByOneUser = initSpotsByOneUser(5, user);
-				spotList.addAll(spotListByOneUser);
+				allSpotList.addAll(spotListByOneUser);
 			}
-
-			System.out.println("spot리스트 출력 = " + spotList);
-			System.out.println("user리스트 출력 = " + userList);
+			
+			//init Comment And VisitorVisitedSpot
+			initCommentAndVisitorVisitedSpot(allUserList, allSpotList);
+			
 
 		}
 
@@ -304,6 +313,75 @@ public class InitDb {
 			}
 
 		}
+		
+		/*
+		 * Assuming that the user comments on the spot, the comment data is initialized.
+		 * And the VisitedVisitorSpot Entity mapped with it is also initialized.
+		 * This is because the user who commented becomes the user who visited.
+		 * Even if the comment is deleted, it is registered as a person who visited.
+		 * Comments can be duplicated, and registrants can also add.
+		 * A random number of comments for each user are initialized in a random spot.
+		 * 
+		 * @return A Map object that maps the user and the spot the user left a comment on is output.
+		 */
+		@Transactional
+		public Map<User, List<Spot>> initCommentAndVisitorVisitedSpot(List<User> userList, List<Spot> spotList){
+			
+			
+			HashMap<User, List<Spot>> userAndCommentedSpotMap = new HashMap<User, List<Spot>>();
+			
+			int spotListSize = spotList.size();
+			Random r=new Random(); 
+			
+			
+			for(User visitor : userList) {
+				
+				List<Spot> commentedSpotList = new ArrayList<Spot>();
+				
+				//A random number of comments per user
+				for(int i = 0; i < r.nextInt(5); i++) {
+					
+					//Pick a random spot.
+					Spot visitedSpot = spotList.get(r.nextInt(spotListSize)); 
+					
+					//comment
+					Comment newComment = new Comment(visitor, visitedSpot);
+					//persist
+					commentService.save(newComment);
+					newComment.setComment("정말 맛이 좋아요!" + r.nextInt(10000));
+					newComment.setStarPoint((r.nextInt(10)+1)*10); //10~100
+					
+					//updated as a visitor
+					//before update, validation
+					Optional<VisitorVisitedSpot> OptionalVisitorVisitedSpot = 
+							visitorVisitedSpotService.findOneByUserAndSpot(visitor, visitedSpot);
+					
+					//If the spot has been already visited by the user, do not update it.
+					if(OptionalVisitorVisitedSpot.isPresent())
+					{
+						continue;
+					}
+					else
+					{	
+						//persist
+						visitorVisitedSpotService.save(new VisitorVisitedSpot(visitor, visitedSpot));
+					}
+					
+					commentedSpotList.add(visitedSpot);	
+				}
+				
+				userAndCommentedSpotMap.put(visitor, commentedSpotList);
+								
+			}
+			
+			return userAndCommentedSpotMap;
+		}
+		
+	
+		
+		
+		
+		
 
 	}
 

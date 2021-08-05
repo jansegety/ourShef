@@ -1,5 +1,6 @@
 package my.ourShef.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class User {
 	
 	@Column(name="account_id")
 	private String accountId;
+	
+	@Column(name="registration_date_time")
+	private LocalDateTime registeredTime;
 	
 	@Setter
 	private String password;
@@ -59,6 +63,7 @@ public class User {
 	
 	public User(String accountId) {
 		this.accountId = accountId;
+		this.registeredTime = LocalDateTime.now();
 	}
 	
 }

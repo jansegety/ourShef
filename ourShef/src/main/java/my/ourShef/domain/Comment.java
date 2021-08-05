@@ -25,6 +25,8 @@ public class Comment {
 	@JoinColumn(name="comment_user_id")
 	User commentUser;
 	
+	//10~100
+	@Setter
 	@Column(name="star_point")
 	float starPoint;
 	

@@ -35,7 +35,7 @@ public class Spot {
 	private Long id;
 	
 	
-	@Column(name="registered_time")
+	@Column(name="registration_date_time")
 	private LocalDateTime registeredTime;
 	
 	
@@ -85,6 +85,7 @@ public class Spot {
 	public Spot(User user, String spotName) {
 		this.registrant = user;
 		this.spotName = spotName;
+		this.registeredTime = LocalDateTime.now();
 	}
 		
 	
