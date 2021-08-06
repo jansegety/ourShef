@@ -31,4 +31,4 @@ logging:
   
   
 file:
-  dir:     userProfileImg: C:/OurShefUserProfileImg/    spotMainImg: C:/OurShefSpotMainImg/    spotAddedImg: C:/OurShefSpotAddedImg/
+  dir:     userProfileImg: C:/OurShefUserProfileImg/    spotMainImg: C:/OurShefSpotMainImg/    spotAddedImg: C:/OurShefSpotAddedImg/      file:      demoImg: /static/img/shefmark.jpg

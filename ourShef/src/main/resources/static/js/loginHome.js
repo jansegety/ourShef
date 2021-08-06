@@ -41,3 +41,7 @@ $(function(){
   })  
 
 })
+
+/*################ Reliability System ##################*/
+reliabilitySystemByClass("reliabilitySystem");
+starPointSystemByClassForView("starPointSystem");

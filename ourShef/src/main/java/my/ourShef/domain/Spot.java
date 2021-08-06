@@ -59,7 +59,7 @@ public class Spot {
 	private List<Comment> comments =new ArrayList<>();
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "registrant")
 	private User registrant;
 	
 	
@@ -71,6 +71,8 @@ public class Spot {
 	@Column(name="registrant_star_point")
 	private float registrantStarPoint;
 	
+    //If -1, no one has visited.
+    //10~100
     @Setter
 	@Column(name="users_star_point")
 	private float usersStarPoint;
@@ -78,6 +80,12 @@ public class Spot {
 	
 	@OneToMany(mappedBy="spot")
 	private List<AddedSpotImg> addedSpotImgs = new ArrayList<>();
+	
+	//the number of visitor, equal to the number of comments
+	//However, the number does not decrease even if the comment is deleted
+    @Setter
+	private int visits;
+	
 	
 	
 	protected Spot() {
@@ -88,6 +96,8 @@ public class Spot {
 		this.registrant = user;
 		this.spotName = spotName;
 		this.registeredTime = LocalDateTime.now();
+		this.visits = 0;
+		this.usersStarPoint = -1;
 	}
 		
 	

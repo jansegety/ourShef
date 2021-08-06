@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.SessionConst;
+import my.ourShef.controller.dto.LoginUserDto;
+import my.ourShef.controller.dto.LoginUserRecentSpotDto;
+import my.ourShef.domain.Spot;
 import my.ourShef.domain.User;
+import my.ourShef.service.SpotService;
 import my.ourShef.service.UserService;
 
 
@@ -24,6 +28,7 @@ import my.ourShef.service.UserService;
 public class HomeController {
 
 	private final UserService userService;
+	private final SpotService spotService;
 	
 	
 	
@@ -35,16 +40,43 @@ public class HomeController {
 		
 		
 		
-		//회원이 정보 DB에서 가져오기
+		//Get user entity from DB
 		Optional<User> findByAccountId = userService.findByAccountId(LoginUserAccountId);
 		
-		//세션은 존재하지만 회원정보가 삭제되었을 경우
+		//If a session exists but user information is deleted
 		if(findByAccountId.isEmpty()) {
+		
 			return "home";
 		}
-			
-		model.addAttribute("user", findByAccountId.get());
-	
+		
+		//setting LoginUserDto
+		User findUser = findByAccountId.get();
+		LoginUserDto loginUserDto = new LoginUserDto();
+		
+		loginUserDto.setNickName(findUser.getNickName());
+		loginUserDto.setIntroduction(findUser.getIntroduction());
+		loginUserDto.setReliability(findUser.getReliability());
+		
+		model.addAttribute("loginUserDto", loginUserDto);
+		
+		//setting LoginUserRecentSpotDto
+		//Get user's most recent registered spot information
+			Optional<Spot> RecentRegisterationSpotOtioanl = spotService.findRecentRegisterationSpotByUserAccountId(LoginUserAccountId);
+			if(RecentRegisterationSpotOtioanl.isPresent())
+			{
+				Spot recentRegisterationSpot = RecentRegisterationSpotOtioanl.get();
+				LoginUserRecentSpotDto loginUserRecentSpotDto = new LoginUserRecentSpotDto();
+				loginUserRecentSpotDto.setRegisteredTime(recentRegisterationSpot.getRegisteredTime());
+				loginUserRecentSpotDto.setSpotName(recentRegisterationSpot.getSpotName());
+				loginUserRecentSpotDto.setSpotIntroduction(recentRegisterationSpot.getSpotIntroduction());
+				loginUserRecentSpotDto.setRegistrantStarPoint(recentRegisterationSpot.getRegistrantStarPoint());
+				loginUserRecentSpotDto.setUsersStarPoint(recentRegisterationSpot.getUsersStarPoint());
+				
+				model.addAttribute("loginUserRecentSpotDto", loginUserRecentSpotDto);
+			}
+		
+		//	
+		
 		//login
 		return "login/loginHome";
 	}

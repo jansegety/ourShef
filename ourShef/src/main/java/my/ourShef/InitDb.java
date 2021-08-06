@@ -199,6 +199,9 @@ public class InitDb {
 				// 성공 로직
 				User user = new User(joinForm.getJoinFormAccountId());
 				user.setPassword(joinForm.getJoinFormPassword());
+				user.setNickName(joinForm.getJoinFormNickName());
+				user.setIntroduction(joinForm.getJoinFormSelfIntroduction());
+				
 
 				// USER_PROFILE_IMG 경로에 프로필 이미지 저장
 				UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile(),
@@ -338,8 +341,8 @@ public class InitDb {
 				
 				List<Spot> commentedSpotList = new ArrayList<Spot>();
 				
-				//A random number of comments per user
-				for(int i = 0; i < r.nextInt(5); i++) {
+				//30 number of comments per user
+				for(int i = 0; i < 30; i++) {
 					
 					//Pick a random spot.
 					Spot visitedSpot = spotList.get(r.nextInt(spotListSize)); 
@@ -350,6 +353,24 @@ public class InitDb {
 					commentService.save(newComment);
 					newComment.setComment("정말 맛이 좋아요!" + r.nextInt(10000));
 					newComment.setStarPoint((r.nextInt(10)+1)*10); //10~100
+				
+					//Average star point rating
+					float allStarPoint = 0;
+					if(visitedSpot.getUsersStarPoint() == -1)
+					{
+						allStarPoint = newComment.getStarPoint();
+					}
+					else
+					{
+						allStarPoint = (visitedSpot.getUsersStarPoint() * visitedSpot.getVisits())+newComment.getStarPoint();
+					}
+					
+					float averageStarPoint = allStarPoint/(visitedSpot.getVisits()+1);
+					
+					visitedSpot.setUsersStarPoint(averageStarPoint);
+					
+					//visits + 1
+					visitedSpot.setVisits(visitedSpot.getVisits() + 1);
 					
 					//updated as a visitor
 					//before update, validation
