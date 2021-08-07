@@ -110,7 +110,8 @@ function reliabilitySystem(reliablilitySystemId) {
 ////////////for Class////////////////
 function reliabilitySystemByClass(reliablilitySystemClass) {
 	const relElements = document.getElementsByClassName(reliablilitySystemClass);
-
+	
+	
 	for (let i = 0; i < relElements.length; i++) {
 		const inputElement = relElements[i].getElementsByClassName(
 			"input-reliability-size"
@@ -123,7 +124,7 @@ function reliabilitySystemByClass(reliablilitySystemClass) {
 				.getElementsByClassName('reliabilityText')[0]
 				.innerText = "noVisits"
 			frontBar.style.width = "0";
-			return;
+			continue;
 		}
 
 		frontBar.style.width = reliabilitySize + "%";

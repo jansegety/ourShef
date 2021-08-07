@@ -24,7 +24,7 @@ import lombok.Setter;
 import my.ourShef.domain.bridge.AddedSpotImg;
 import my.ourShef.domain.bridge.VisitorVisitedSpot;
 
-//@SequenceGenerator(name = "SPOT_SEQ_GENERATOR", sequenceName = "SPOT_SEQ", initialValue = 1, allocationSize = 1)
+
 @Entity
 @Getter
 @Table(name = "spot")
@@ -59,7 +59,7 @@ public class Spot {
 	private List<Comment> comments =new ArrayList<>();
 	
 	@ManyToOne
-	@JoinColumn(name = "registrant")
+	@JoinColumn(name = "registrant_id")
 	private User registrant;
 	
 	

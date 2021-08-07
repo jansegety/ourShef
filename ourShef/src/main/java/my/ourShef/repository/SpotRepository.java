@@ -1,5 +1,7 @@
 package my.ourShef.repository;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
@@ -21,4 +23,9 @@ public class SpotRepository {
 		return spot.getId();
 	}
 	
+	public Optional<Spot> findById(Long spotId) {
+		return Optional.ofNullable(em.find(Spot.class, spotId));
+	}
+	
+
 }

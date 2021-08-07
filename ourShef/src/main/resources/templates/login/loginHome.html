@@ -28,102 +28,109 @@
 		</div>
 		<div class="row">
 			<div class="user-spot-slider">
-				<div>
+				<div
+					th:each="recentAcquaintanceSpotDto : ${recentAcquaintanceSpotDtoList}">
 					<div class="user-spot">
 						<div class="user-info">
 							<div class="img">
-								<img class="img-circle demo-img" style="width: 50px">
+								<img 
+								th:src="@{/img/userProfile/{storeName}(storeName= ${recentAcquaintanceSpotDto.acquaintance.profileImgStoreName})}"
+								th:class="img-circle" class="img-circle demo-img" style="width: 50px">
 							</div>
-							<div>홍길동</div>
-							<div>*****</div>
-							<div>Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Eveniet tempore, recusandae molestias exerc</div>
+							<div th:text="${recentAcquaintanceSpotDto.acquaintance.nickName}">홍길동</div>
+							<div class="reliabilitySystem">
+								<input class="input-reliability-size" type="hidden" value="-1">
+								<div class="reliabilityText">신뢰도</div>
+								<div class="gaugeBar">
+									<div class="back"></div>
+									<div class="front"></div>
+								</div>
+							</div>
+							<div>
+								<div>등록자 평점</div>
+								<div class="starPointSystem">
+									<input
+										th:value="${recentAcquaintanceSpotDto.recentSpot.registrantStarPoint}"
+										th:name="starPoint" class="input-star-point" type="text"
+										value="10" required="required">
+									<div class="star-point-area">
+										<div class="star-front"></div>
+										<div class="star-back"></div>
+										<div class="click-areas">
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+											<div class="click-area"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div>
+								<div
+									th:if="${recentAcquaintanceSpotDto.recentSpot.usersStarPoint} == -1">
+									방문한 유저가 없습니다.</div>
+								<div
+									th:if="${recentAcquaintanceSpotDto.recentSpot.usersStarPoint} != -1">
+									<div>유저들 평점</div>
+									<div class="starPointSystem">
+										<input
+											th:value="${recentAcquaintanceSpotDto.recentSpot.usersStarPoint}"
+											th:name="starPoint" class="input-star-point" type="text"
+											value="10" required="required">
+										<div class="star-point-area">
+											<div class="star-front"></div>
+											<div class="star-back"></div>
+											<div class="click-areas">
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+												<div class="click-area"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="spot-info">
 							<div>
 								<div>
-									<img class="img-rounded demo-img">
+									<img 
+									th:src ="@{/img/spotMain/{storeName}(storeName =${recentAcquaintanceSpotDto.recentSpot.mainImgStoreName})}"
+									th:class= "img-rounded"
+									class="img-rounded demo-img">
 								</div>
 							</div>
-							<div>* * * * *</div>
-							<div>식당 이름</div>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="user-spot">
-						<div class="user-info">
-							<div class="img">
-								<img class="img-circle demo-img" style="width: 50px">
-							</div>
-							<div>홍길동</div>
-							<div>*****</div>
-							<div>Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Eveniet tempore, recusandae molestias exerc</div>
-						</div>
-						<div class="spot-info">
+							<div th:text="${recentAcquaintanceSpotDto.recentSpot.spotName}">식당
+								이름</div>
 							<div>
-								<div>
-									<img class="img-rounded demo-img">
-								</div>
+								<div
+									th:text="${#temporals.format(recentAcquaintanceSpotDto.recentSpot.registeredTime, 'yyyy-MM-dd')}">0000-00-00</div>
 							</div>
-							<div>* * * * *</div>
-							<div>식당 이름</div>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="user-spot">
-						<div class="user-info">
-							<div class="img">
-								<img class="img-circle demo-img" style="width: 50px">
-							</div>
-							<div>홍길동</div>
-							<div>*****</div>
-							<div>Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Eveniet tempore, recusandae molestias exerc</div>
-						</div>
-						<div class="spot-info">
-							<div>
-								<div>
-									<img class="img-rounded demo-img">
-								</div>
-							</div>
-							<div>* * * * *</div>
-							<div>식당 이름</div>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="user-spot">
-						<div class="user-info">
-							<div class="img">
-								<img class="img-circle demo-img" style="width: 50px">
-							</div>
-							<div>홍길동</div>
-							<div>*****</div>
-							<div>Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Eveniet tempore, recusandae molestias exerc</div>
-						</div>
-						<div class="spot-info">
-							<div>
-								<div>
-									<img class="img-rounded demo-img">
-								</div>
-							</div>
-							<div>* * * * *</div>
-							<div>식당 이름</div>
-							<div>등록일</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div></div>
+		</div>
 		<div class="row footer">
 			<div class="col-sm-8 my-spot">
 				<div class="my-user-info">
 					<div>
-						<img th:src="@{/img/userProfile}" th:class="img-circle"
+						<img th:src="@{/img/loginUserProfile}" th:class="img-circle"
 							class="img-circle demo-img" style="width: 100px;">
 					</div>
 					<div th:text="${loginUserDto.nickName}">홍길동</div>
@@ -146,7 +153,7 @@
 				<div class="my-spot-info">
 					<div>
 						<div>
-							<img th:src="@{/img/userRecentRegisterationSpot}"
+							<img th:src="@{/img/loginUserRecentRegisterationSpot}"
 								th:class="img-rounded" class="img-rounded demo-img">
 						</div>
 					</div>
@@ -173,8 +180,7 @@
 						</div>
 					</div>
 					<div th:if="${loginUserRecentSpotDto.getUsersStarPoint} == -1">
-						방문한 유저가 없습니다.
-					</div>
+						방문한 유저가 없습니다.</div>
 					<div th:if="${loginUserRecentSpotDto.getUsersStarPoint} != -1">
 						<div>유저들 평점</div>
 						<div class="starPointSystem">
@@ -200,15 +206,17 @@
 						</div>
 					</div>
 
-					<div th:text = "${loginUserRecentSpotDto.getSpotName}">식당 이름</div>
+					<div th:text="${loginUserRecentSpotDto.getSpotName}">식당 이름</div>
 					<div>
 						<div>등록일</div>
-						<div th:text = "${#temporals.format(loginUserRecentSpotDto.getRegisteredTime, 'yyyy-MM-dd')}"></div>		
+						<div
+							th:text="${#temporals.format(loginUserRecentSpotDto.getRegisteredTime, 'yyyy-MM-dd')}"></div>
 					</div>
-					<div th:text = "${loginUserRecentSpotDto.getSpotIntroduction}">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Ipsam suscipit voluptatibus nobis quos recusandae at animi
-						assumenda, modi beatae dolor excepturi. Id sit consequuntur fugiat
-						architecto eos laboriosam rerum magni.</div>
+					<div th:text="${loginUserRecentSpotDto.getSpotIntroduction}">Lorem
+						ipsum dolor sit amet consectetur adipisicing elit. Ipsam suscipit
+						voluptatibus nobis quos recusandae at animi assumenda, modi beatae
+						dolor excepturi. Id sit consequuntur fugiat architecto eos
+						laboriosam rerum magni.</div>
 				</div>
 			</div>
 			<div class="col-sm-7">

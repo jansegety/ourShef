@@ -46,5 +46,30 @@ public class UserRepository {
 		 return resultList;
 	}
 	
+	/*
+	 * Prints a list of recent acquaintances and spots registered by the acquaintance.
+	 * 
+	 * @param loginUser: A user based on whose acquaintance is
+	 * @param limit: how many tuples will it take
+	 * @param offset: Where to start on the list
+	 * 
+	 * @return  Object[0] type:User name:acquaintance, Object[1] type:Spot name:registeredSpot
+	 */
+	@Transactional
+	public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, int limit, int offset){
+		
+		String sql="select ac.*, sp.* from \r\n"
+				+ "(select u.* from \r\n"
+				+ "(select ua.* from user u join user_acquaintance ua on u.user_id = ua.user_id and u.user_id = 3) ua \r\n"
+				+ "join user u on ua.acquaintance_id = u.user_id) ac join spot sp on ac.user_id = sp.registrant_id\r\n"
+				+ "order by sp.spot_id desc\r\n"
+				+ "limit ? offset ?";
+		List<Object[]> resultList = em.createNativeQuery(sql, "recentAcquaintanceSpots").setParameter(1, limit).setParameter(2, offset).getResultList();
+		
+		return resultList;
+		
+	}
+	
+	
 	
 }

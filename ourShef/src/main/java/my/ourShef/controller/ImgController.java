@@ -51,11 +51,10 @@ public class ImgController {
 	 * return user profile
 	 */
 	@ResponseBody
-	@GetMapping("/userProfile")
-	public Resource downloadProfileImg(
+	@GetMapping("/loginUserProfile")
+	public Resource downloadLoginUserProfile(
 			@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId) throws IOException
 	{
-		byte[] profileImgByteArray = {};
 		User user = userService.findByAccountId(LoginUserAccountId).get();
 		UploadFileInfo profileImgInfo = user.getProfileImgInfo();
 		String storeProfileImgFileName = profileImgInfo.getStoreFileName();
@@ -68,7 +67,7 @@ public class ImgController {
 	 * return User recent registration spot
 	 */
 	@ResponseBody
-	@GetMapping("/userRecentRegisterationSpot")
+	@GetMapping("/loginUserRecentRegisterationSpot")
 	public Resource downloadUserRecentSpot(
 			@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId) throws IOException
 	{
@@ -94,6 +93,23 @@ public class ImgController {
 		}
 		
 	}
+	
+	@ResponseBody
+	@GetMapping("/userProfile/{storeName}")
+	public Resource downloadUserProfile(@PathVariable("storeName") String storeFileName ) throws IOException {
+		File profileImgFile = new File(userProfileImgDirPath + storeFileName);
+		byte[] profileImgFileImgFileBytes = Files.readAllBytes(profileImgFile.toPath());
+		return new ByteArrayResource(profileImgFileImgFileBytes);
+	}
+	
+	@ResponseBody
+	@GetMapping("/spotMain/{storeName}")
+	public Resource downloadSpotMain(@PathVariable("storeName") String storeFileName ) throws IOException {
+		File spotMainImgFile = new File(spotMainImgDirPath + storeFileName);
+		byte[] spotMainImgFileBytes = Files.readAllBytes(spotMainImgFile.toPath());
+		return new ByteArrayResource(spotMainImgFileBytes);
+	}
+	
 	
 
 	

@@ -35,6 +35,7 @@ import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
+import my.ourShef.domain.UserAcquaintance;
 import my.ourShef.domain.bridge.AddedSpotImg;
 import my.ourShef.domain.bridge.VisitorVisitedSpot;
 import my.ourShef.file.FilePath;
@@ -44,6 +45,7 @@ import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 import my.ourShef.service.bridge.AddedSpotImgService;
+import my.ourShef.service.bridge.UserAcquaintanceService;
 import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @Component
@@ -81,6 +83,7 @@ public class InitDb {
 		private final UserService userService;
 		private final CommentService commentService;
 		private final VisitorVisitedSpotService visitorVisitedSpotService;
+		private final UserAcquaintanceService userAcquaintanceService;
 
 		public ArrayList<JoinForm> makeJoinForm(int formNum) throws IOException {
 
@@ -288,9 +291,12 @@ public class InitDb {
 			//init Comment And VisitorVisitedSpot
 			initCommentAndVisitorVisitedSpot(allUserList, allSpotList);
 			
+			//init UserAcquantance
+			initUserAcquaintance(allUserList);
 
 		}
 
+		
 		/*
 		 * 어플리케이션 유저 업로드 이미지 디렉토리에 있는 모든 이미지를 지웁니다.
 		 */
@@ -400,6 +406,49 @@ public class InitDb {
 		
 	
 		
+		/*
+		 * init UserAcquaintance
+		 */
+		private void initUserAcquaintance(List<User> userList){
+			
+			Random r=new Random(); //random number generator
+			
+			//loop per User
+			for(int i = 0; i < userList.size(); i++)
+			{
+				for(int j = 0; j < userList.size(); j++)
+				{
+					//The same user cannot become acquaintances.
+					if(i == j)
+						continue;
+					
+					int isAquaintance = r.nextInt(2); //0~1, 0 is no, 1 is yes 
+					
+					//Skip without becoming an acquaintance
+					if(isAquaintance == 0)
+						continue;
+					
+					////be acquaintance logic////
+					
+					//Skip Duplication
+					if(userAcquaintanceService.isPresentByUserAndAcquaintance(userList.get(i), userList.get(j)))
+					{
+						continue;
+					}
+					UserAcquaintance case1 = new UserAcquaintance(userList.get(i), userList.get(j));
+					UserAcquaintance case2 = new UserAcquaintance(userList.get(j), userList.get(i));
+					//UserAcquaintance persist in both case
+					userAcquaintanceService.save(case1);
+					userAcquaintanceService.save(case2);
+					
+			
+				}
+				
+			}
+			
+			
+			
+		}
 		
 		
 		

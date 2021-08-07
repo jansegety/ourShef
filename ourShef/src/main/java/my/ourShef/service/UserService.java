@@ -69,6 +69,13 @@ public class UserService {
 			}
 	
 		}
+		
+		@Transactional
+		public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, int limit, int offset){
+			return userRepository.getRecentAcquaintanceSpotList(loginUser, limit, offset);
+		}
+		
+
 	
 
 }

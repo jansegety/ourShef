@@ -8,6 +8,7 @@ password : vchar
 introduction : vchar
 reliability: float
 profileImg: UUID(VCHAR)(FK) 
+
 }
 
 entity Visitor_VisitedSpot {
@@ -53,6 +54,13 @@ comment: text
 commentedSpotId : Long (FK)
 }
 
+entity UserAcquaintance {
+  *id : Long (PK)
+  --
+  UserId: Long (FK)
+  Acquaintance: Long (FK)
+}
+
 
 
 
@@ -80,5 +88,7 @@ User ||--o{ Comment
 
 Spot ||--o{ Comment
 
+User ||--o{ UserAcquaintance
+User ||--o{ UserAcquaintance
 
 @enduml
