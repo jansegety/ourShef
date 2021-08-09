@@ -1,0 +1,117 @@
+
+* {
+  box-sizing: border-box;
+}
+
+a:link, a:visited, a:active, a:hover{
+  text-decoration: none;
+}
+
+/*################ Slick ##############*/
+.slick-prev:before{
+  content: '<' !important;
+}
+
+.slick-next:before{
+  content: '>' !important;
+}
+
+.slick-prev:before, .slick-next:before{
+  font-size: 30px;
+  color: rgb(70, 73, 110);
+  opacity: 100% !important;
+}
+
+.slick-arrow {
+  background-color: transparent !important;
+}
+
+
+
+
+/* ############### Starpoint System Start##################### */
+.starPointSystem .star-point-area {
+  display: inline-block;
+  position: relative;
+  height: 21px;
+  width: 120px;
+  overflow: hidden;
+}
+
+.starPointSystem .star-front, .starPointSystem  .star-back {
+  font-size: 20px;
+}
+.starPointSystem .star-back{
+  height: 40px;
+  width: 120px;
+  background:url(../../static/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+}
+.starPointSystem .star-front{
+  position: absolute;
+  top: -20px;
+  left: 0;
+  background:url(../../static/img/star/star.png) no-repeat;
+  background-size: 120px 40px;
+  height: 40px;
+  width: 10%;
+}
+
+.starPointSystem  .click-areas {
+  position: absolute;
+  height: inherit;
+  top: 0;
+  left:0;
+}
+.starPointSystem .click-area {
+  /* border: 1px solid red; */
+  height: inherit;
+  width:12px;
+  float: left;
+}
+.starPointSystem  input {
+  display: none;
+}
+/* ############### Starpoint System End ##################### */
+/* #############Reliability System Start #################### */
+.reliabilitySystem {
+  height: 15px;
+  width: 80px;
+  position: relative;
+}
+
+.reliabilityText {
+  position:absolute;
+  font-size: 12px;
+  font-weight: bold;
+  color: aliceblue;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+
+.gaugeBar {
+  height: inherit;
+  width: inherit;
+  position: relative;
+}
+
+.gaugeBar .front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(98, 152, 218);
+  height: inherit;
+  width: 50%;
+}
+
+.gaugeBar .back {
+  /* border: 2px solid blue; */
+  background-color: rgb(227, 229, 230);
+  height: inherit;
+  width: inherit;
+}
+
+
+/* #############Reliability System End #################### */

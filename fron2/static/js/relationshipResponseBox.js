@@ -1,13 +1,11 @@
-////////////reliabilitySystem/////////////////
-reliabilitySystemByClass("reliabilitySystem");
-
+/*################## relattionshipResponseBox ####################*/
 //////////delete checkbox/////////////
 let deleteMode = false;
 
-let acquaintanceDeleteButton = document.getElementsByClassName("btn-acquaintance-delete")[0];
-acquaintanceDeleteButton.onclick = dispatcherAcquaintanceListToBeDeleted;
+let deleteButton = document.getElementsByClassName("btn-delete")[0];
+deleteButton.onclick = dispatcherRelationshipResponseListToBeDeleted;
 
-function dispatcherAcquaintanceListToBeDeleted(){
+function dispatcherRelationshipResponseListToBeDeleted(){
 
   let deleteCheckBoxList = document.getElementsByClassName("input-delete");
 
@@ -41,5 +39,3 @@ function dispatcherAcquaintanceListToBeDeleted(){
   }
 
 } 
-
-

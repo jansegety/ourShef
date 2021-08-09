@@ -1,0 +1,63 @@
+/* ############################### Spot ################################ */
+#main-spot-img {
+  width: 250px;
+}
+.spot-images img{
+  width: 120px;
+  margin: 10px;
+}
+.img-frame{
+  display: inline-block;
+  height: 300px;
+  /* border: 1px solid blue; */
+}
+
+.comment-area {
+  /* border: 1px solid red; */
+  margin: 20px 0;
+}
+
+.visitor-info-area{
+  height : 250px;
+  position: relative;
+}
+#visitor-profile-img{
+  width: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left:30px;
+}
+#visitor-nickName {
+  position: absolute;
+  top: 220px;
+  left: 80px;
+}
+.visitor-info{
+  display: inline-block;
+  width: 280px;
+  padding-top:20px;
+  position: absolute;
+  top:10px;
+  left: 240px; 
+}
+.home-list {
+  padding: 10px;
+  /* border: 1px solid red; */
+}
+.home-list div{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.home-list button{
+  font-size: 12px;
+  padding: 5px;
+  width: 120px;
+  height: 30px;
+}
+
+.footer button{
+  margin-bottom: 10px;
+  width: 120px;
+} 

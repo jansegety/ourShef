@@ -1,4 +1,4 @@
-@startuml
+@startuml ERDiagram
 
 entity User {
 *id : Long (PK)
@@ -61,8 +61,13 @@ entity UserAcquaintance {
   Acquaintance: Long (FK)
 }
 
-
-
+entity RelationshipMessage{
+  *id : Lonf (PK)
+  --
+  from_user_id : Long (PK)
+  to_user_id : Long (PK)
+  acceptance : boolean 
+}
 
 
 User ||--|{ Visitor_VisitedSpot
@@ -90,5 +95,8 @@ Spot ||--o{ Comment
 
 User ||--o{ UserAcquaintance
 User ||--o{ UserAcquaintance
+
+User ||--|| RelationshipMessage
+User ||--|| RelationshipMessage
 
 @enduml

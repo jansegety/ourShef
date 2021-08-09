@@ -1,0 +1,32 @@
+/* #################################### spotListOfUser ############################################## */
+
+/* visitor info */
+.visitor-info{
+  width: 200px;
+  margin: auto;
+}
+.visitor-info div {
+  margin-top: 20px;
+}
+.visitor-info img{
+  width: 130px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
+/* spots */
+.spot-area {
+  margin-top: 50px;
+}
+.spot-info {
+  text-align: center;
+  float: left;
+  width: 170px;
+}
+.spot-info img{
+  width: 150px;
+}
+.footer {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}

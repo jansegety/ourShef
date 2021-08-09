@@ -1,0 +1,47 @@
+/* ###################### spotRegisteration ########################## */
+
+
+.main-col div{
+  text-align: center;
+}
+#main-spot-img {
+  width: 300px;
+}
+
+.img-button-frame {
+  padding-top: 10px;
+}
+.img-button-frame input{
+  display: none;
+}
+
+.spot-imgs-area {
+  overflow: hidden;
+}
+
+.spot-img-frame {
+  width: 150px;
+  margin: 10px;
+  float: left;
+}
+.spot-img {
+  width: inherit;
+}
+
+.spot-info-area {
+  padding-top:30px;
+  width: 302px;
+  margin: auto;
+}
+.spot-info-area textarea {
+  margin-top: 10px;
+  width: 300px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.footer button {
+  width: 130px;
+}

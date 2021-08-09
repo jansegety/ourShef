@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--jQuery-->
+        <script src="../../static/library/jquery-2.1.4.js"></script>
+
+        <!--부트 스트랩-->
+        <link rel="stylesheet" href="../../static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" href="../../static/bootStrap/bootstrap.css">
+
+        <!--common -->
+        <link rel="stylesheet" href="../../static/common.css">
+
+        <!--specific-->
+        <link rel="stylesheet" href="../../static/css/relationshipRequestBox.css">
+
+        <title>relationshipRequestBox</title>
+    </head>
+    <body>
+        <form id="form-i1" action="#none">
+            <div class="container">
+                <div class="row text-center text-primary">
+                    <h3>보낸 친분 요청</h3>
+                </div>
+                <div class="row">
+                    <ul>
+                        <li>
+                            <span class="user-info">
+                                <div class="nickName">맛있는집을찾아다녀요</div>     
+                            </span>
+                            <span class="added-text-frame">
+                              <div class="added-text">에게 요청</div>
+                            </span>
+                            <span class="btn-frame">
+                              <div class="btns-response">
+                                <button class="btn btn-warning btn-before-confirmation" type="button" disabled="true">확인전</button>
+                              <input class="input-delete" type="checkbox">
+                              </div>
+                            </span>
+                        </li>
+                        <li>
+                          <span class="user-info">
+                              <div class="nickName">맛있는집을찾아다녀요</div>     
+                          </span>
+                          <span class="added-text-frame">
+                            <div class="added-text">에게 요청</div>
+                          </span>
+                          <span class="btn-frame">
+                            <div class="btns-response">
+                              <button class="btn btn-muted btn-rejected" type="button" disabled="true">거절됨</button>
+                              <input class="input-delete" type="checkbox">
+                            </div>
+                          </span>
+                      </li>
+                      <li>
+                        <span class="user-info">
+                            <div class="nickName">맛있는집을찾아다녀요</div>     
+                        </span>
+                        <span class="added-text-frame">
+                          <div class="added-text">에게 요청</div>
+                        </span>
+                        <span class="btn-frame">
+                          <div class="btns-response">
+                            <button class="btn btn-success btn-accepted" type="button" disabled="true">수락됨</button>
+                            <input class="input-delete" type="checkbox">
+                          </div>
+                        </span>
+                    </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="btns-footer">
+                        <button class="btn btn-primary" type="button">이전으로</button>
+                        <button class="btn btn-primary">받은 친분 요청</button>
+                        <button class="btn btn-primary btn-delete">삭제하기</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--부트 스트랩-->
+    <script src="../../static/bootStrap/bootstrap.min.js"></script>
+    <!-- specific -->
+    <script src="../../static/js/relationshipResponseBox.js"></script>
+
+</body>
+</html>
