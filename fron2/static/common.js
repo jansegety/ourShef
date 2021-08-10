@@ -131,3 +131,22 @@ function reliabilitySystemByClass(reliablilitySystemClass) {
 	}
 }
 ///////////////reliabilitySystem End//////////////
+
+//////////////////showHideSystem///////////////////
+function showHideSystem(wrapperClass, buttonClass, detailClass){
+	let wrapperClassElement = document.getElementsByClassName(wrapperClass)[0];
+	
+
+	
+	let buttonClassElement = wrapperClassElement.getElementsByClassName(buttonClass)[0];
+
+
+	console.log(buttonClassElement);
+	buttonClassElement.onclick= showHide;
+
+	function showHide(){
+		console.log("실행됨");
+		document.getElementsByClassName(detailClass)[0].click();
+	}
+}
+//////////////////showHideSystem end///////////////////

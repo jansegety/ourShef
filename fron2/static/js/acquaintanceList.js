@@ -25,7 +25,7 @@ function dispatcherAcquaintanceListToBeDeleted(){
     // Send if any one is checked
     for (let i = 0; i < deleteCheckBoxList.length; i++){
       if(deleteCheckBoxList[i].checked == true){
-        if(confirm("정말 삭제하시겠습니까?")==true)
+        if(confirm("정말 삭제하시겠습니까?\n지인의 목록에서도 삭제됩니다.\n맛집 목록도 서로 볼 수 없습니다.")==true)
         {
           document.getElementById("form-i1").submit();
         }
