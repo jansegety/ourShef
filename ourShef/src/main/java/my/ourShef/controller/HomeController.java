@@ -75,6 +75,7 @@ public class HomeController {
 			//set Acquaintance
 			User user = (User)recentAcquaintanceSpot[0];
 			Acquaintance acquaintance = new Acquaintance();
+			acquaintance.setId(user.getId());
 			acquaintance.setNickName(user.getNickName());
 			acquaintance.setIntroduction(user.getIntroduction());
 			acquaintance.setProfileImgStoreName(user.getProfileImgInfo().getStoreFileName());
@@ -83,6 +84,7 @@ public class HomeController {
 			//set RecentSpot
 			Spot spot = (Spot)recentAcquaintanceSpot[1];
 			RecentSpot recentSpot = new RecentSpot();
+			recentSpot.setId(spot.getId());
 			recentSpot.setSpotName(spot.getSpotName());
 			recentSpot.setSpotIntroduction(spot.getSpotIntroduction());
 			recentSpot.setMainImgStoreName(spot.getMainSpotImgInfo().getStoreFileName());
@@ -112,6 +114,7 @@ public class HomeController {
 			loginUserRecentSpotDto.setSpotIntroduction(recentRegisterationSpot.getSpotIntroduction());
 			loginUserRecentSpotDto.setRegistrantStarPoint(recentRegisterationSpot.getRegistrantStarPoint());
 			loginUserRecentSpotDto.setUsersStarPoint(recentRegisterationSpot.getUsersStarPoint());
+			loginUserRecentSpotDto.setVisits(recentRegisterationSpot.getVisits());
 
 			model.addAttribute("loginUserRecentSpotDto", loginUserRecentSpotDto);
 		}

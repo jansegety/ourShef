@@ -357,7 +357,7 @@ public class InitDb {
 					Comment newComment = new Comment(visitor, visitedSpot);
 					//persist
 					commentService.save(newComment);
-					newComment.setComment("정말 맛이 좋아요!" + r.nextInt(10000));
+					newComment.setComment("정말 맛이 좋아요!" + r.nextInt(10000) + "정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!정말 맛이 좋아요!");
 					newComment.setStarPoint((r.nextInt(10)+1)*10); //10~100
 				
 					//Average star point rating
@@ -377,6 +377,10 @@ public class InitDb {
 					
 					//visits + 1
 					visitedSpot.setVisits(visitedSpot.getVisits() + 1);
+					
+					//Registrant's reliability updates every time a comment is posted
+					//Average userStarPoint should be updated.
+					updateRegistrantReliability(visitedSpot);
 					
 					//updated as a visitor
 					//before update, validation
@@ -449,6 +453,34 @@ public class InitDb {
 			
 			
 		}
+		
+		/*
+		 *Registrant's reliability updates every time a comment is posted
+		 */
+		private void updateRegistrantReliability(Spot spot) {
+			User registrant = spot.getRegistrant();
+			//If the registrant has never received a comment
+			if(registrant.getReliability() == -1)
+			{
+				float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
+				registrant.setReliability(newReliability);
+			}
+			else
+			{
+				
+				Long registerationSpotNum = spotService.getCountRegisterationSpotNum(registrant);
+				float oldReliability= registrant.getReliability();
+				float oldReliabilitySum = (registerationSpotNum-1) * oldReliability;
+				
+				float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
+				
+				float newAverageReliability = (oldReliabilitySum + newReliability) / registerationSpotNum;
+				
+				registrant.setReliability(newAverageReliability);
+			}
+			
+		}
+		
 		
 		
 		

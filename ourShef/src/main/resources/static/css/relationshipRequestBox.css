@@ -1,0 +1,70 @@
+/* ########################## relationshipRequestBox ############################# */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  height: 60px;
+  width: 400px;
+  border-radius: 16px;
+  border-bottom: 1px solid gray;
+  background-color: rgb(249, 255, 247);
+  margin: auto;
+  margin-top: 2px;
+  text-align: center;
+  overflow: hidden;
+}
+
+li span {
+  display: inline-block;
+}
+
+.user-info, .added-text-frame, .btn-frame{
+  position: relative;
+  height: inherit;
+}  
+
+.user-info {
+  width: 100px;
+}
+.added-text-frame {
+  width: 80px;
+  font-size: 15px;
+}
+
+.btn-frame {
+ width: 150px;
+}
+
+.nickName,.added-text,.btns-response{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  word-break: break-all;
+  width: inherit;
+  text-align: center;
+} 
+
+.nickName{
+  font-size: 16px;
+}
+
+.btn-rejected, .btn-accepted, .btn-before-confirmation{
+  padding: 2px;
+  width: 100px;
+  height: 25px;
+}
+
+.input-delete{
+  margin-left: 10px !important;
+  transform: scale(1.2);
+  display: none;
+}
+
+.btns-footer {
+  text-align: center;
+}
+
+

@@ -110,7 +110,13 @@ public class ImgController {
 		return new ByteArrayResource(spotMainImgFileBytes);
 	}
 	
-	
+	@ResponseBody
+	@GetMapping("/spotAdded/{storeName}")
+	public Resource downloadSpotAdded(@PathVariable("storeName") String storeFileName ) throws IOException {
+		File spotMainImgFile = new File(spotAddedImgDirPath + storeFileName);
+		byte[] spotMainImgFileBytes = Files.readAllBytes(spotMainImgFile.toPath());
+		return new ByteArrayResource(spotMainImgFileBytes);
+	}
 
 	
 }

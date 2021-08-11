@@ -27,6 +27,10 @@ public class SpotService {
 		spotRepository.save(spot);
 	}
 	
+	public Optional<Spot> findById(Long spotId) {
+		return spotRepository.findById(spotId);
+	}
+	
 	public Optional<Spot> findRecentRegisterationSpotByUserAccountId(String userAccountId) {
 		User findUser = userRepository.findByAccountId(userAccountId).get();
 		List<Spot> registeredSpots = findUser.getRegisteredSpots();
@@ -38,6 +42,10 @@ public class SpotService {
 			return Optional.of(registeredSpots.get(registeredSpots.size()-1));
 		}
 			
+	}
+	
+	public Long getCountRegisterationSpotNum(User user) {
+		return spotRepository.getCountRegisterationSpotNum(user);
 	}
 	
 }

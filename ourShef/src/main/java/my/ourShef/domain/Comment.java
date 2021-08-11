@@ -1,5 +1,7 @@
 package my.ourShef.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,9 @@ public class Comment {
 	@Column(name="comment_id")
 	private Long id;
 	
+	@Column(name="registration_date_time")
+	private LocalDateTime registeredTime;
+	
 	@ManyToOne
 	@JoinColumn(name="comment_user_id")
 	User commentUser;
@@ -49,6 +54,7 @@ public class Comment {
 	public Comment(User commentUser, Spot commentedSpot) {
 		this.commentUser = commentUser;
 		this.commentedSpot = commentedSpot;
+		this.registeredTime = LocalDateTime.now();
 	}
 	
 	

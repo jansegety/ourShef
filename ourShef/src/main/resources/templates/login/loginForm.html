@@ -6,17 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!--부트 스트랩-->
-        <link rel="stylesheet" href="../../bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" href="../../bootStrap/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../bootStrap/bootstrap.css">
 
         <!--font awesome-->
-        <link rel="stylesheet" href="../../library/fontawesome/all.min.css">
-        <script src="../../library/fontawesome/all.js"></script>
+        <link rel="stylesheet" th:href="@{/library/fontawesome/all.min.css}" href="../../library/fontawesome/all.min.css">
 
         <!--custom-->
-        <link rel="stylesheet" href="../../style.css">
+        <link rel="stylesheet" th:href="@{/common.css}" href="../../style.css">
+        <link rel="stylesheet" th:href="@{/css/loginForm.css}">
 
-        <title>Document</title>
+        <title>loginForm</title>
     </head>
     <body class="loginForm">
         <div class="container">
@@ -60,5 +60,7 @@
         <script src="/library/jquery-2.1.4.js"></script>
         <!--부트 스트랩-->
         <script src="../bootStrap/bootstrap.js"></script>
+        <!-- fontawesome -->
+        <script th:src="@{/library/fontawesome/all.js}" src="../../library/fontawesome/all.js"></script>
     </body>
 </html>

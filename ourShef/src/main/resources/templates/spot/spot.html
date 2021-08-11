@@ -1,106 +1,234 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        
+		<!--fontawesome-->
+        <link rel="stylesheet" th:href="@{/library/fontawesome/all.min.css}" href="../../static/library/fontawesome/all.min.css">
+        
         <!--부트 스트랩-->
-        <link rel="stylesheet" href="../../bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" href="../../bootStrap/bootstrap.css">
+        <link
+            rel="stylesheet"
+            href="../../static/bootStrap/bootstrap-theme.css"
+            th:href="@{/bootStrap/bootstrap-theme.css}">
+        <link
+            rel="stylesheet"
+            href="../../static/bootStrap/bootstrap.css"
+            th:href="@{/bootStrap/bootstrap.css}">
+            
+            <!--css-->
+        <link rel="stylesheet" href="../../static/common.css" th:href="@{/common.css}">
+        <link rel="stylesheet" th:href="@{/css/spot.css}">
 
-        <!--css-->
-        <link rel="stylesheet" href="../../style.css">
         <title>Document</title>
     </head>
     <body class="spot">
-        <div class="container text-center">
+        <div class="container">
             <div class="row">
-                <h1 class="text-primary">
-                    특정 맛집 페이지
+                <h1 class="text-head text-primary" th:text="${spotDetailDto.spotName}">
+                    맛집 제목
                 </h1>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <ul class="list-unstyled">
-                        <li class="bg-info">
-                            <img class="img-rounded demo-img" style="width: 50px;"></img>
-                            <span class="text-muted">유저 별 맛집 평가1</span>
-                            <span class="text-warning">평점 *****
-                            </span>
-                        </li>
-                        <li class="bg-info">
-                            <img class="img-rounded demo-img" style="width: 50px;"></img>
-                            <span class="text-muted">유저 별 맛집 평가1</span>
-                            <span class="text-warning">평점 *****
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <div >
-                        <img id="main-spot-img" class="demo-img" alt="메인 스폿 이미지">
+                <div class="col-md-4 layout-1"></div>
+                <div class="col-md-4 layout-2">
+                    <div>
+                        <img id="main-spot-img" th:src="@{/img/spotMain/{storeName}(storeName = ${spotDetailDto.mainImgStoreName})}" th:class="''" class="demo-img" alt="메인 스폿 이미지">
                     </div>
-                    <div >
-                        <div>맛집 이름</div>
-                        <div>총점 *****</div>
-                        <p>
-                            맛집 설명
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet, possimus amet non dolore laboriosam fugiat exercitationem quam veritatis fuga ea, voluptatibus voluptates minus cupiditate perspiciatis culpa velit ex provident! Non.
-                        </p>
+                    <div class="spot-info-warapper">
+                    	<div class="registeration-time-frame" th:text="${#temporals.format(spotDetailDto.registeredTime, 'yyyy-MM-dd')}">등록날짜</div>
+                     	<div class="registrant-star-point-frame">
+                            <div>등록자 평점</div>
+                            <div class="starPointSystem">
+                                <input class="input-star-point" th:value="${spotDetailDto.registrantStarPoint}" type="text" value="10" required="required">
+                                <div class="star-point-area">
+                                    <div class="star-front"></div>
+                                    <div class="star-back"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="users-star-point-frame">
+                            <div>지인들 평점</div>
+                            <div class="starPointSystem">
+                                <input class="input-star-point" th:value="${spotDetailDto.usersStarPoint}" type="text" value="10" required="required">
+                                <div class="star-point-area">
+                                    <div class="star-front"></div>
+                                    <div class="star-back"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="spot-introduction-frame">
+                            <p class="spot-introduction" th:text="${spotDetailDto.spotIntroduction}">
+                                맛집 설명 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet,
+                                possimus amet non dolore laboriosam fugiat exercitationem quam veritatis fuga
+                                ea, voluptatibus voluptates minus cupiditate perspiciatis culpa velit ex
+                                provident! Non.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 spot-images">
-                    <img class="demo-img">
-                    <img class="demo-img">
-                    <img class="demo-img">
-                    <img class="demo-img">
-                    <img class="demo-img">
-                    <img class="demo-img">
+                <div class="col-md-4 layout-3 spot-image-area">
+                    <img th:src="@{/img/spotAdded/{storeName}(storeName = ${addedImgStoreName})}" 
+                    th:class="''" class="demo-img" alt="장소 추가 사진" th:each="addedImgStoreName : ${spotDetailDto.addedImgStoreNames}">
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="comment-area">
-                        <form>
-                            <div><input type="text" hidden></div>
-                            <div>*****</div>
-                            <div><textarea 
-                                name="" 
-                                id="" 
-                                cols="25"
-                                rows="5"
-                                placeholder="100자 이내의 짦은 댓글을 남겨보세요"
-                                maxlength="100"></textarea></div>
-                            <div><button>댓글 남기기</button></div>
-                        </form>
+                <div class="col-md-6 layout-comment-area">
+                    <div class="comments-wrapper">
+                        <div class="comment bg-info" th:each="commentDto : ${commentDtoList}">
+                            <div class="comment-middle">
+                                <div class="img-frame">
+                                    <img th:src="@{/img/userProfile/{storeName}(storeName=${commentDto.commentUserProfileImgStoreName})}"
+                                    th:class="'img-commet-profile img-rounded'" class="img-rounded demo-img"></img>
+                                </div>
+                                <div class="text-frame">
+                                    <details>
+                                        <summary th:text = "${commentDto.commentSummary}">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure laborum
+                                            quasi mollitia.
+                                        </summary>
+                                        <div th:text = "${commentDto.commentDetail}">Fugit adipisci nostrum recusandae ex placeat deserunt, optio aliquid
+                                        </div>
+                                        <div th:text = "${#temporals.format(commentDto.registeredTime, 'yyyy-MM-dd hh:mm')}">2000-10-15 11-00</div>
+                                    </details>
+                                </div>
+                            </div>
+                            <div class="comment-bottom">
+                                <div class="nickname-frame" th:text= "${commentDto.commentUserNickName}">
+                                    닉네임닉네임닉네임
+                                </div>
+                                <div class="starpoint-frame">
+                                    <div>
+                                        <div class="starPointSystem">
+                                            <input th:value="${commentDto.starPoint}" class="input-star-point" type="text" value="10" required="required">
+                                            <div class="star-point-area">
+                                                <div class="star-front"></div>
+                                                <div class="star-back"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pager-container-wrapper">
+                        <div class="pager-container">
+                            <div class="pager-arrow">
+                                <a>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </div>
+                            <div class="page-container">
+                                <div class="page-list">
+                                    <a class="page-num current-page-num">1</a>
+                                    <a class="page-num">2</a>
+                                    <a class="page-num">3</a>
+                                    <a class="page-num">4</a>
+                                    <a class="page-num">5</a>
+                                </div>
+                            </div>
+                            <div class="pager-arrow">
+                                <a>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="pager-navigator">1/10</div>
+                        </div>
+                    </div>
+                    <div class="comment-form-wrapper">
+                        <button class="btn-leave-comment btn-primary">댓글 남기기</button>
+                        <details>
+                            <summary class="summary"></summary>
+                            <form>
+                                <div><input type="text" hidden="hidden"></div>
+                                <div>
+                                    <div id="starPointSystem-i1" class="starPointSystem">
+                                        <input     
+                                            th:name="starPoint"
+                                            class="input-star-point"
+                                            type="text"
+                                            value="10"
+                                            required="required">
+                                        <div class="star-point-area">
+                                            <div class="star-front"></div>
+                                            <div class="star-back"></div>
+                                            <div class="click-areas">
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                                <div class="click-area"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <textarea
+                                        name=""
+                                        id=""
+                                        cols="40"
+                                        rows="5"
+                                        placeholder="200자 이내의 짦은 댓글을 남겨보세요"
+                                        maxlength="200"></textarea>
+                                </div>
+                                <div>
+                                    <button class="btn-leave-comment2 btn-success">입력</button>
+                                </div>
+                            </form>
+                        </details>
                     </div>
                 </div>
-                <div class="visitor-info-area col-md-6">
-                    <img id="visitor-profile-img" class="demo-img">
-                    <div id="visitor-nickName">탐방한 사람 이름</div>
-                    <div class="visitor-info">
-                        <div>탐방한 사람의 평점 *****</div>
-                        <p>
-                            탐방한 사람 소개 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem blanditiis id doloribus accusantium aliquam aperiam, officiis quo corrupti repudiandae corporis praesentium magni quis, delectus autem omnis quod veniam. Natus, omnis?
-                        </p>
-                        <div class="home-list">
-                            <div><button class="btn btn-primary">이 사람 맛집 리스트</button></div>
+                <div class="layout-visitor-info col-md-6">
+                    <div class="visitor-info-wrapper">
+                        <div>
+                            <img th:src="@{/img/userProfile/{storeName}(storeName = ${registrantDto.profileImgStoreName})}" 
+                            th:class="visitor-profile-img" class="visitor-profile-img demo-img">
                         </div>
-                    </div>    
+                        <div th:text="${registrantDto.nickName}" class="visitor-nickName">탐방한 사람 이름</div>
+                        <div>
+                            <div class="reliabilitySystem">
+                                <input th:value="${registrantDto.reliability}" class="input-reliability-size" type="hidden" value="-1">
+                                <div class="reliabilityText">신뢰도</div>
+                                <div class="gaugeBar">
+                                    <div class="back"></div>
+                                    <div class="front"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="visitor-introduction-frame">
+                            <div th:text="${registrantDto.introduction}">
+                                탐방한 사람 소개 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem
+                                blanditiis id doloribus accusantium aliquam aperiam, officiis quo corrupti
+                                repudiandae corporis praesentium magni quis, delectus autem omnis quod veniam.
+                                Natus, omnis?
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                </div>
+                <div class="col-md-6"></div>
             </div>
             <div class="row">
                 <div class="col-sm-3 footer">
-                    <button class="btn btn-primary"> 로그인 홈</button>
+                    <button class="btn btn-primary">
+                        로그인 홈</button>
                 </div>
             </div>
         </div>
-        <!--부트 스트랩-->
-        <script src="../../bootStrap/bootstrap.min.js"></script>
-        <!--cummon.js-->
-        <script src="../../common.js"></script>
+        <!--jQuery-->
+            <script
+                src="../../static/library/jquery-2.1.4.js"
+                th:src="@{/library/jquery-2.1.4.js}"></script>
+            <!--cummon.js-->
+            <script src="../../static/common.js" th:src="@{/common.js}"></script>
+            <!--custom.js-->
+            <script th:src="@{/js/spot.js}" src="../../static/js/spot.js"></script>
+            <!--fontawesome-->
+            <script th:src="@{/library/fontawesome/all.js}" src="../../static/library/fontawesome/all.js"></script>
     </body>
 </html>

@@ -1,0 +1,33 @@
+/* ############### acquaintanceRequestForm ###########*/
+ form {
+   text-align: center;
+   margin: auto;
+   margin-top: 160px;
+ }
+ form>div{
+   margin-top: 20px;
+ }
+ .guide-text{
+  font-size: 20px; 
+  margin-bottom: 20px;
+  color:gray;
+ }
+
+ input{
+   width: 200px;
+   height: 30px;
+   padding: 0 10px;
+   border-radius: 5px;
+   border: 1px solid gray;
+   outline: none;
+ }
+
+ input:focus{
+   border: 1px solid rgb(131, 163, 243);
+   box-shadow: 0 0 3px rgb(134, 184, 245);
+ }
+
+ button{
+   width: 100px;
+  margin: 0px 3px;
+}

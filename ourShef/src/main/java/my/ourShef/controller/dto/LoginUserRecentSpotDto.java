@@ -18,4 +18,6 @@ public class LoginUserRecentSpotDto {
     //If -1, no one has visited.
     //10~100
 	private float usersStarPoint;
+	
+	private Long visits;
 }

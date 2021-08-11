@@ -84,7 +84,7 @@ public class Spot {
 	//the number of visitor, equal to the number of comments
 	//However, the number does not decrease even if the comment is deleted
     @Setter
-	private int visits;
+	private Long visits;
 	
 	
 	
@@ -96,7 +96,7 @@ public class Spot {
 		this.registrant = user;
 		this.spotName = spotName;
 		this.registeredTime = LocalDateTime.now();
-		this.visits = 0;
+		this.visits = 0L;
 		this.usersStarPoint = -1;
 	}
 		

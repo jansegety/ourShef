@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" href="bootStrap/bootstrap.css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="bootStrap/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/common.css}">
+        <link rel="stylesheet" th:href="@{/css/home.css}">
         <title>Document</title>
     </head>
     <body class="home">
@@ -38,6 +39,8 @@
                 </div>
             </div>
         </div>
-        <script src="common.js"></script>
+        <script th:src="@{/common.js}" src="common.js"></script>
+        <script th:src="@{/library/jquery-2.1.4.js}"></script>
+        <script th:src="@{/bootStrap/bootstrap.js}"></script>
     </body>
 </html>

@@ -1,13 +1,11 @@
-////////////reliabilitySystem/////////////////
-reliabilitySystemByClass("reliabilitySystem");
-
+/*################## relattionshipResponseBox ####################*/
 //////////delete checkbox/////////////
 let deleteMode = false;
 
-let acquaintanceDeleteButton = document.getElementsByClassName("btn-acquaintance-delete")[0];
-acquaintanceDeleteButton.onclick = dispatcherAcquaintanceListToBeDeleted;
+let deleteButton = document.getElementsByClassName("btn-delete")[0];
+deleteButton.onclick = dispatcherRelationshipResponseListToBeDeleted;
 
-function dispatcherAcquaintanceListToBeDeleted(){
+function dispatcherRelationshipResponseListToBeDeleted(){
 
   let deleteCheckBoxList = document.getElementsByClassName("input-delete");
 
@@ -25,7 +23,7 @@ function dispatcherAcquaintanceListToBeDeleted(){
     // Send if any one is checked
     for (let i = 0; i < deleteCheckBoxList.length; i++){
       if(deleteCheckBoxList[i].checked == true){
-        if(confirm("정말 삭제하시겠습니까?\n지인의 목록에서도 삭제됩니다.\n맛집 목록도 서로 볼 수 없습니다.")==true)
+        if(confirm("정말 삭제하시겠습니까?")==true)
         {
           document.getElementById("form-i1").submit();
         }
@@ -41,5 +39,3 @@ function dispatcherAcquaintanceListToBeDeleted(){
   }
 
 } 
-
-
