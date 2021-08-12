@@ -1,0 +1,68 @@
+/* ###################### spotRegisteration ########################## */
+
+
+.main-col div{
+  text-align: center;
+}
+#main-spot-img {
+  width: 300px;
+}
+
+.img-button-frame {
+  padding-top: 10px;
+}
+.img-button-frame input{
+  display: none;
+}
+
+.spot-imgs-area {
+  overflow: hidden;
+}
+
+.spot-img-frame {
+  width: 150px;
+  margin: 10px;
+  float: left;
+}
+.spot-img {
+  width: inherit;
+}
+
+.spot-name-frame, .spot-introduction-frame {
+  margin-top: 5px;
+}
+
+.spot-name-frame input, .spot-introduction-frame textarea{
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid gray;
+  transition: 0.3s;
+}
+
+.spot-name-frame input:focus, .spot-introduction-frame textarea:focus{
+  border: 1px solid rgb(69, 137, 255);
+  box-shadow: 0 0 3px rgb(69, 137, 255);
+}
+.spot-name-frame input:focus::placeholder, .spot-introduction-frame textarea:focus::placeholder{
+  transition: 0.3s;
+  color: transparent;
+}
+
+
+.spot-info-area {
+  padding-top:30px;
+  width: 302px;
+  margin: auto;
+}
+.spot-info-area textarea {
+  
+  width: 300px;
+}
+
+.footer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.footer button {
+  width: 130px;
+}
