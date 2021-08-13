@@ -21,25 +21,25 @@
         <link
             rel="stylesheet"
             href="../../static/library/slick/slick-theme.css"
-            th:href="@{library/slick/slick-theme.css}">
+            th:href="@{/library/slick/slick-theme.css}">
         <link
             rel="stylesheet"
             href="../../static/library/slick/slick.css"
-            th:href="@{library/slick/slick.css}">
+            th:href="@{/library/slick/slick.css}">
 
         <!--css-->
         <link rel="stylesheet" href="../../static/common.css" th:href="@{/common.css}">
-        <link rel="stylesheet" th:href="@{/css/loginHome.css}">
+        <link rel="stylesheet" th:href="@{/css/loginHome.css}" href="/static/css/loginHome.css">
 
         <title>loginHome</title>
     </head>
     <body>
         <div class="container text-center">
             <div class="row">
-                <h1 class="text-primary">로그인 홈</h1>
+                <h1 class="text-shefGreen">로그인 홈</h1>
             </div>
             <div class="row">
-                <h3 style="margin-bottom: 20px; color: gray;">최근에 업데이트 된 우리들의 맛집정보!</h3>
+                <h3 class="text-success" style="margin-bottom: 20px;">최근에 업데이트 된 우리들의 맛집정보!</h3>
             </div>
             <div class="row">
                 <div class="user-spot-slider">
@@ -47,10 +47,12 @@
                         <div class="user-spot">
                             <div class="spot-info-left">
                                 <div class="img">
-                                    <img
+                                	<a th:href="@{/spot/userSpotList/{userId}(userId = ${recentAcquaintanceSpotDto.acquaintance.id})}">
+                                	<img
                                         th:src="@{/img/userProfile/{storeName}(storeName= ${recentAcquaintanceSpotDto.acquaintance.profileImgStoreName})}"
                                         th:class="img-circle"
                                         class="img-circle demo-img">
+                                	</a>                                 
                                 </div>
                                 <div th:text="${recentAcquaintanceSpotDto.acquaintance.nickName}">홍길동</div>
                                 <div class="reliabilitySystem">
@@ -74,19 +76,7 @@
                                                 required="required">
                                             <div class="star-point-area">
                                                 <div class="star-front"></div>
-                                                <div class="star-back"></div>
-                                                <div class="click-areas">
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                </div>
+                                                <div class="star-back"></div>                                                
                                             </div>
                                         </div>
                                     </div>
@@ -105,19 +95,7 @@
                                                     required="required">
                                                 <div class="star-point-area">
                                                     <div class="star-front"></div>
-                                                    <div class="star-back"></div>
-                                                    <div class="click-areas">
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                        <div class="click-area"></div>
-                                                    </div>
+                                                    <div class="star-back"></div>                                                    
                                                 </div>
                                             </div>
                                             <div th:text="'방문 ' + ${recentAcquaintanceSpotDto.recentSpot.visits}">방문수</div>
@@ -157,27 +135,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="pager-container">
+                <div th:object="${spotPager}" class="pager-container">
                     <div class="pager-arrow">
-                        <a>
+                        <a th:href="@{/loginHome/(page=*{leftPage})}">
                             <i class="fas fa-chevron-left"></i>
                         </a>
                     </div>
                     <div class="page-container">
                         <div class="page-list">
-                            <a class="page-num current-page-num">1</a>
-                            <a class="page-num">2</a>
-                            <a class="page-num">3</a>
-                            <a class="page-num">4</a>
-                            <a class="page-num">5</a>
+                            <a th:each="page: ${#numbers.sequence(spotPager.startPage,spotPager.endPage)}" 
+                            th:classappend="${page} == *{currentPage}?'current-page-num'"
+                            class="page-num "
+                            th:text="${page}"
+                            th:href="@{/loginHome/(page=${page})}">1</a>
                         </div>
                     </div>
                     <div class="pager-arrow">
-                        <a>
+                        <a th:href="@{/loginHome/(page=*{rightPage})}">
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     </div>
-                    <div class="pager-navigator">1/10</div>
+                    <div class="pager-navigator"
+                    th:text="|*{currentPageGroup}/*{totalPageGroupNum}|">1/10</div>
                 </div>
             </div>
             <div class="row">
@@ -188,10 +167,12 @@
                     <div class="user-spot">
                         <div class="spot-info-left">
                             <div class="img">
-                                <img
-                                    th:src="@{/img/loginUserProfile}"
-                                    th:class="img-circle"
-                                    class="img-circle demo-img">
+                                <a th:href="@{/spot/mySpotList}">
+	                                <img
+	                                    th:src="@{/img/loginUserProfile}"
+	                                    th:class="img-circle"
+	                                    class="img-circle demo-img">
+                                </a>
                             </div>
                             <div th:text="${loginUserDto.nickName}">홍길동</div>
                             <div class="reliabilitySystem">
@@ -215,19 +196,7 @@
                                             required="required">
                                         <div class="star-point-area">
                                             <div class="star-front"></div>
-                                            <div class="star-back"></div>
-                                            <div class="click-areas">
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                                <div class="click-area"></div>
-                                            </div>
+                                            <div class="star-back"></div>                                           
                                         </div>
                                     </div>
                                 </div>
@@ -246,19 +215,7 @@
                                                 required="required">
                                             <div class="star-point-area">
                                                 <div class="star-front"></div>
-                                                <div class="star-back"></div>
-                                                <div class="click-areas">
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                    <div class="click-area"></div>
-                                                </div>
+                                                <div class="star-back"></div>                                               
                                             </div>
                                         </div>
                                         <div th:text="'방문 ' + ${loginUserRecentSpotDto.visits}">방문수</div>
@@ -269,7 +226,7 @@
                         <div class="spot-info-right">
                             <div>
                                 <div>
-                                    <a href="#none">
+                                    <a th:href="@{/spot/spot/{spotId}(spotId = ${loginUserRecentSpotDto.spotId})}">
                                         <img
                                             th:src="@{/img/loginUserRecentRegisterationSpot}"
                                             th:class="img-rounded"
@@ -301,16 +258,19 @@
                     <div>
                         <button
                             id="btn-spot-registration-i1"
-                            class="btn btn-primary"
+                            class="btn-shefGreen"
                             type="button"
                             onclick="location.href='/spot/registeration'">맛집 등록하기</button>
                     </div>
                     <div>
-                        <button id="btn-my-spot-i1" class="btn btn-primary">나의 맛집</button>
-                        <button id="btn-my-acquaintance-i1" class="btn btn-primary">지인 리스트</button>
+                        <button id="btn-my-spot-i1" class="btn-shefGreen" 
+                        type="button" onclick="location.href='/spot/mySpotList'">나의 맛집</button>
+                        <button id="btn-my-acquaintance-i1" class="btn-shefGreen" 
+                        type="button" onclick="location.href='/aquaintance/myAcquaintanceList'">지인 리스트</button>
                     </div>
                     <div>
-                        <button class="btn btn-primary btn-logout">로그아웃</button>
+                   		<button class="btn-shefGreen btn-login-user-info" type="button" onclick="location.href='/user/myInfo'">내 정보</button>
+                        <button class="btn-shefGreen btn-logout" type="button" onclick="location.href='/login/logout'">로그아웃</button>
                     </div>
                 </div>
             </div>

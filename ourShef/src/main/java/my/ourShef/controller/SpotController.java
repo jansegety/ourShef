@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import my.ourShef.SessionConst;
 import my.ourShef.controller.dto.Acquaintance;
 import my.ourShef.controller.dto.CommentDto;
 import my.ourShef.controller.dto.RecentSpot;
@@ -96,6 +98,23 @@ public class SpotController {
 		
 		
 		return "spot/spot";
+	}
+	
+	/*
+	 * Login User Spot List
+	 */
+	@GetMapping("/mySpotList")
+	public String mySpotList(
+			@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId, 
+			Model model) {
+		
+		return "spot/spotListOfUser";
+	}
+	
+	@GetMapping("/userSpotList/{userId}")
+	public String userSpotList(@PathVariable("userId") String userId) {
+		
+		return "spot/spotListOfUser";
 	}
 	
 	

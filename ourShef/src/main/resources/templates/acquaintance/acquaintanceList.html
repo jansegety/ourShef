@@ -9,21 +9,21 @@
         <script src="../../static/library/jquery-2.1.4.js"></script>
 
         <!--부트 스트랩-->
-        <link rel="stylesheet" href="../../static/bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" href="../../static/bootStrap/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
 
         <!--common -->
-        <link rel="stylesheet" href="../../static/common.css">
+        <link rel="stylesheet" th:href="@{/common.css}" href="../../static/common.css">
 
         <!--specific-->
-        <link rel="stylesheet" href="../../static/css/acquaintanceList.css">
+        <link rel="stylesheet" th:href="@{/css/acquaintanceList.css}" href="../../static/css/acquaintanceList.css">
 
         <title>acquaintanceList</title>
     </head>
     <body>
         <form id="form-i1" action="#none">
             <div class="container">
-                <div class="row text-center text-primary">
+                <div class="row text-center text-shefGreen">
                     <h3>나의 지인 리스트</h3>
                 </div>
                 <div class="row text-center">
@@ -44,7 +44,7 @@
                                 </div>
                             </span>
                             <span class="btn-frame">
-                                <button class="btn btn-info" type="button">맛집 보기</button>
+                                <button class="btn-subGreen" type="button">맛집 보기</button>
                             </span>
                             <span class="input-wrapper">
                                 <input class="input-delete" type="checkbox">
@@ -54,26 +54,26 @@
                 </div>
                 <div class="row">
                     <div class="btns">
-                        <button class="btn btn-primary" type="button">이전으로</button>
-                        <button class="btn btn-primary btn-acquaintance-delete" type="button">지인삭제</button>
+                        <button class="btn-shefGreen" type="button">이전으로</button>
+                        <button class="btn-shefGreen btn-acquaintance-delete" type="button">지인삭제</button>
                         <div class="message-component-wrapeer">
                             <div class="new-message-pop">10</div>
-                            <button class="btn btn-primary btn-message-box">
+                            <button class="btn-shefGreen btn-message-box">
                                 메세지함
                             </button>
                         </div>
-                        <button class="btn btn-primary">친분맺기</button>
+                        <button class="btn-shefGreen">친분맺기</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <!--부트 스트랩-->
-    <script src="../../static/bootStrap/bootstrap.min.js"></script>
+    <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
     <!--common.js-->
-    <script src="../../static/common.js"></script>
+    <script th:src="@{/common.js}" src="../../static/common.js"></script>
     <!--specific.js-->
-    <script src="../../static/js/acquaintanceList.js"></script>
+    <script th:src="@{/js/acquaintanceList.js}" src="../../static/js/acquaintanceList.js"></script>
 
 </body>
 </html>

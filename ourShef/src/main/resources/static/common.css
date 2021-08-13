@@ -7,6 +7,87 @@ a:link, a:visited, a:active, a:hover{
   text-decoration: none;
 }
 
+/*#################mainColor####################*/
+.text-shefGreen {
+  color:rgb(63, 167, 87);
+}
+.bg-shefGreen {
+  color: white;
+  background-color: rgb(82, 201, 143);
+}
+/* btn-shefGreen */
+.btn-shefGreen{
+  color: white;
+  background-color: rgb(74, 181, 113); 
+  outline: none;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+.btn-shefGreen:active{
+  color: white;
+  background-color: rgb(63, 164, 100); 
+  outline: none;
+  transform: scale(0.95);
+}
+.btn-shefGreen:hover{
+  color: white;
+  background-color: rgb(63, 164, 100); 
+  outline: none;
+}
+
+/* btn-subGreen */
+.btn-subGreen{
+  color: white;
+  background-color: rgb(72, 182, 153); 
+  outline: none;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+.btn-subGreen:active{
+  color: white;
+  background-color: rgb(64, 165, 138);
+  outline: none;
+  transform: scale(0.95);
+}
+.btn-subGreen:hover{
+  color: white;
+  background-color: rgb(64, 165, 138);
+  outline: none;
+}
+
 /*################ Slick ##############*/
 .slick-prev:before{
   content: '<' !important;
@@ -101,7 +182,7 @@ a:link, a:visited, a:active, a:hover{
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgb(98, 152, 218);
+  background-color: rgb(82, 201, 125);
   height: inherit;
   width: 50%;
 }
@@ -112,6 +193,77 @@ a:link, a:visited, a:active, a:hover{
   height: inherit;
   width: inherit;
 }
-
-
 /* #############Reliability System End #################### */
+/*######################### Pager ##########################*/
+.pager-container{
+  display: inline-block;
+  margin: auto;
+  overflow: hidden;
+  font-size: 20px;
+  text-align: center;
+}
+
+.pager-container > div{
+  float: left;
+}
+
+.pager-arrow{
+  padding-top: 3px;
+  width: 30px;
+  height: 32px;
+  border: 1px solid rgba(108, 173, 220, 0);
+   border-radius: 3px;
+  
+}
+.pager-arrow a{
+	display: block;
+	width: inherit;
+	height: 28px;
+}
+
+/*because bootStrap a style*/
+.pager-arrow a{
+	color: rgb(64, 171, 80);	
+}
+/*because bootStrap a style*/
+.pager-arrow:hover a{
+	color: rgb(84, 197, 135);
+}
+
+.pager-arrow:hover{
+  color: rgb(84, 197, 135);
+  border: 1px solid rgb(114, 223, 108);
+  cursor: pointer;
+}
+
+.page-num{
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0);
+  box-sizing: border-box;
+  vertical-align: top;
+  border-radius: 3px;
+  color: gray;
+  padding: 2px;
+  height: 32px;
+  width: 35px;
+  transition: 0.1s;
+}
+
+.page-num:hover{
+  color: rgb(84, 197, 135);
+  border: 1px solid rgb(114, 223, 108);
+  cursor: pointer;
+  /* margin-top: -1px; */
+}
+
+.current-page-num{
+  color: rgb(85, 216, 90);
+  font-weight: bold;
+}
+
+.pager-navigator{
+	margin-top: 3px;
+  width: 50px;
+  color: gray;
+}
+/*######################### Pager End ##########################*/

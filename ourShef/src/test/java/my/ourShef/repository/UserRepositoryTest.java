@@ -35,7 +35,7 @@ class UserRepositoryTest {
 		
 		Optional<User> findById = ur.findById(1L);
 		
-		List<Object[]> recentAcquaintanceSpotList = ur.getRecentAcquaintanceSpotList(findById.get(), 10, 0);
+		List<Object[]> recentAcquaintanceSpotList = ur.getRecentAcquaintanceSpotList(findById.get(), 10L, 0L);
 		
 		for(Object[] recentAcquaintanceSpot : recentAcquaintanceSpotList) {
 			

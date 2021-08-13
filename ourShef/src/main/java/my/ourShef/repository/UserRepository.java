@@ -1,5 +1,6 @@
 package my.ourShef.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,18 +57,34 @@ public class UserRepository {
 	 * @return  Object[0] type:User name:acquaintance, Object[1] type:Spot name:registeredSpot
 	 */
 	@Transactional
-	public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, int limit, int offset){
+	public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, Long limit, Long offset){
 		
 		String sql="select ac.*, sp.* from \r\n"
 				+ "(select u.* from \r\n"
-				+ "(select ua.* from user u join user_acquaintance ua on u.user_id = ua.user_id and u.user_id = 3) ua \r\n"
+				+ "(select ua.* from user u join user_acquaintance ua on u.user_id = ua.user_id and u.user_id = ?) ua \r\n"
 				+ "join user u on ua.acquaintance_id = u.user_id) ac join spot sp on ac.user_id = sp.registrant_id\r\n"
 				+ "order by sp.spot_id desc\r\n"
 				+ "limit ? offset ?";
-		List<Object[]> resultList = em.createNativeQuery(sql, "recentAcquaintanceSpots").setParameter(1, limit).setParameter(2, offset).getResultList();
+		List<Object[]> resultList = em.createNativeQuery(sql, "recentAcquaintanceSpots")
+				.setParameter(1, loginUser.getId())
+				.setParameter(2, limit)
+				.setParameter(3, offset)
+				.getResultList();
 		
 		return resultList;
 		
+	}
+	
+	@Transactional
+	public Long getAcquaintanceSpotTotalNum(User loginUser) {
+		
+		String sql="select count(sp.spot_id) from \r\n"
+				+ "(select u.* from \r\n"
+				+ "(select ua.* from user u join user_acquaintance ua on u.user_id = ua.user_id and u.user_id = ?) ua \r\n"
+				+ "join user u on ua.acquaintance_id = u.user_id) ac join spot sp on ac.user_id = sp.registrant_id";
+		BigInteger result = (BigInteger)em.createNativeQuery(sql).setParameter(1, loginUser.getId()).getResultList().get(0);
+		
+		return result.longValue();
 	}
 	
 	

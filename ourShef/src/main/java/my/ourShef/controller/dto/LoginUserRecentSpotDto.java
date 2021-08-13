@@ -11,6 +11,8 @@ public class LoginUserRecentSpotDto {
 	
 	private String spotName;
 	
+	private Long spotId;
+	
 	private String spotIntroduction;
 
 	private float registrantStarPoint;

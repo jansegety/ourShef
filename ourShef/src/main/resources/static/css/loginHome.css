@@ -71,66 +71,6 @@
   top: 260px;
 }
 
-.pager-container{
-  display: inline-block;
-  margin: auto;
-  overflow: hidden;
-  font-size: 20px;
-}
-
-.pager-container > div{
-  float: left;
-}
-
-.pager-arrow{
-  margin-top: 3px;
-  width: 60px;
-  color: rgb(119, 171, 223);
-}
-
-.pager-arrow a{
-  color: rgb(99, 136, 201);
-  border: 1px solid rgba(108, 173, 220, 0);
-  border-radius: 3px;
-  display: inline-block;
-  width: 30px;
-}
-
-.pager-arrow:hover a{
-  color: rgb(71, 107, 169);
-  border: 1px solid rgb(108, 173, 220);
-  cursor: pointer;
-}
-
-.page-num{
-  display: inline-block;
-  border: 1px solid rgba(255, 255, 255, 0);
-  box-sizing: border-box;
-  vertical-align: top;
-  color: gray;
-  padding: 2px;
-  height: 32px;
-  width: 35px;
-}
-
-.page-num:hover{
-  color: rgb(84, 126, 197);
-  border: 1px solid rgb(108, 173, 220);
-  border-radius: 3px;
-  cursor: pointer;
-  /* margin-top: -1px; */
-}
-
-.current-page-num{
-  color: rgb(84, 126, 197);
-  font-weight: bold;
-}
-
-.pager-navigator{
-  width: 50px;
-  color: gray;
-}
-
 .head-text{
   font-size: 20px;
   margin-top: 20px;
@@ -167,5 +107,6 @@
 .btn-logout{
   margin-top: 20px;
   margin-bottom: 40px;
-  width: 120px
+  margin-left: 10px;
+  width: 110px
 }

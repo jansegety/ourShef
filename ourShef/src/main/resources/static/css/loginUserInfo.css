@@ -1,10 +1,14 @@
-/*######################joinForm##########################*/
+/*################## loginUserInfo ####################*/
 input[type="file"]{
   display:inline-block
 }
 #joinForm-profile-img {
   width: 100px;
   border-radius: 50%;
+}
+
+#joinForm-btn-profile-img{
+  height: 30px;
 }
 
 input[type="text"], input[type="password"], textarea{
@@ -22,4 +26,8 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus{
 input[type="text"]:focus::placeholder, input[type="password"]:focus::placeholder, textarea:focus::placeholder{
   transition: 0.3s;
  color: transparent;
+}
+
+.footer {
+  margin-bottom: 15px;
 }

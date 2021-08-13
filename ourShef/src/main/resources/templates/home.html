@@ -4,11 +4,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="bootStrap/bootstrap.css">
-        <link rel="stylesheet" th:href="@{/common.css}">
-        <link rel="stylesheet" th:href="@{/css/home.css}">
-        <title>Document</title>
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="/static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="/static/bootStrap/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/common.css}" href="/static/common.css">
+        <link rel="stylesheet" th:href="@{/css/home.css}" href="/static/css/home.css">
+        <title>OurShefHome</title>
     </head>
     <body class="home">
         <div class=".container-fluid text-center">
@@ -20,26 +20,26 @@
                 <img class="img-circle demo-img" alt="쉐프 마크" style="height: 100px;">
             </div>
             <div class="row">
-                <h1 class="text-primary">OurShef</h1>
+                <h1 class="text-shefGreen">OurShef</h1>
             </div>
-            <div class="row text-muted">
+            <div class="row text-success">
                 <div>믿을 수 없는 후기는 이제 그만!</div>
                 <div>우리끼리 맛집 공유!</div>
             </div>
             <div class="row">
                 <div>
-                    <button class="btn btn-primary" onclick="location.href='/login/join'">
+                    <button class="btn-shefGreen" onclick="location.href='/login/join'">
                         회원가입
                     </button>
                 </div>
                 <div>
-                    <button class="btn btn-primary" onclick="location.href='/login/login'">
+                    <button class="btn-shefGreen" onclick="location.href='/login/login'">
                         로그인
                     </button>
                 </div>
             </div>
         </div>
-        <script th:src="@{/common.js}" src="common.js"></script>
+        <script th:src="@{/common.js}" src="/static/common.js"></script>
         <script th:src="@{/library/jquery-2.1.4.js}"></script>
         <script th:src="@{/bootStrap/bootstrap.js}"></script>
     </body>

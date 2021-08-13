@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +20,7 @@ import my.ourShef.controller.dto.LoginUserDto;
 import my.ourShef.controller.dto.LoginUserRecentSpotDto;
 import my.ourShef.controller.dto.RecentAcquaintanceSpotDto;
 import my.ourShef.controller.dto.RecentSpot;
+import my.ourShef.controller.pager.SpotPager;
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.User;
 import my.ourShef.service.SpotService;
@@ -59,14 +59,49 @@ public class HomeController {
 		setLoginUserRecentSpotDto(LoginUserAccountId, model);
 
 		// setting RecentAquaintanceSpotsList
-		// default limit=10 offset=0
-		setRecentAquaintanceSpotDtoList(model, findUser, 10, 0);
+		// default tupleNumByPage=10 pageNumByGroup=5 currentPage= 1
+		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 10L, 5L, 1L);
 		
 		// login
 		return "login/loginHome";
 	}
+	
+	@GetMapping("/loginHome")
+	public String loginHomeByPage(@RequestParam("page") Long page,
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			Model model) {
+		
+		// Get user entity from DB
+		Optional<User> findUserOptional = userService.findByAccountId(LoginUserAccountId);
+		User findUser = findUserOptional.get();
+		
+		// setting LoginUserDto
+		setLoginUserDto(model, findUser);
 
-	private void setRecentAquaintanceSpotDtoList(Model model, User findUser, int limit, int offset) {
+		// setting LoginUserRecentSpotDto
+		// Get user's most recent registered spot information
+		setLoginUserRecentSpotDto(LoginUserAccountId, model);
+
+		// setting RecentAquaintanceSpotsList
+		// default tupleNumByPage=10 pageNumByGroup=5 currentPage= 1
+		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 10L, 5L, page);
+		
+		return "login/loginHome";
+	}
+	
+
+	private void setRecentAquaintanceSpotPagerAndDtoList(Model model, User findUser, Long tupleNumByPage, Long pageNumByGroup, Long currentPage) {
+		Long totalTupleNum = userService.getAcquaintanceSpotTotalNum(findUser);
+		SpotPager spotPager = new SpotPager(tupleNumByPage, pageNumByGroup, currentPage, totalTupleNum);
+		model.addAttribute("spotPager", spotPager);
+		Long offset = (currentPage-1)*pageNumByGroup; //because index is num-1
+		
+		setRecentAquaintanceSpotDtoList(model, findUser, tupleNumByPage, offset);
+	}
+
+	private void setRecentAquaintanceSpotDtoList(Model model, User findUser, Long limit, Long offset) {
+		
+		
 		List<Object[]> recentAcquaintanceSpotList = userService.getRecentAcquaintanceSpotList(findUser, limit, offset);
 		List<RecentAcquaintanceSpotDto> recentAcquaintanceSpotDtoList = new ArrayList<RecentAcquaintanceSpotDto>();
 
@@ -109,6 +144,7 @@ public class HomeController {
 		if (RecentRegisterationSpotOtioanl.isPresent()) {
 			Spot recentRegisterationSpot = RecentRegisterationSpotOtioanl.get();
 			LoginUserRecentSpotDto loginUserRecentSpotDto = new LoginUserRecentSpotDto();
+			loginUserRecentSpotDto.setSpotId(recentRegisterationSpot.getId());
 			loginUserRecentSpotDto.setRegisteredTime(recentRegisterationSpot.getRegisteredTime());
 			loginUserRecentSpotDto.setSpotName(recentRegisterationSpot.getSpotName());
 			loginUserRecentSpotDto.setSpotIntroduction(recentRegisterationSpot.getSpotIntroduction());

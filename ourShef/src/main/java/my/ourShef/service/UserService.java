@@ -71,11 +71,14 @@ public class UserService {
 		}
 		
 		@Transactional
-		public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, int limit, int offset){
+		public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, Long limit, Long offset){
 			return userRepository.getRecentAcquaintanceSpotList(loginUser, limit, offset);
 		}
 		
-
+		@Transactional
+		public Long getAcquaintanceSpotTotalNum(User loginUser) {
+			return userRepository.getAcquaintanceSpotTotalNum(loginUser);
+		}
 	
 
 }

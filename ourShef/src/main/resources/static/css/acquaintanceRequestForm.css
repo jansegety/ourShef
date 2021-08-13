@@ -23,8 +23,8 @@
  }
 
  input:focus{
-   border: 1px solid rgb(131, 163, 243);
-   box-shadow: 0 0 3px rgb(134, 184, 245);
+   border: 1px solid rgb(85, 201, 128);
+   box-shadow: 0 0 3px rgb(87, 213, 133);
  }
 
  button{
