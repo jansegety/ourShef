@@ -15,7 +15,6 @@ public class SpotPager {
 	//endPage
 	private Long endPage;
 	
-	
 	//current Page
 	private Long currentPage;
 	//total PageNum
@@ -57,6 +56,10 @@ public class SpotPager {
 		{
 			totalPageNum = (totalTupleNum/tupleNumByPage) + 1;
 		}
+		if(totalPageNum == 0)
+			totalPageNum=1L;
+		
+		
 		
 		leftPage = currentPage-1;
 		if(leftPage < 1)
@@ -98,7 +101,10 @@ public class SpotPager {
 			endPage = totalPageNum;
 		}
 		else {
+			if(currentPageGroup * pageNumByGroup < totalPageNum)
 			endPage = currentPageGroup * pageNumByGroup;
+			else
+			endPage = totalPageNum;	
 		}
 		
 	}

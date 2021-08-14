@@ -156,7 +156,7 @@
                         </a>
                     </div>
                     <div class="pager-navigator"
-                    th:text="|*{currentPageGroup}/*{totalPageGroupNum}|">1/10</div>
+                    th:text="|*{currentPage}/*{totalPageNum}|">1/10</div>
                 </div>
             </div>
             <div class="row">
@@ -167,7 +167,7 @@
                     <div class="user-spot">
                         <div class="spot-info-left">
                             <div class="img">
-                                <a th:href="@{/spot/mySpotList}">
+                                <a th:href="@{/spot/userSpotList/{userId}(userId=${loginUserDto.id})}">
 	                                <img
 	                                    th:src="@{/img/loginUserProfile}"
 	                                    th:class="img-circle"
@@ -264,6 +264,7 @@
                     </div>
                     <div>
                         <button id="btn-my-spot-i1" class="btn-shefGreen" 
+                        th:onclick="|location.href='@{/spot/userSpotList/{userId}(userId = ${loginUserDto.id})}'|"
                         type="button" onclick="location.href='/spot/mySpotList'">나의 맛집</button>
                         <button id="btn-my-acquaintance-i1" class="btn-shefGreen" 
                         type="button" onclick="location.href='/aquaintance/myAcquaintanceList'">지인 리스트</button>

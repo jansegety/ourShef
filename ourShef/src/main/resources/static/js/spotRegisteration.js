@@ -58,6 +58,12 @@ function preViewImg2(event) {
     var preViewElement = document.getElementById("input-added-imgs");
     var files = preViewElement.files;
 
+	//Delete the created Img preview
+	while(spotArea.hasChildNodes())
+	{
+		spotArea.removeChild(spotArea.firstChild);
+	}
+
     //파일 확장자 validation 만약 파일이 6개 이상 들어오면 오류 팝업
     if (files.length > 6) {
         alert("파일은 6개까지 올릴 수 있습니다.");
@@ -80,7 +86,6 @@ function preViewImg2(event) {
             //스폿 이미지 영역에 추가
             spotArea.appendChild(newDiv);
             newImg.src = URL.createObjectURL(files[i]);
-            console.log("태그 생성!");
         } else {
             alert("이미지 파일만 가능합니다.");
             document

@@ -3,6 +3,9 @@ package my.ourShef.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +49,21 @@ public class SpotService {
 	
 	public Long getCountRegisterationSpotNum(User user) {
 		return spotRepository.getCountRegisterationSpotNum(user);
+	}
+	
+	public List<Spot> getAllRegisteredSpotsByUser(User user) {
+		
+		return spotRepository.getAllRegisteredSpotsByUser(user);
+	}
+	
+	public List<Spot> getRegisteredSpotsByUserUsingPaging(User user, Long limit, Long offset){
+		
+		return spotRepository.getRegisteredSpotsByUserUsingPaging(user, limit, offset);
+	}
+	
+	public Long getAllRegisteredSpotsNumByUser(User user) {
+
+		return spotRepository.getAllRegisteredSpotsNumByUser(user);
 	}
 	
 }

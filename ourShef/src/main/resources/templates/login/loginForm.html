@@ -16,7 +16,7 @@
         <link rel="stylesheet" th:href="@{/common.css}" href="/static/common.css">
         <link rel="stylesheet" th:href="@{/css/loginForm.css}" href="/static/css/loginForm.css">
 
-        <title>loginForm</title>
+        <title>Sign In</title>
     </head>
     <body class="loginForm">
         <div class="container">
@@ -57,9 +57,9 @@
             <div class="row"></div>
         </div>
         <!-- jQuery -->
-        <script src="/static/library/jquery-2.1.4.js"></script>
+        <script th:src="@{/library/jquery-2.1.4.js}" src="/static/library/jquery-2.1.4.js"></script>
         <!--부트 스트랩-->
-        <script src="/static/bootStrap/bootstrap.min.js"></script>
+        <script th:src="@{/bootStrap/bootstrap.min.js}" src="/static/bootStrap/bootstrap.min.js"></script>
         <!-- fontawesome -->
         <script th:src="@{/library/fontawesome/all.js}" src="/static/library/fontawesome/all.js"></script>
     </body>

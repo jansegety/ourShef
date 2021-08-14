@@ -1,0 +1,2 @@
+starPointSystemByClassForView("starPointSystem");
+reliabilitySystemByClass("reliabilitySystem");

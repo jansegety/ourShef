@@ -28,10 +28,14 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-	public List<Comment> getCommentListBySpot(Spot spot, int limit, int offset){
+	public List<Comment> getCommentListBySpot(Spot spot, Long limit, Long offset){
 	
 		return commentRepository.getCommentListBySpot(spot, limit, offset);
 	}
 	
+	public Long getAllConmentsNumBySpot(Spot spot) {
+		
+		return commentRepository.getAllConmentsNumBySpot(spot);
+	}
 	
 }

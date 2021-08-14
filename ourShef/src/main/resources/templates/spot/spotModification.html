@@ -6,22 +6,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!--부트 스트랩-->
-        <link rel="stylesheet" href="../../static/bootStrap/bootstrap-theme.css">
-        <link rel="stylesheet" href="../../static/bootStrap/bootstrap.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
 
         <!--fontawesome-->
-        <link rel="stylesheet" href="../../library/fontawesome/all.min.css">
+        <link rel="stylesheet" th:href="@{/fontawesome/all.min.css}" href="../../library/fontawesome/all.min.css">
 
         <!--css-->
-        <link rel="stylesheet" href="../../static/css/spotModification.css">
-        <link rel="stylesheet" href="../../static/common.css">
+        <link rel="stylesheet" th:href="@{/css/spotModification.css}" href="../../static/css/spotModification.css">
+        <link rel="stylesheet" th:href="@{/common.css}" href="../../static/common.css">
 
-        <title>spotRegisteration</title>
+        <title>Spot Modification</title>
     </head>
-    <body class="spotRegisteration">
+    <body>
         <form
             action="#none"
-            th:action="th:action"
+            th:action="''"
             method="post"
             enctype="multipart/form-data">
             <div class="container">
@@ -49,7 +49,7 @@
                                     type="file"
                                     accept=".jpg, .txt"
                                     name="main-img">
-                                <div class="text-danger" th:errors="${spotRegisterationForm.spotMainImg}">메인 사진 오류 메시지</div>
+                                <div class="text-danger" th:errors="${spotModificationForm.spotMainImg}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn-subGreen" type="button">메인 사진 변경</button>
                             </div>
                             <div class="img-button-frame">
@@ -60,7 +60,7 @@
                                     accept=".jpg, .txt"
                                     multiple="multiple"
                                     name="added-img">
-                                <div class="text-danger" th:errors="${spotRegisterationForm.spotAddedImgs}">추가 사진 오류 메시지</div>
+                                <div class="text-danger" th:errors="${spotModificationForm.spotAddedImgs}">추가 사진 오류 메시지</div>
                                 <button id="btn-added-imgs" class="btn-subGreen" type="button">추가 사진 변경</button>
                             </div>
                         </div>
@@ -68,19 +68,19 @@
                     <div class="col-md-4">
                         <div class="spot-info-area">
                             <div class="spot-name-frame">
-                                <div class="text-danger" th:errors="${spotRegisterationForm.spotName}">맛집 이름 오류</div>
+                                <div class="text-danger" th:errors="${spotModificationForm.spotName}">맛집 이름 오류</div>
                                 <input
-                                    th:value="${spotRegisterationForm.spotName}"
+                                    th:value="${spotModificationForm.spotName}"
                                     th:name="spotName"
                                     type="text"
                                     name="spot-name"
                                     placeholder="맛집 이름을 써주세요.">
                             </div>
                             <div class="spot-introduction-frame">
-                                <div class="text-danger" th:errors="${spotRegisterationForm.spotIntroduction}">맛집 소개 오류</div>
+                                <div class="text-danger" th:errors="${spotModificationForm.spotIntroduction}">맛집 소개 오류</div>
                                 <textarea
                                     th:name="spotIntroduction"
-                                    th:text="${spotRegisterationForm.spotIntroduction}"
+                                    th:text="${spotModificationForm.spotIntroduction}"
                                     name="spot-introduction"
                                     cols="45"
                                     rows="10"
@@ -89,7 +89,7 @@
                                     style="resize: none;"></textarea>
                             </div>
                             <div id="startPointSystem-i1" class="starPointSystem">
-                                <div class="text-danger" th:errors="${spotRegisterationForm.starPoint}">별점 시스템 오류</div>
+                                <div class="text-danger" th:errors="${spotModificationForm.starPoint}">별점 시스템 오류</div>
                                 <input
                                     th:name="starPoint"
                                     class="input-star-point"
@@ -133,14 +133,14 @@
             </div>
         </form>
         <!--JQuery-->
-        <script src="../../library/jquery-2.1.4.js"></script>
+        <script th:src="@{/library/jquery-2.1.4.js}" src="../../library/jquery-2.1.4.js"></script>
         <!--fontawesome-->
-        <script src="../../library/fontawesome/all.js"></script>
+        <script th:src="@{/library/fontawesome/all.js}" src="../../library/fontawesome/all.js"></script>
         <!--부트 스트랩-->
-        <script src="../../static/bootStrap/bootstrap.min.js"></script>
+        <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
         <!--cummon.js-->
-        <script src="../../static/common.js"></script>
+        <script th:src="@{/common.js}" src="../../static/common.js"></script>
         <!--specific-->
-        <script src="../../static/js/spotModification.js"></script>
+        <script th:src="@{/js/spotModification.js}" src="../../static/js/spotModification.js"></script>
     </body>
 </html>

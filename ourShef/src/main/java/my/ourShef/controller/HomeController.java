@@ -94,7 +94,7 @@ public class HomeController {
 		Long totalTupleNum = userService.getAcquaintanceSpotTotalNum(findUser);
 		SpotPager spotPager = new SpotPager(tupleNumByPage, pageNumByGroup, currentPage, totalTupleNum);
 		model.addAttribute("spotPager", spotPager);
-		Long offset = (currentPage-1)*pageNumByGroup; //because index is num-1
+		Long offset = (currentPage-1)*tupleNumByPage; //because index is num-1
 		
 		setRecentAquaintanceSpotDtoList(model, findUser, tupleNumByPage, offset);
 	}
@@ -159,6 +159,7 @@ public class HomeController {
 	private void setLoginUserDto(Model model, User findUser) {
 		LoginUserDto loginUserDto = new LoginUserDto();
 
+		loginUserDto.setId(findUser.getId());
 		loginUserDto.setNickName(findUser.getNickName());
 		loginUserDto.setIntroduction(findUser.getIntroduction());
 		loginUserDto.setReliability(findUser.getReliability());

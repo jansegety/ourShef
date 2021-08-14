@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!--부트 스트랩-->
-<link rel="stylesheet" href="../../static/bootStrap/bootstrap-theme.css">
-<link rel="stylesheet" href="../../static/bootStrap/bootstrap.css">
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
 
 <!--custom-->
-<link rel="stylesheet" href="../../static/common.css">
-<link rel="stylesheet" href="../../static/css/joinForm.css">
+<link rel="stylesheet" th:href="@{/common.css}" href="../../static/common.css">
+<link rel="stylesheet" th:href="@{/css/joinForm.css}" href="../../static/css/joinForm.css">
 
-<title>회원가입</title>
+<title>Sign Up</title>
 </head>
 <style>
 .error-border {
@@ -93,10 +93,10 @@
 		</div>
 	</form>
 	<!--부트 스트랩-->
-	<script src="../../static/bootStrap/bootstrap.min.js"></script>
+	<script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
 	<!--common.js-->
-	<script src="../../static/common.js"></script>
+	<script th:src="@{/common.js}" src="../../static/common.js"></script>
 	<!-- specific -->
-	<script src="../../static/js/joinForm.js"></script>
+	<script th:src="@{/js/joinForm.js}" src="../../static/js/joinForm.js"></script>
 </body>
 </html>

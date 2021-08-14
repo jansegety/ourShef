@@ -20,7 +20,6 @@ public class AcquaintanceContoller {
 	public String myAcquaintanceList(
 			@SessionAttribute(name=SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId)
 	{
-		System.out.println("여기 실행됨!!!!!!!!!!!!!!");
 		return "/acquaintance/acquaintanceList";
 	}
 }

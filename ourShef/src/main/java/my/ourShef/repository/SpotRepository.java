@@ -1,10 +1,12 @@
 package my.ourShef.repository;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +36,29 @@ public class SpotRepository {
 		Query nativeQuery = em.createNativeQuery("select count(sp.spot_id) from Spot sp where sp.registrant_id = ?");
 		nativeQuery.setParameter(1, user.getId());
 		return ((BigInteger)nativeQuery.getResultList().get(0)).longValue();
+	}
+	
+	public List<Spot> getAllRegisteredSpotsByUser(User user) {
+		TypedQuery<Spot> query = em.createQuery("select sp from Spot sp where sp.registrant = :user order by sp.id desc", Spot.class);
+		query.setParameter("user", user);
+		List<Spot> resultList = query.getResultList();
+		
+		return resultList;
+	}
+	
+	public List<Spot> getRegisteredSpotsByUserUsingPaging(User user, Long limit, Long offset){
+		TypedQuery<Spot> query = em.createQuery("select sp from Spot sp where sp.registrant = :user order by sp.id desc", Spot.class);
+		query.setParameter("user", user).setMaxResults(limit.intValue()).setFirstResult(offset.intValue());
+		
+		return query.getResultList();
+	}
+	
+	public Long getAllRegisteredSpotsNumByUser(User user) {
+		Query query = em.createQuery("select count(sp.id) from Spot sp where sp.registrant = :user");
+		query.setParameter("user", user);
+		List<Object> resultList = query.getResultList();
+		
+		return (Long)resultList.get(0);
 	}
 	
 

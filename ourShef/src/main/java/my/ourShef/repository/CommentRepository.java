@@ -25,11 +25,19 @@ public class CommentRepository {
 		return comment.getId(); 
 	}
 	
-	public List<Comment> getCommentListBySpot(Spot spot, int limit, int offset){
-		Query query = em.createNativeQuery("select * from comment c where c.commented_spot_id = ? limit ? offset ?", Comment.class);
+	public List<Comment> getCommentListBySpot(Spot spot, Long limit, Long offset){
+		Query query = em.createNativeQuery("select * from comment c where c.commented_spot_id = ? order by c.comment_id desc limit ? offset ?", Comment.class);
 		query.setParameter(1, spot.getId()).setParameter(2, limit).setParameter(3, offset);
 		List<Comment> resultList = query.getResultList();
 		return resultList;
+	}
+	
+	public Long getAllConmentsNumBySpot(Spot spot) {
+		Query query = em.createQuery("select count(cm.id) from Comment cm where cm.commentedSpot = :spot");
+		query.setParameter("spot", spot);
+		List<Object> resultList = query.getResultList();
+		
+		return (Long)resultList.get(0);
 	}
 	
 	
