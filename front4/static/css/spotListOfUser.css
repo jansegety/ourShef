@@ -1,0 +1,62 @@
+/* #################################### spotListOfUser ############################################## */
+
+/* visitor info */
+.visitor-info{
+  width: 200px;
+  margin: auto;
+}
+.visitor-info > div {
+  margin-top: 20px;
+}
+.visitor-info img{
+  width: 130px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
+
+.nick-name{
+	text-align: center;
+	font-size: 17px;
+}
+
+.reliabilitySystem {
+	margin: auto;
+}
+
+/* spots */
+.spot-area {
+  margin-top: 50px;
+}
+
+.spots-wrapper{
+  overflow: hidden;
+}
+
+.spot-info {
+  float: left;
+  width: 170px;
+  padding: 10px;
+}
+.spot-info img{
+  width: 150px;
+  display: block;
+  margin: auto;
+}
+.spot-info > div{
+  margin-top: 5px;
+}
+
+.spot-name {
+	font-size: 17px;
+}
+
+.pager-container-wrapper {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.footer {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}

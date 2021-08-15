@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--부트 스트랩-->
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
+
+        <!--fontawesome-->
+        <link rel="stylesheet" th:href="@{/fontawesome/all.min.css}" href="../../library/fontawesome/all.min.css">
+
+        <!--css-->
+        <link rel="stylesheet" th:href="@{/css/spotModification.css}" href="../../static/css/spotModification.css">
+        <link rel="stylesheet" th:href="@{/common.css}" href="../../static/common.css">
+
+        <title>Spot Modification</title>
+    </head>
+    <body>
+        <form
+            action="#none"
+            th:action="''"
+            method="post"
+            enctype="multipart/form-data">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8">
+                        <h3 class="text-primary">맛집 수정</h3>
+                    </div>
+                    <div class="col-xs-2"></div>
+                </div>
+                <div class="row main-row">
+                    <div class="col-md-4 spot-imgs-area">
+                        <!-- <div class="spot-imgs-area"> <div class="spot-img-frame"><img
+                        class="spot-img demo-img" alt="장소 사진"></div> </div> -->
+                    </div>
+                    <div class="col-md-4 main-col">
+                        <div>
+                            <img class="demo-img" id="main-spot-img" alt="" onchange="loadFile(e)">
+                        </div>
+                        <div>
+                            <div class="img-button-frame">
+                                <input
+                                    th:name="spotMainImg"
+                                    id="input-main-img"
+                                    type="file"
+                                    accept=".jpg, .txt"
+                                    name="main-img">
+                                <div class="text-danger" th:errors="${spotModificationForm.spotMainImg}">메인 사진 오류 메시지</div>
+                                <button id="btn-main-img" class="btn-subGreen" type="button">메인 사진 변경</button>
+                            </div>
+                            <div class="img-button-frame">
+                                <input
+                                    th:name="spotAddedImgs"
+                                    id="input-added-imgs"
+                                    type="file"
+                                    accept=".jpg, .txt"
+                                    multiple="multiple"
+                                    name="added-img">
+                                <div class="text-danger" th:errors="${spotModificationForm.spotAddedImgs}">추가 사진 오류 메시지</div>
+                                <button id="btn-added-imgs" class="btn-subGreen" type="button">추가 사진 변경</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="spot-info-area">
+                            <div class="spot-name-frame">
+                                <div class="text-danger" th:errors="${spotModificationForm.spotName}">맛집 이름 오류</div>
+                                <input
+                                    th:value="${spotModificationForm.spotName}"
+                                    th:name="spotName"
+                                    type="text"
+                                    name="spot-name"
+                                    placeholder="맛집 이름을 써주세요.">
+                            </div>
+                            <div class="spot-introduction-frame">
+                                <div class="text-danger" th:errors="${spotModificationForm.spotIntroduction}">맛집 소개 오류</div>
+                                <textarea
+                                    th:name="spotIntroduction"
+                                    th:text="${spotModificationForm.spotIntroduction}"
+                                    name="spot-introduction"
+                                    cols="45"
+                                    rows="10"
+                                    placeholder="400자 이내의 짦은 맛집 소개를 써주세요."
+                                    maxlength="400"
+                                    style="resize: none;"></textarea>
+                            </div>
+                            <div id="startPointSystem-i1" class="starPointSystem">
+                                <div class="text-danger" th:errors="${spotModificationForm.starPoint}">별점 시스템 오류</div>
+                                <input
+                                    th:name="starPoint"
+                                    class="input-star-point"
+                                    type="text"
+                                    value="10"
+                                    required="required">
+                                <div class="star-point-area">
+                                    <div class="star-front"></div>
+                                    <div class="star-back"></div>
+                                    <div class="click-areas">
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                        <div class="click-area"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row footer">
+                    <div class="col-md-1"></div>
+                    <div class="col-xs-7 col-md-2">
+                        <button class="btn-shefGreen" type="button" onclick="location.href='/'">홈으로</button>
+                    </div>
+                    <div class="col-md-6"></div>
+                    <div class="col-xs-5 col-md-2">
+                        <button class="btn-shefGreen" type="submit">수정하기</button>
+                        <button class="btn-shefGreen btn-delete" type="button" 
+                        onclick="location.href='/'">삭제하기</button>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </form>
+        <!--JQuery-->
+        <script th:src="@{/library/jquery-2.1.4.js}" src="../../library/jquery-2.1.4.js"></script>
+        <!--fontawesome-->
+        <script th:src="@{/library/fontawesome/all.js}" src="../../library/fontawesome/all.js"></script>
+        <!--부트 스트랩-->
+        <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
+        <!--cummon.js-->
+        <script th:src="@{/common.js}" src="../../static/common.js"></script>
+        <!--specific-->
+        <script th:src="@{/js/spotModification.js}" src="../../static/js/spotModification.js"></script>
+    </body>
+</html>

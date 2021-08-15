@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500</title>
+
+  <!-- common -->
+  <link rel="stylesheet" th:href="@{/common.css}" href="/static/common.css">
+  <!-- specific -->
+  <link rel="stylesheet" th:href="@{/css/404.css}" href="/static/css/404.css">
+</head>
+<body>
+  <img th:src="@{/img/shefMarkError.png}" src="/static/img/shefMarkError.png">
+  <div class="text-shefGreen">서버에 오류가 발생하였습니다.</div>
+  <script th:src="@{/common.js}" src="/static/common.js"></script>
+</body>
+</html>

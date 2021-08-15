@@ -1,6 +1,7 @@
 package my.ourShef.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Query;
 
@@ -28,14 +29,22 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
+	public Optional<Comment> findById(Long commentId){
+		return commentRepository.findById(commentId);
+	}
+	
+	public void delete(Comment comment) {
+		commentRepository.delete(comment);
+	}
+	
 	public List<Comment> getCommentListBySpot(Spot spot, Long limit, Long offset){
 	
 		return commentRepository.getCommentListBySpot(spot, limit, offset);
 	}
 	
-	public Long getAllConmentsNumBySpot(Spot spot) {
+	public Long getAllCommentsNumBySpot(Spot spot) {
 		
-		return commentRepository.getAllConmentsNumBySpot(spot);
+		return commentRepository.getAllCommentsNumBySpot(spot);
 	}
 	
 }

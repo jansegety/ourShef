@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class CommentDto {
+	Long commentId;
+	Long commentUserId;
 	String commentUserNickName;
 	String commentUserProfileImgStoreName;
 	float starPoint;

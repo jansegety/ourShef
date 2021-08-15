@@ -25,8 +25,7 @@ function fileExtensionCheck(fileObj, extensionList) {
 	return check
 }
 
-/////// StarPointSystem Function start///////
-/////for Id/////
+/////// StarPointSystem Function start/////// ///By Id/////
 function starPointSystem(starPointSystemId) {
 
 	const spsElement = document.getElementById(starPointSystemId);
@@ -61,34 +60,72 @@ function starPointSystem(starPointSystemId) {
 
 	}
 }
+//By Class
+function starPointSystemByClass(starPointSystemClass) {
+
+	let starPointSystemList = document.getElementsByClassName(starPointSystemClass);
+
+	for (let i = 0; i < starPointSystemList.length; i++) {
+		const spsElement = starPointSystemList[i];
+
+		//point with click on the Star point System
+		let arrNum = spsElement
+			.getElementsByClassName("click-area")
+			.length;
+		for (var j = 0; j < arrNum; j++) {
+			// i is click-area index use Closer
+			setEventListenerPointByClick(j);
+		}
+
+		function setEventListenerPointByClick(idx) {
+
+			var temp = spsElement.getElementsByClassName("click-area")[idx];
+			temp.addEventListener("click", update, false);
+
+			function update(event) {
+				//updat input value
+				var score = (idx + 1) * 10;
+				spsElement
+					.getElementsByClassName("input-star-point")[0]
+					.value = score;
+
+				//star pointer point link with input value
+				let starFront = spsElement.getElementsByClassName("star-front")[0];
+				starFront.style.width = score + "%";
+
+				event.stopPropagation();
+			}
+
+		}
+
+	}
+
+}
+
 /////By Class For View/////
 function starPointSystemByClassForView(starPointSystemClass) {
 
 	const spsElements = document.getElementsByClassName(starPointSystemClass);
 
 	for (let i = 0; i < spsElements.length; i++) {
-		
-		const inputElement = spsElements[i].getElementsByClassName(
-			"input-star-point"
-		)[0];
+
+		const inputElement = spsElements[i].getElementsByClassName("input-star-point")[0];
 		const frontStarBar = spsElements[i].getElementsByClassName("star-front")[0];
 		let frontStarSize = inputElement.value;
 
-		if(frontStarSize == -1)
+		if (frontStarSize == -1)
 			frontStarBar.style.width = "50%";
 
 		frontStarBar.style.width = frontStarSize + "%";
 
 	}
 
-
 }
-
 
 /*// ///// StarPointSystem Function end///////*/
 /////////////reliabilitySystem Start////////////
 /*// HTM을 받는 순간 변화시킨다. event listener가 아니다.*/
-///////////// for Id ///////////////////////
+///////////// for Id /////////////////////
 function reliabilitySystem(reliablilitySystemId) {
 	const relElement = document.getElementById(reliablilitySystemId);
 	const inputElement = relElement.getElementsByClassName(
@@ -110,8 +147,7 @@ function reliabilitySystem(reliablilitySystemId) {
 ////////////for Class////////////////
 function reliabilitySystemByClass(reliablilitySystemClass) {
 	const relElements = document.getElementsByClassName(reliablilitySystemClass);
-	
-	
+
 	for (let i = 0; i < relElements.length; i++) {
 		const inputElement = relElements[i].getElementsByClassName(
 			"input-reliability-size"
@@ -130,23 +166,39 @@ function reliabilitySystemByClass(reliablilitySystemClass) {
 		frontBar.style.width = reliabilitySize + "%";
 	}
 }
-///////////////reliabilitySystem End//////////////
-
-//////////////////showHideSystem///////////////////
-function showHideSystem(wrapperClass, buttonClass, detailClass){
-	let wrapperClassElement = document.getElementsByClassName(wrapperClass)[0];
+// /////////////reliabilitySystem End//////////////
+// ////////////////showHideSystem///////////////////
+function showHideSystem(wrapperClass, buttonClass, detailClass) {
 	
+	let wrapperClassElementList = document.getElementsByClassName(wrapperClass);
 
-	
-	let buttonClassElement = wrapperClassElement.getElementsByClassName(buttonClass)[0];
+	for (let i=0; i < wrapperClassElementList.length; i++) {
+
+		let wrapperClassElement = wrapperClassElementList[i];
+
+		let buttonClassElement = wrapperClassElement.getElementsByClassName(buttonClass)[0];
+		
+		
+		
+		//check if there is no button
+		if (buttonClassElement == null)
+			continue;
+		
+		buttonClassElement.onclick = showHideWrapperFunction(wrapperClassElement);
+
+		function showHideWrapperFunction(wrapperClassElement) {
+			return function showHide() {
+				
+				
+				wrapperClassElement
+					.getElementsByClassName(detailClass)[0]
+					.click();
+			}
+		}
 
 
-	console.log(buttonClassElement);
-	buttonClassElement.onclick= showHide;
-
-	function showHide(){
-		console.log("실행됨");
-		document.getElementsByClassName(detailClass)[0].click();
 	}
+
+
 }
 //////////////////showHideSystem end///////////////////

@@ -52,9 +52,9 @@
 							</div>
 						</div>
 					</div>
-					<div th:if="${spotDetailDto.usersStarPoint} == -1">방문 지인 없음</div>
-					<div th:if="${spotDetailDto.usersStarPoint} != -1"
-						class="users-star-point-frame">
+					<div th:if="${spotDetailDto.usersStarPoint} == -1">
+                                            방문 지인 없음</div>
+					<div th:if="${spotDetailDto.usersStarPoint} != -1" class="users-star-point-frame">
 						<div>지인들 평점</div>
 						<div class="starPointSystem">
 							<input class="input-star-point"
@@ -98,36 +98,32 @@
 							</div>
 							<div class="text-frame">
 								<details>
-									<summary class="comment-summary"
-										th:text="${commentDto.commentSummary}">Lorem ipsum
-										dolor sit amet consectetur adipisicing elit. Iure laborum
-										quasi mollitia. </summary>
-									<div class="comment-detail" th:text="${commentDto.commentDetail}">Fugit adipisci
+									<summary class="comment-summary" th:text="${commentDto.commentSummary}">Lorem
+										ipsum dolor sit amet consectetur adipisicing elit. Iure
+										laborum quasi mollitia. </summary>
+									<div th:text="${commentDto.commentDetail}">Fugit adipisci
 										nostrum recusandae ex placeat deserunt, optio aliquid</div>
 									<div class="registered-time-frame">
-										<div class="registered-time"
-											th:text="${#temporals.format(commentDto.registeredTime, 'yyyy-MM-dd hh:mm')}">2000-10-15
-											11:00</div>
-										<div th:if="${commentDto.commentUserId}==${loginUserId}"
-											class="btn-frame">
+										<div
+										class="registered-time"
+										th:text="${#temporals.format(commentDto.registeredTime, 'yyyy-MM-dd hh:mm')}">2000-10-15
+										11:00</div>
+										<div class="btn-frame">
 											<button class="btn-modification btn-subGreen" type="button">수정</button>
-											<form th:class="form-delete" th:action="@{/comment/delete}" method="post">
-											<input th:name="commentId" type="text" th:value="${commentDto.commentId}" hidden="hidden">	
-											<button class="btn-delete-comment btn-subGreen" type="button">삭제</button>
-											</form>
+											<button class="btn-delete-comment btn-subGreen"
+											type="submit">삭제</button>
 										</div>
 									</div>
 								</details>
 							</div>
-							<details class="details-comment-modification" th:if="${commentDto.commentUserId}==${loginUserId}">
-								<summary class="summary-comment-modification"></summary>
-								<div class="modification-frame">
+							<div class="modification-frame">
+								<details>
+									<summary class="summary-comment-modification"></summary>
 									<form>
 										<div>
-											<div
-												class="comment-modification-starPointSystem starPointSystem">
-												<input th:name="starPoint" class="input-star-point"
-													type="text" value="10" required="required">
+											<div class="comment-modification-starPointSystem starPointSystem">
+												<input th:name="starPoint" class="input-star-point" type="text"
+													value="10" required="required">
 												<div class="star-point-area">
 													<div class="star-front"></div>
 													<div class="star-back"></div>
@@ -147,17 +143,17 @@
 											</div>
 										</div>
 										<div>
-											<textarea name="" cols="40" rows="5" maxlength="200">써져있던 내용</textarea>
+											<textarea name="" cols="40" rows="5"
+											maxlength="200">써져있던 내용</textarea>
 										</div>
 										<div>
 											<button class="btn-modification-comment btn-subGreen"
-												type="submit">적용</button>
-											<button class="btn-modification-cancel btn-subGreen"
-												type="button">취소</button>
+											type="submit">적용</button>
+											<button class="btn-modification-cancel btn-subGreen" type="button">취소</button>
 										</div>
 									</form>
-								</div>
-							</details>
+								</details>
+							</div>
 						</div>
 						<div class="comment-bottom">
 							<div class="nickname-frame"
@@ -209,9 +205,9 @@
 					<button class="btn-leave-comment btn-subGreen">댓글 남기기</button>
 					<details>
 						<summary class="summary"></summary>
-						<form th:action="@{/comment/post}" method="post" th:object="${commentForm}">
+						<form>
 							<div>
-								<input th:name="spotId" type="text" th:value="${spotDetailDto.id}" hidden="hidden">								
+								<input type="text" hidden="hidden">
 							</div>
 							<div>
 								<div id="starPointSystem-i1" class="starPointSystem">
@@ -236,11 +232,11 @@
 								</div>
 							</div>
 							<div>
-								<textarea th:name="comment" id="" cols="40" rows="5"
+								<textarea name="" id="" cols="40" rows="5"
 									placeholder="200자 이내의 짦은 댓글을 남겨보세요" maxlength="200"></textarea>
 							</div>
 							<div>
-								<button class="btn-leave-comment2 btn-subGreen" type="submit">입력</button>
+								<button class="btn-leave-comment2 btn-subGreen">입력</button>
 							</div>
 						</form>
 					</details>
@@ -280,12 +276,12 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-3 footer">
-				<button class="btn-shefGreen" type="button"
-					onclick="location.href='/'">로그인 홈</button>
-				<button th:if="${spotDetailDto.registrantId} == ${loginUserId}"
-					type="button"
-					th:onclick="|location.href='@{/spot/modification/{spotId}(spotId = ${spotDetailDto.id})}'|"
-					class="btn-shefGreen">수정하기</button>
+				<button class="btn-shefGreen" type="button" onclick="location.href='/'">로그인 홈</button>
+				<button
+				th:if="${spotDetailDto.registrantId} == ${loginUserId}"
+				type="button"
+				th:onclick="|location.href='@{/spot/modification/{spotId}(spotId = ${spotDetailDto.id})}'|"
+				class="btn-shefGreen">수정하기</button>
 			</div>
 		</div>
 	</div>

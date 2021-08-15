@@ -33,6 +33,7 @@ import my.ourShef.controller.dto.RegistrantDto;
 import my.ourShef.controller.dto.SpotDetailDto;
 import my.ourShef.controller.dto.UserSpotListSpotDto;
 import my.ourShef.controller.dto.UserSpotListUserDto;
+import my.ourShef.controller.form.CommentForm;
 import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
 import my.ourShef.controller.pager.SpotPager;
@@ -136,6 +137,7 @@ public class SpotController {
 	@Transactional
 	@GetMapping("/spot/{spotId}")
 	public String spotDetail(
+			@ModelAttribute CommentForm commentForm,
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
 			@RequestParam(value = "page", defaultValue = "1") Long page, @PathVariable("spotId") String spotId,
 			Model model) {
@@ -149,6 +151,9 @@ public class SpotController {
 		setRegistrantDto(model, spot.getRegistrant());
 		setSpotDetailDto(model, spot);
 		setCommentDtoListAndPager(model, spot, 5L, 5L, page);
+		
+		
+		model.addAttribute("commentForm", new CommentForm());
 
 		return "spot/spot";
 	}
@@ -239,7 +244,7 @@ public class SpotController {
 
 	private void setCommentDtoListAndPager(Model model, Spot spot, Long tupleNumByPage, Long pageNumByGroup,
 			Long currentPage) {
-		Long totalTupleNum = commentService.getAllConmentsNumBySpot(spot);
+		Long totalTupleNum = commentService.getAllCommentsNumBySpot(spot);
 		SpotPager commentPager = new SpotPager(tupleNumByPage, pageNumByGroup, currentPage, totalTupleNum);
 		model.addAttribute("commentPager", commentPager);
 
@@ -255,7 +260,9 @@ public class SpotController {
 
 		for (Comment comment : commentList) {
 			CommentDto commentDto = new CommentDto();
+			commentDto.setCommentId(comment.getId());
 			commentDto.setCommentUserNickName(comment.getCommentUser().getNickName());
+			commentDto.setCommentUserId(comment.getCommentUser().getId());
 			commentDto
 					.setCommentUserProfileImgStoreName(comment.getCommentUser().getProfileImgInfo().getStoreFileName());
 

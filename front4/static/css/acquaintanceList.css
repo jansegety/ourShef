@@ -1,0 +1,86 @@
+/* ########################## acquaintanceList ############################# */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul img {
+  width: 90px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 5px;
+}
+
+ul li {
+  height: 100px;
+  width: 400px;
+  border-radius: 16px;
+  border-bottom: 1px solid gray;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  margin-top: 2px;
+}
+
+ul span {
+  display: inline-block;
+  /* border: 1px solid red; */
+  height: 100px;
+  vertical-align: top;
+  margin: 0 5px;
+}
+ul .user-info {
+  line-height: 100px;
+}
+
+.input-wrapper{
+  line-height: 100px;
+}
+
+.input-delete{
+  transform: scale(1.2);
+  display: none;
+}
+
+.nickName {
+  font-size: 16px;
+  /* border: 1px solid red; */
+  width: 100px;
+}
+
+.reliabilitySystem{
+  margin: auto;
+}
+
+ul .wrapper {
+  /* border: 1px solid red; */
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+
+ul .btn-frame {
+  line-height: 100px;
+}
+
+.btns {
+  text-align: center;
+}
+
+.message-component-wrapeer {
+  display: inline-block;
+  position: relative;
+}
+.new-message-pop{
+  position: absolute;
+  top: -10px;
+  left: -5px;
+  color:rgb(255, 255, 255);
+  background-color: rgb(255, 158, 113);
+  box-shadow: 0 0 4px rgb(255, 241, 241);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 23px;
+  text-align: center;
+  font-weight:500;
+}
