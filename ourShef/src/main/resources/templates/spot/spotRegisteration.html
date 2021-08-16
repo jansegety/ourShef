@@ -70,6 +70,7 @@
                             <div class="spot-name-frame">
                                 <div class="text-danger" th:errors="${spotRegisterationForm.spotName}">맛집 이름 오류</div>
                                 <input
+                                	maxlength="20"
                                     th:value="${spotRegisterationForm.spotName}"
                                     th:name="spotName"
                                     type="text"

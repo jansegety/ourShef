@@ -7,14 +7,20 @@ import org.hibernate.validator.constraints.Range;
 
 import lombok.Data;
 
-
 @Data
-public class CommentForm {
-
+public class CommentModificationForm {
+	
+	
+	Long CommentId;
+	
 	Long spotId;
 	
+	
 	@Range(min = 10, max =100)
-	float starPoint;
+	float oldStarPoint;
+	
+	@Range(min = 10, max =100)
+	float newStarPoint;
 	
 	@Size(max=200)
 	String comment;

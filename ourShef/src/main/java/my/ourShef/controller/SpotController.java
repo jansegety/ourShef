@@ -34,6 +34,7 @@ import my.ourShef.controller.dto.SpotDetailDto;
 import my.ourShef.controller.dto.UserSpotListSpotDto;
 import my.ourShef.controller.dto.UserSpotListUserDto;
 import my.ourShef.controller.form.CommentForm;
+import my.ourShef.controller.form.CommentModificationForm;
 import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
 import my.ourShef.controller.pager.SpotPager;
@@ -137,7 +138,6 @@ public class SpotController {
 	@Transactional
 	@GetMapping("/spot/{spotId}")
 	public String spotDetail(
-			@ModelAttribute CommentForm commentForm,
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
 			@RequestParam(value = "page", defaultValue = "1") Long page, @PathVariable("spotId") String spotId,
 			Model model) {
@@ -152,8 +152,6 @@ public class SpotController {
 		setSpotDetailDto(model, spot);
 		setCommentDtoListAndPager(model, spot, 5L, 5L, page);
 		
-		
-		model.addAttribute("commentForm", new CommentForm());
 
 		return "spot/spot";
 	}

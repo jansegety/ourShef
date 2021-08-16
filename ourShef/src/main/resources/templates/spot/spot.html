@@ -122,11 +122,13 @@
 							<details class="details-comment-modification" th:if="${commentDto.commentUserId}==${loginUserId}">
 								<summary class="summary-comment-modification"></summary>
 								<div class="modification-frame">
-									<form>
+									<form th:action="@{/comment/modify}" method="post">
 										<div>
 											<div
 												class="comment-modification-starPointSystem starPointSystem">
-												<input th:name="starPoint" class="input-star-point"
+												<input
+												th:value="${commentDto.starPoint}" 
+												th:name="newStarPoint" class="input-star-point"
 													type="text" value="10" required="required">
 												<div class="star-point-area">
 													<div class="star-front"></div>
@@ -147,7 +149,12 @@
 											</div>
 										</div>
 										<div>
-											<textarea name="" cols="40" rows="5" maxlength="200">써져있던 내용</textarea>
+											<input th:name="commentId" type="text" th:value="${commentDto.commentId}" hidden="hidden">	
+											<input th:name="spotId" type="text" th:value="${spotDetailDto.id}" hidden="hidden">
+											<input th:name="oldStarPoint" type="text" th:value="${commentDto.starPoint}" hidden="hidden">	
+											<textarea
+											th:text="(${commentDto.commentSummary}?:'')+(${commentDto.commentDetail}?:'')" 
+											th:name="comment" cols="40" rows="5" maxlength="200">써져있던 내용</textarea>
 										</div>
 										<div>
 											<button class="btn-modification-comment btn-subGreen"
@@ -209,7 +216,7 @@
 					<button class="btn-leave-comment btn-subGreen">댓글 남기기</button>
 					<details>
 						<summary class="summary"></summary>
-						<form th:action="@{/comment/post}" method="post" th:object="${commentForm}">
+						<form th:action="@{/comment/post}" method="post">
 							<div>
 								<input th:name="spotId" type="text" th:value="${spotDetailDto.id}" hidden="hidden">								
 							</div>
@@ -237,7 +244,7 @@
 							</div>
 							<div>
 								<textarea th:name="comment" id="" cols="40" rows="5"
-									placeholder="200자 이내의 짦은 댓글을 남겨보세요" maxlength="200"></textarea>
+									maxlength="200" placeholder="200자 이내의 짦은 댓글을 남겨보세요" ></textarea>
 							</div>
 							<div>
 								<button class="btn-leave-comment2 btn-subGreen" type="submit">입력</button>

@@ -99,6 +99,8 @@ public class LoginContoller {
 		//성공 로직
 		User user = new User(joinForm.getJoinFormAccountId());
 		user.setPassword(joinForm.getJoinFormPassword());
+		user.setNickName(joinForm.getJoinFormNickName());
+		user.setIntroduction(joinForm.getJoinFormSelfIntroduction());
 		
 		//USER_PROFILE_IMG 경로에 프로필 이미지 저장
 		UploadFileInfo storeFile = fileStore.storeFile(joinForm.getJoinFormProfileImgFile(), FilePath.USER_PROFILE_IMG); 

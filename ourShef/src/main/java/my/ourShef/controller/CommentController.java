@@ -2,8 +2,11 @@ package my.ourShef.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.SessionConst;
 import my.ourShef.controller.form.CommentForm;
+import my.ourShef.controller.form.CommentModificationForm;
 import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.User;
@@ -38,7 +42,15 @@ public class CommentController {
 	@PostMapping("/post")
 	public String postComment(
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
-			@ModelAttribute CommentForm commentForm) {
+			@Valid @ModelAttribute CommentForm commentForm, BindingResult bindingResult) {
+		
+		//검증에 실패하면 다시 입력 폼으로
+		if(bindingResult.hasErrors()) {
+			log.info("errors={} ", bindingResult);
+			return "redirect:/spot/spot/" + commentForm.getSpotId();
+		}
+		
+		//성공 로직
 
 		User commentUser = userService.findByAccountId(LoginUserAccountId).get();
 		Spot commentedSpot = spotService.findById(commentForm.getSpotId()).get();
@@ -122,6 +134,52 @@ public class CommentController {
 
 		return "redirect:/spot/spot/"+commentedSpot.getId();
 	}
+	
+	
+	@Transactional
+	@PostMapping("/modify")
+	public String modifyComment(@Valid @ModelAttribute CommentModificationForm commentModificationForm, BindingResult bindingResult) {
+		
+		//검증에 실패하면 다시 입력 폼으로
+		if(bindingResult.hasErrors()) {
+			log.info("errors={} ", bindingResult);
+			return "redirect:/spot/spot/" + commentModificationForm.getSpotId();
+		}
+		
+		//성공 로직
+		
+		Spot commentedSpot = spotService.findById(commentModificationForm.getSpotId()).get();
+
+		Comment commentToBeModified = commentService.findById(commentModificationForm.getCommentId()).get();
+
+		commentToBeModified.setComment(commentModificationForm.getComment());
+		commentToBeModified.setStarPoint(commentModificationForm.getNewStarPoint());
+
+		// Update Average Star Point and Registrant's Reliability
+		Long oldVisits = commentedSpot.getVisits();
+		float oldUsersStarPoint = commentedSpot.getUsersStarPoint();
+
+	    float oldAllStarPoint = (oldUsersStarPoint * oldVisits);
+	    float starPointChange = commentModificationForm.getNewStarPoint()-commentModificationForm.getOldStarPoint();
+	    float newAllStarPoint = oldAllStarPoint + starPointChange;
+	    Long newVisits = oldVisits; //old new same
+
+		float newAverageStarPoint = newAllStarPoint / newVisits;
+
+		// update visits
+		commentedSpot.setVisits(newVisits);
+		// update usersStarPoint
+		commentedSpot.setUsersStarPoint(newAverageStarPoint);
+
+		// Registrant's reliability updates every time a comment is posted
+		// Average userStarPoint should be updated.
+		updateRegistrantReliability(commentedSpot);
+		
+		return "redirect:/spot/spot/"+commentModificationForm.getSpotId();
+	}
+	
+	
+	
 
 	/*
 	 * Registrant's reliability updates every time a comment is posted

@@ -43,7 +43,7 @@ public class FileStore {
 		List<UploadFileInfo> storeFileResult = new ArrayList<>();
 		
 		for (MultipartFile multipartFile : multipartFiles) {
-			if (!multipartFiles.isEmpty()) {
+			if (!multipartFile.isEmpty()) {
 				storeFileResult.add(storeFile(multipartFile, fileDirPath));
 			}
 		}

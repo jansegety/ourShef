@@ -47,7 +47,7 @@
 					<p>
 					<div class="text-danger" th:errors="*{joinFormAccountId}">아이디
 						오류 메시지</div>
-						<input th:field="*{joinFormAccountId}" type="text"
+						<input maxlength="20" th:field="*{joinFormAccountId}" type="text"
 							placeholder="아이디" th:errorclass="error-border">
 					</p>
 					<div th:if="${#fields.hasGlobalErrors()}">
@@ -59,19 +59,19 @@
 					<p>
 						<div class="text-danger" th:errors="*{joinFormPassword}">패스워드
 						오류 메시지</div>
-						<input th:field="*{joinFormPassword}" type="password"
+						<input maxlength="16" th:field="*{joinFormPassword}" type="password"
 							placeholder="비밀번호" th:errorclass="error-border">
 
 					</p>
 					
 					<p>
-						<input th:field="*{joinFormConfirmPassword}" type="password"
+						<input maxlength="16" th:field="*{joinFormConfirmPassword}" type="password"
 							placeholder="비밀번호 확인" th:errorclass="error-border">
 					</p>
 								
 					<p>
 					<div class="text-danger" th:errors="*{joinFormNickName}">닉네임 오류 메시지</div>
-						<input th:field="*{joinFormNickName}" type="text" placeholder="닉네임"
+						<input maxlength="20" th:field="*{joinFormNickName}" type="text" placeholder="닉네임"
 							th:errorclass="error-border">
 					</p>
 					

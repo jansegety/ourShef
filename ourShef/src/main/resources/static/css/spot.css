@@ -2,6 +2,7 @@
 .text-head {
 	text-align: center;
 	margin: 30px 0;
+	padding: 20px 40px 10px 40px;
 }
 
 #main-spot-img {
@@ -13,6 +14,10 @@
 .spot-info-warapper>div {
 	padding: 5px 20px;
 	font-size: 16px;
+}
+
+.spot-introduction {
+	word-break: break-all;
 }
 
 .spot-image-area img {

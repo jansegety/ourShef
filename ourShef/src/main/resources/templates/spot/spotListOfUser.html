@@ -25,10 +25,11 @@
 </head>
 <body class="spotListOfUser">
 	<div class="container">
-		<div class="row text-center text-primary">
-			<h3 class="text-shefGreen"
-				th:text="|${userSpotListUserDto.nickName}의 맛집 리스트!|">XXX의 맛집
-				리스트 입니다!</h3>
+		<div class="row text-center">
+			<div class="col-md-8 col-xs-8 text-shefGreen head-text-top-frame">
+				<div th:text="|${userSpotListUserDto.nickName}의|">XXX의</div>
+				<div>맛집 리스트!</div>	
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-1"></div>
@@ -64,8 +65,7 @@
 				<div class="spots-wrapper">
 					<div th:each="spot : ${userSpotListSpotDtoList}" class="spot-info">
 						<div>
-							<a th:href="@{/spot/spot/{spotId}(spotId=${spot.id})}">
-								<img
+							<a th:href="@{/spot/spot/{spotId}(spotId=${spot.id})}"> <img
 								th:src="@{/img/spotMain/{storeName}(storeName=${spot.mainImgStoreName})}"
 								th:class="''" class="demo-img" alt="장소 사진">
 							</a>
@@ -85,9 +85,9 @@
 								</div>
 							</div>
 						</div>
-						<div th:if="${spot.usersStarPoint} == -1">
-                                            방문 지인 없음</div>
-						<div th:if="${spot.usersStarPoint} != -1" class="users-star-point-frame">
+						<div th:if="${spot.usersStarPoint} == -1">방문 지인 없음</div>
+						<div th:if="${spot.usersStarPoint} != -1"
+							class="users-star-point-frame">
 							<div>지인들 평점</div>
 							<div class="starPointSystem">
 								<input th:value="${spot.usersStarPoint}"
@@ -109,8 +109,9 @@
 				<div class="pager-container-wrapper">
 					<div th:object="${userSpotPager}" class="pager-container">
 						<div class="pager-arrow">
-							<a th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{leftPage})}"> <i
-								class="fas fa-chevron-left"></i>
+							<a
+								th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{leftPage})}">
+								<i class="fas fa-chevron-left"></i>
 							</a>
 						</div>
 						<div class="page-container">
@@ -123,8 +124,9 @@
 							</div>
 						</div>
 						<div class="pager-arrow">
-							<a th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{rightPage})}"> <i
-								class="fas fa-chevron-right"></i>
+							<a
+								th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{rightPage})}">
+								<i class="fas fa-chevron-right"></i>
 							</a>
 						</div>
 						<div class="pager-navigator"

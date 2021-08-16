@@ -67,9 +67,15 @@ public class HomeController {
 	}
 	
 	@GetMapping("/loginHome")
-	public String loginHomeByPage(@RequestParam("page") Long page,
+	public String loginHomeByPage(@RequestParam(value="page", required=false) Long page,
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
 			Model model) {
+		
+		//If connect without parameter page
+		if(page==null)
+		{
+			return "redirect:/"; 
+		}
 		
 		// Get user entity from DB
 		Optional<User> findUserOptional = userService.findByAccountId(LoginUserAccountId);
@@ -85,6 +91,8 @@ public class HomeController {
 		// setting RecentAquaintanceSpotsList
 		// default tupleNumByPage=10 pageNumByGroup=5 currentPage= 1
 		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 10L, 5L, page);
+		
+		
 		
 		return "login/loginHome";
 	}
@@ -154,6 +162,7 @@ public class HomeController {
 
 			model.addAttribute("loginUserRecentSpotDto", loginUserRecentSpotDto);
 		}
+		
 	}
 
 	private void setLoginUserDto(Model model, User findUser) {

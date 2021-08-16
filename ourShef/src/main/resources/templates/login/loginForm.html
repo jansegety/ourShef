@@ -33,14 +33,14 @@
 					</div>
                 		<div class="text-danger" th:errors="*{loginFormId}"></div>
                         <div>
-                            <input id="loginFormId" type="text" placeholder="id" name="" th:field="*{loginFormId}">
+                            <input maxlength="20" id="loginFormId" type="text" placeholder="id" name="" th:field="*{loginFormId}">
                             <label for="loginFormId">
                                 <i class="fas fa-user"></i>
                             </label>
                         </div>
                        	<div class="text-danger" th:errors="*{loginFormPassword}"></div>
                         <div>
-                            <input id="loginFormPassword" type="password" placeholder="password" name="" th:field="*{loginFormPassword}">
+                            <input maxlength="16" id="loginFormPassword" type="password" placeholder="password" name="" th:field="*{loginFormPassword}">
                             <label for="loginFormPassword">
                                 <i class="fas fa-key"></i>
                             </label>

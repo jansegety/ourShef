@@ -27,7 +27,11 @@ public class UploadFileInfoService {
 	@Transactional
 	public void saves(List<UploadFileInfo> upLoadFileInfoList) {
 		for(UploadFileInfo upLoadFileInfo : upLoadFileInfoList)
-		upLoadFileInfoRepository.save(upLoadFileInfo);
+		{
+			if(upLoadFileInfo != null)
+			upLoadFileInfoRepository.save(upLoadFileInfo);
+		}
+		
 	}
 	
 	
