@@ -84,7 +84,7 @@ public class CommentController {
 		// Average userStarPoint should be updated.
 		updateRegistrantReliability(commentedSpot);
 
-		// updated as a visitor
+		// update visitorVisitedSpot
 		// before update, validation
 		Optional<VisitorVisitedSpot> OptionalVisitorVisitedSpot = visitorVisitedSpotService
 				.findOneByUserAndSpot(commentUser, commentedSpot);
@@ -115,11 +115,20 @@ public class CommentController {
 		float oldUsersStarPoint = commentedSpot.getUsersStarPoint();
 
 		float allStarPoint = 0;
+		float averageStarPoint = 0;
 		
+		if(oldVisits==1)
+		{
+			averageStarPoint = -1;
+			
+		}
+		else
+		{
 		allStarPoint = (oldUsersStarPoint * oldVisits) - commentToBeDeleted.getStarPoint();
+			
+		averageStarPoint = allStarPoint / (oldVisits - 1);
+		}
 		
-
-		float averageStarPoint = allStarPoint / (oldVisits - 1);
 
 		// update visits
 		commentedSpot.setVisits(oldVisits - 1);
@@ -131,6 +140,19 @@ public class CommentController {
 		updateRegistrantReliability(commentedSpot);
 		
 		
+		//The delete Comment performed in the above logic is reflected in the DB before JPQL is executed.
+		//if there is no comment for the spot written by the user
+		//delete visitorVisitedSpot
+		User commentUser = userService.findByAccountId(LoginUserAccountId).get();
+		if(commentService.isNotPresentCommentOnSpotByUser(commentedSpot, commentUser))
+		{
+			Optional<VisitorVisitedSpot> visitorVisitedSpotOptional = visitorVisitedSpotService.findOneByUserAndSpot(commentUser, commentedSpot);
+			if(visitorVisitedSpotOptional.isPresent())
+			{
+				VisitorVisitedSpot visitorVisitedSpot = visitorVisitedSpotService.findOneByUserAndSpot(commentUser, commentedSpot).get();
+				visitorVisitedSpotService.delete(visitorVisitedSpot);
+			}
+		}
 
 		return "redirect:/spot/spot/"+commentedSpot.getId();
 	}

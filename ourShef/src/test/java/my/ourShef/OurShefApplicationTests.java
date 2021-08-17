@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import my.ourShef.domain.member.Member;
 
 
 @SpringBootTest

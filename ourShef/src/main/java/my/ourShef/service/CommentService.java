@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
+import my.ourShef.domain.User;
 import my.ourShef.repository.CommentRepository;
 import my.ourShef.repository.UserRepository;
 
@@ -46,5 +47,13 @@ public class CommentService {
 		
 		return commentRepository.getAllCommentsNumBySpot(spot);
 	}
+	
+	/*
+	 * true if there is no comment for the spot written by the user
+	 */
+	public boolean isNotPresentCommentOnSpotByUser(Spot commentedSpot, User commentUser) {
+		return commentRepository.isNotPresentCommentOnSpotByUser(commentedSpot, commentUser);
+	}
+	
 	
 }

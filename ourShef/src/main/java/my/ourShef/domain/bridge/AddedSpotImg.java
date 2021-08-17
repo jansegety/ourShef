@@ -2,6 +2,7 @@ package my.ourShef.domain.bridge;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class AddedSpotImg {
 	@Column(name="added_spot_img_id")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "spot_id")
 	private Spot spot;
 	

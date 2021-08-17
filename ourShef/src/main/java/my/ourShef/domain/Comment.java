@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Comment {
 	@Column(name="registration_date_time")
 	private LocalDateTime registeredTime;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="comment_user_id")
 	User commentUser;
 	
@@ -43,7 +44,7 @@ public class Comment {
 	@Column(columnDefinition = "TEXT")
 	String comment;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="commented_spot_id")
 	Spot commentedSpot;
 	

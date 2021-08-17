@@ -5,16 +5,20 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
+import my.ourShef.domain.User;
 
 @Slf4j
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class CommentRepository {
 
@@ -48,6 +52,25 @@ public class CommentRepository {
 		List<Object> resultList = query.getResultList();
 		
 		return (Long)resultList.get(0);
+	}
+	
+	/*
+	 * true if there is no comment for the spot written by the user
+	 */
+	public boolean isNotPresentCommentOnSpotByUser(Spot commentedSpot, User commentUser) {
+		
+		 TypedQuery<Comment> query = em.createQuery("select cm from Comment cm where cm.commentedSpot =:commentedSpot and cm.commentUser =:commentUser", Comment.class);
+		
+		 List<Comment> resultList = query
+		 .setParameter("commentedSpot", commentedSpot)
+		 .setParameter("commentUser", commentUser)
+		 .getResultList();
+		 
+
+		 if(resultList.size() == 0)
+			 return true;
+		 
+		return false;
 	}
 	
 	

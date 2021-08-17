@@ -2,6 +2,7 @@ package my.ourShef.domain.bridge;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,11 +26,11 @@ public class VisitorVisitedSpot {
 	@Column(name="visitor_visited_spot_id")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="visitor_id")
 	private User visitor;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="visited_spot_id")
 	private Spot visitedSpot;
 

@@ -26,6 +26,11 @@ public class VisitorVisitedSpotService {
 	}
 	
 	@Transactional
+	public void delete(VisitorVisitedSpot visitorVisitedSpot){
+		visitorVisitedSpotRepository.delete(visitorVisitedSpot);
+	}
+	
+	@Transactional
 	public Optional<VisitorVisitedSpot> findOneByUserAndSpot(User user, Spot spot){
 		
 		return visitorVisitedSpotRepository.findOneByUserAndSpot(user, spot);

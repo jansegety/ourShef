@@ -22,10 +22,14 @@ public class VisitorVisitedSpotRepository {
 
 	private final EntityManager em;
 	
-	public Long save( VisitorVisitedSpot visitorVisitedSpot) {
+	public Long save(VisitorVisitedSpot visitorVisitedSpot) {
 		em.persist(visitorVisitedSpot);
 		return visitorVisitedSpot.getId();
 	} 
+	
+	public void delete(VisitorVisitedSpot visitorVisitedSpot){
+		em.remove(visitorVisitedSpot);
+	}
 	
 	/*
 	 * Returns an object with both Spot and User matching	 * 

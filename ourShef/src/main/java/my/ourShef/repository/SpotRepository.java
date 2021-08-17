@@ -33,7 +33,6 @@ public class SpotRepository {
 	}
 	
 	public Long getCountRegisterationSpotNum(User user) {
-		System.out.println("유저 아이디는?" + user.getId());
 		Query nativeQuery = em.createNativeQuery("select count(sp.spot_id) from Spot sp where sp.registrant_id = ?");
 		nativeQuery.setParameter(1, user.getId());
 		return ((BigInteger)nativeQuery.getResultList().get(0)).longValue();

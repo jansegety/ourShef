@@ -14,21 +14,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import my.ourShef.OurShefApplication;
-import my.ourShef.domain.member.Member;
-import my.ourShef.domain.member.MemberRepository;
-
 
 @SpringBootTest
 class StartTest {
 
-	@Autowired MemberRepository memberRepository;
 	
-	@Test
-	@Transactional
-	@Rollback(false)
-	void startTest()
-	{
-		
-	}
 
 }
