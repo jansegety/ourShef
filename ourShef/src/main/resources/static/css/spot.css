@@ -194,6 +194,11 @@ textarea:focus::placeholder {
 	color: transparent;
 }
 
+.pager-container-wrapper{
+	text-align: center;
+	margin-top: 10px;
+}
+
 /*######### layout-visitor-info ##########*/
 .visitor-info-wrapper {
 	text-align: center;

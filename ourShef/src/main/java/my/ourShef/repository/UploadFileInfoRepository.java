@@ -1,6 +1,7 @@
 package my.ourShef.repository;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import my.ourShef.domain.User;
 @Slf4j
 @Repository
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class UploadFileInfoRepository {
 
@@ -23,6 +25,10 @@ public class UploadFileInfoRepository {
 		em.persist(ufi);
 		
 		return ufi.getId();
+	}
+	
+	public void delete(UploadFileInfo uploadFileInfo) {
+		em.remove(uploadFileInfo);
 	}
 	
 }

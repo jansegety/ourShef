@@ -34,6 +34,10 @@ public class UploadFileInfoService {
 		
 	}
 	
+	public void delete(UploadFileInfo uploadFileInfo) {
+		upLoadFileInfoRepository.delete(uploadFileInfo);
+	}
+	
 	
 	
 }

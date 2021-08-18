@@ -56,7 +56,7 @@
 									<img class="img-rounded demo-img">
 								</div>
 							</div>
-							<div class="spot-name">지인을 등록하면<br>지인의 맛집을 볼 수 있어요.</div>
+							<div class="spot-name">지인을 등록하면<br>맛집을 볼 수 있어요.</div>
 
 						</div>
 						<div class="spot-info-bottom text-left">
@@ -152,6 +152,9 @@
 								necessitatibus a dicta provident porro tempore quod omnis ex
 								rem. Recusandae nesciunt quos illum quia voluptatibus, ea
 								officiis</div>
+						</div>
+						<div th:if="${recentAcquaintanceSpotDto.recentSpot.isVisited}" class="is-visited">
+							탐방완료
 						</div>
 					</div>
 				</div>

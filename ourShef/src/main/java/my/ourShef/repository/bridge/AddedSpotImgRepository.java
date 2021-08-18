@@ -1,6 +1,7 @@
 package my.ourShef.repository.bridge;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,7 @@ import my.ourShef.repository.UserRepository;
 
 @Slf4j
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class AddedSpotImgRepository {
 
@@ -20,6 +22,10 @@ public class AddedSpotImgRepository {
 		em.persist(addedSpotImg);
 		
 		return addedSpotImg.getId();
+	}
+	
+	public void delete(AddedSpotImg addedSpotImg) {
+		em.remove(addedSpotImg);
 	}
 	
 }

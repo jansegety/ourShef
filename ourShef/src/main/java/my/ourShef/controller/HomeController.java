@@ -25,6 +25,7 @@ import my.ourShef.domain.Spot;
 import my.ourShef.domain.User;
 import my.ourShef.service.SpotService;
 import my.ourShef.service.UserService;
+import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +34,7 @@ public class HomeController {
 
 	private final UserService userService;
 	private final SpotService spotService;
+	private final VisitorVisitedSpotService visitorVisitedSpotService;
 
 	// @SessionAttribute 스프링이 제공하는 이 기능은 세션을 생성하지 않기 때문에, 세션을 찾아올 때 사용하면 된다.
 	@RequestMapping("/")
@@ -59,8 +61,8 @@ public class HomeController {
 		setLoginUserRecentSpotDto(LoginUserAccountId, model);
 
 		// setting RecentAquaintanceSpotsList
-		// default tupleNumByPage=10 pageNumByGroup=5 currentPage= 1
-		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 10L, 5L, 1L);
+		// default tupleNumByPage=5 pageNumByGroup=5 currentPage= 1
+		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 5L, 5L, 1L);
 		
 		// login
 		return "login/loginHome";
@@ -89,8 +91,8 @@ public class HomeController {
 		setLoginUserRecentSpotDto(LoginUserAccountId, model);
 
 		// setting RecentAquaintanceSpotsList
-		// default tupleNumByPage=10 pageNumByGroup=5 currentPage= 1
-		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 10L, 5L, page);
+		// default tupleNumByPage=5 pageNumByGroup=5 currentPage= page
+		setRecentAquaintanceSpotPagerAndDtoList(model, findUser, 5L, 5L, page);
 		
 		
 		
@@ -135,6 +137,7 @@ public class HomeController {
 			recentSpot.setRegistrantStarPoint(spot.getRegistrantStarPoint());
 			recentSpot.setUsersStarPoint(spot.getUsersStarPoint());
 			recentSpot.setVisits(spot.getVisits());
+			recentSpot.setIsVisited((Boolean)visitorVisitedSpotService.isVisitedSpotByTheUser(spot, findUser));
 			
 			//set RecentAcquaintanceSpotDto
 			RecentAcquaintanceSpotDto recentAcquaintanceSpotDto = new RecentAcquaintanceSpotDto();

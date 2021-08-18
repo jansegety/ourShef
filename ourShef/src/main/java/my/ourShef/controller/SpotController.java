@@ -38,6 +38,7 @@ import my.ourShef.controller.form.CommentModificationForm;
 import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
 import my.ourShef.controller.pager.SpotPager;
+import my.ourShef.controller.validator.SpotModificationFormValidator;
 import my.ourShef.controller.validator.SpotRegisterationFormValidator;
 import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
@@ -58,7 +59,9 @@ import my.ourShef.service.bridge.AddedSpotImgService;
 @RequiredArgsConstructor
 public class SpotController {
 
+	private final CommentController commentController;
 	private final SpotRegisterationFormValidator spotRegisterationFormValidator;
+	private final SpotModificationFormValidator spotModificationFormValidator;
 	private final SpotService spotService;
 	private final UserService userService;
 	private final CommentService commentService;
@@ -74,6 +77,7 @@ public class SpotController {
 
 		final List<Validator> validatorsList = new ArrayList<>();
 		validatorsList.add(spotRegisterationFormValidator);
+		validatorsList.add(spotModificationFormValidator);
 
 		for (Validator validator : validatorsList) {
 			if (validator.supports(dataBinder.getTarget().getClass())) {
@@ -91,9 +95,10 @@ public class SpotController {
 
 	@Transactional
 	@PostMapping("/registeration")
-	public String registerSpot(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
-			@Validated @ModelAttribute SpotRegisterationForm spotRegisterationForm,
-			BindingResult bindingResult) throws IOException {
+	public String registerSpot(
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
+			@Validated @ModelAttribute SpotRegisterationForm spotRegisterationForm, BindingResult bindingResult)
+			throws IOException {
 
 		if (bindingResult.hasErrors()) {
 			return "spot/spotRegisteration";
@@ -103,22 +108,21 @@ public class SpotController {
 		User findUser = userService.findByAccountId(LoginUserAccountId).get();
 		String spotName = spotRegisterationForm.getSpotName();
 		Spot newSpot = new Spot(findUser, spotName);
-		//persist
+		// persist
 		spotService.save(newSpot);
 		newSpot.setSpotIntroduction(spotRegisterationForm.getSpotIntroduction());
 		newSpot.setRegistrantStarPoint(spotRegisterationForm.getStarPoint());
-		
 
-		//MainImg
+		// MainImg
 		// SPOT_MAIN_IMG 경로에 Spot Main Img 저장
-		UploadFileInfo mainImgInfo = fileStore.storeFile(spotRegisterationForm.getSpotMainImg(), FilePath.SPOT_MAIN_IMG);
+		UploadFileInfo mainImgInfo = fileStore.storeFile(spotRegisterationForm.getSpotMainImg(),
+				FilePath.SPOT_MAIN_IMG);
 		// UploadFileInfo 영속화
 		uploadFileInfoService.save(mainImgInfo);
 		// Spot + MaibImgInfo 연결
 		newSpot.setMainSpotImgInfo(mainImgInfo);
-		
-		
-		//AddedImg
+
+		// AddedImg
 		List<UploadFileInfo> spotAddesImgList = fileStore.storeFiles(spotRegisterationForm.getSpotAddedImgs(),
 				FilePath.SPOT_ADDED_IMG);
 		// UploadFileInfo 영속화
@@ -126,11 +130,9 @@ public class SpotController {
 
 		// Bridge Entity
 		// AddedSpotImg 생성 및 영속화
-		List<AddedSpotImg> addedSpotImgList = addedSpotImgService
-				.constructWithUploadFileInfoAndSpot(spotAddesImgList, newSpot);
+		List<AddedSpotImg> addedSpotImgList = addedSpotImgService.constructWithUploadFileInfoAndSpot(spotAddesImgList,
+				newSpot);
 		addedSpotImgService.saves(addedSpotImgList);
-		
-		
 
 		return "redirect:/";
 	}
@@ -151,7 +153,6 @@ public class SpotController {
 		setRegistrantDto(model, spot.getRegistrant());
 		setSpotDetailDto(model, spot);
 		setCommentDtoListAndPager(model, spot, 5L, 5L, page);
-		
 
 		return "spot/spot";
 	}
@@ -170,25 +171,129 @@ public class SpotController {
 		return "spot/spotListOfUser";
 	}
 
+	@javax.transaction.Transactional
 	@GetMapping("/modification/{spotId}")
-	public String createModificationForm(Model model) {
+	public String createModificationForm(@PathVariable("spotId") Long spotId, Model model) {
 
+		Spot findSpot = spotService.findById(spotId).get();
+
+		// spot Img name setting
+		setSpotImgNames(model, findSpot);
+
+		// set Form
 		SpotModificationForm spotModificationForm = new SpotModificationForm();
+
+		spotModificationForm.setSpotName(findSpot.getSpotName());
+		spotModificationForm.setSpotIntroduction(findSpot.getSpotIntroduction());
+		spotModificationForm.setRegistrantStarPoint(findSpot.getRegistrantStarPoint());
+
 		model.addAttribute("spotModificationForm", spotModificationForm);
 
 		return "spot/spotModification";
 	}
 
+	@Transactional
 	@PostMapping("/modification/{spotId}")
 	public String modifySpot(Model model, @Validated @ModelAttribute SpotModificationForm spotModificationForm,
-			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) {
+			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) throws IOException {
+
+		Spot findSpot = spotService.findById(spotId).get();
+
+		// spot Img name setting
+		setSpotImgNames(model, findSpot);
 
 		if (bindingResult.hasErrors()) {
 			return "spot/spotModification";
 		}
 
-		redirectAttributes.addAttribute("spotId", spotId);
-		return "redirect:spot/spot";
+		// 성공 로직
+		//If MainImg is Exist
+		if (!spotModificationForm.getSpotMainImg().isEmpty()) {
+			// delete Img file
+			String oldSpotMainImgStoreName = findSpot.getMainSpotImgInfo().getStoreFileName();
+			fileStore.deleteFile(oldSpotMainImgStoreName, FilePath.SPOT_MAIN_IMG);
+			// delete uploadFileInfoService Entity in DB
+			uploadFileInfoService.delete(findSpot.getMainSpotImgInfo());
+
+			// MainImg
+			// SPOT_MAIN_IMG 경로에 Spot Main Img 저장
+			UploadFileInfo mainImgInfo = fileStore.storeFile(spotModificationForm.getSpotMainImg(),
+					FilePath.SPOT_MAIN_IMG);
+			// UploadFileInfo 영속화
+			uploadFileInfoService.save(mainImgInfo);
+			// Spot + MaibImgInfo 연결
+			findSpot.setMainSpotImgInfo(mainImgInfo);
+		}
+
+		//If AddedImgs are Exist
+		if(!(spotModificationForm.getSpotAddedImgs().size()==0))
+		{
+			//deleteFiles
+			List<AddedSpotImg> oldAddedSpotImgs = findSpot.getAddedSpotImgs();			
+			for(AddedSpotImg oldAddedSpotImg : oldAddedSpotImgs)
+			{
+				String oldAddedSpotImgFileName = oldAddedSpotImg.getUploadFileInfo().getStoreFileName();
+				fileStore.deleteFile(oldAddedSpotImgFileName, FilePath.SPOT_ADDED_IMG);
+			}
+			
+			//delete  uploadFileInfoService Entity in DB
+			for(AddedSpotImg oldAddedSpotImg : oldAddedSpotImgs)
+			{
+				UploadFileInfo oldUploadFileInfo = oldAddedSpotImg.getUploadFileInfo();
+				uploadFileInfoService.delete(oldUploadFileInfo);
+			
+			}
+			
+			//delete AddedSpotImg Entity in DB
+			for(AddedSpotImg oldAddedSpotImg : oldAddedSpotImgs)
+			{
+				addedSpotImgService.delete(oldAddedSpotImg);
+			}
+			
+			
+			
+			// AddedImg
+			List<UploadFileInfo> spotAddesImgList = fileStore.storeFiles(spotModificationForm.getSpotAddedImgs(),
+					FilePath.SPOT_ADDED_IMG);
+			// UploadFileInfo 영속화
+			uploadFileInfoService.saves(spotAddesImgList);
+			// Bridge Entity
+			// AddedSpotImg 생성 및 영속화
+			List<AddedSpotImg> addedSpotImgList = addedSpotImgService.constructWithUploadFileInfoAndSpot(spotAddesImgList,
+					findSpot);
+			addedSpotImgService.saves(addedSpotImgList);
+		}
+		
+
+		//update spot
+		findSpot.setSpotName(spotModificationForm.getSpotName());
+		findSpot.setSpotIntroduction(spotModificationForm.getSpotIntroduction());
+		findSpot.setRegistrantStarPoint(spotModificationForm.getRegistrantStarPoint());
+		
+		
+		//update Registrant's Reliability
+		commentController.updateRegistrantReliability(findSpot);
+		
+		
+		
+		
+		return "redirect:/spot/spot/"+spotId;
+	}
+
+	// spot Img name setting
+	private void setSpotImgNames(Model model, Spot findSpot) {
+		// main Img
+		String spotMainImgStoreName = findSpot.getMainSpotImgInfo().getStoreFileName();
+		model.addAttribute("spotMainImgStoreName", spotMainImgStoreName);
+
+		// added Img
+		ArrayList<String> spotAddedImgStoreNames = new ArrayList<String>();
+		List<AddedSpotImg> addedSpotImgs = findSpot.getAddedSpotImgs();
+		for (AddedSpotImg addedSpotImg : addedSpotImgs) {
+			String addedImgStoreName = addedSpotImg.getUploadFileInfo().getStoreFileName();
+			spotAddedImgStoreNames.add(addedImgStoreName);
+		}
+		model.addAttribute("spotAddedImgStoreNames", spotAddedImgStoreNames);
 	}
 
 	private void setUserSpotListSpotDto(Model model, User findUser, Long tupleNumByPage, Long pageNumByGroup,

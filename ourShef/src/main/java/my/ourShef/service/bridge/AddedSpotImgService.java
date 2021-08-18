@@ -15,17 +15,17 @@ import my.ourShef.repository.bridge.AddedSpotImgRepository;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class AddedSpotImgService {
 
 	private final AddedSpotImgRepository addedSpotImgRepository;
 	
-	@Transactional
+	
 	public Long save(AddedSpotImg addesSpotImg) {
 		return addedSpotImgRepository.save(addesSpotImg);
 	}
 	
-	@Transactional
 	public void saves(List<AddedSpotImg> addesSpotImgList) {
 		
 		for(AddedSpotImg addesSpotImg : addesSpotImgList) {
@@ -33,7 +33,6 @@ public class AddedSpotImgService {
 		}	
 	}
 	
-	@Transactional
 	public List<AddedSpotImg> constructWithUploadFileInfoAndSpot(List<UploadFileInfo> addedSpotImgFileInfoList, Spot spot) {
 		
 		ArrayList<AddedSpotImg> addedSpotImgList = new ArrayList<AddedSpotImg>();
@@ -44,6 +43,8 @@ public class AddedSpotImgService {
 		return addedSpotImgList;
 	}
 	
-	
+	public void delete(AddedSpotImg addedSpotImg) {
+		addedSpotImgRepository.delete(addedSpotImg);
+	}
 	
 }

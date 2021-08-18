@@ -59,6 +59,15 @@ public class FileStore {
 		multipartFile.transferTo(new File(getFullPath(storeFileName, fileDirPath)));
 		return new UploadFileInfo(originalFilename, storeFileName);
 	}
+	
+	
+	public void deleteFile(String storeFileName, FilePath filePath) {
+		
+		 File file = new File(getFullPath(storeFileName, filePath));
+		 
+		 file.delete();	 
+	}
+	
 
 	private String createStoreFileName(String originalFilename) {
 		String ext = extractExt(originalFilename);

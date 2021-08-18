@@ -206,7 +206,7 @@ public class CommentController {
 	/*
 	 * Registrant's reliability updates every time a comment is posted
 	 */
-	private void updateRegistrantReliability(Spot spot) {
+	public void updateRegistrantReliability(Spot spot) {
 		User registrant = spot.getRegistrant();
 		// If the registrant has never received a comment
 		if (registrant.getReliability() == -1) {

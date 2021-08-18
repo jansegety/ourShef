@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccountDelete Confirm</title>
+  <!-- bootStrap -->
+  <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+  <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
+  <!-- common -->
+  <link rel="stylesheet" th:href="@{/common.css}" href="/static/common.css">
+  <!-- specific -->
+  <link rel="stylesheet" th:href="@{/css/joinConfirm.css}" href="../../static/css/joinConfirm.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row text-center">
+      <img class="demo-img">
+    </div>
+    <div class="row text-top">
+      <div class="text-shefGreen">계정이 생성되었습니다.</div>
+    </div>
+    <div class="row text-success">회원이 되신 것을 환영합니다.</div>
+    <div class="row">
+      <button class="btn-shefGreen" onclick="location.href='/'">확인</button>
+    </div>
+  </div>
+  <!--jQuery-->
+  <script th:src="@{/library/jquery-2.1.4.js}" src="/static/library/jquery-2.1.4.js"></script>
+  <!-- bootstrap -->
+  <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
+  <!--common-->
+  <script th:src="@{/common.js}" src="/static/common.js"></script>
+</body>
+</html>

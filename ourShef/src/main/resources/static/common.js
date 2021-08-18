@@ -168,7 +168,7 @@ function reliabilitySystemByClass(reliablilitySystemClass) {
 }
 // /////////////reliabilitySystem End//////////////
 // ////////////////showHideSystem///////////////////
-function showHideSystem(wrapperClass, buttonClass, detailClass) {
+function showHideSystem(wrapperClass, buttonClass, summaryClass) {
 	
 	let wrapperClassElementList = document.getElementsByClassName(wrapperClass);
 
@@ -191,7 +191,7 @@ function showHideSystem(wrapperClass, buttonClass, detailClass) {
 				
 				
 				wrapperClassElement
-					.getElementsByClassName(detailClass)[0]
+					.getElementsByClassName(summaryClass)[0]
 					.click();
 			}
 		}

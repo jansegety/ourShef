@@ -15,25 +15,27 @@ import my.ourShef.repository.bridge.VisitorVisitedSpotRepository;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class VisitorVisitedSpotService {
 
 	private final VisitorVisitedSpotRepository visitorVisitedSpotRepository;
 	
-	@Transactional
 	public Long save(VisitorVisitedSpot visitorVisitedSpot) {
 		return visitorVisitedSpotRepository.save(visitorVisitedSpot);
 	}
 	
-	@Transactional
 	public void delete(VisitorVisitedSpot visitorVisitedSpot){
 		visitorVisitedSpotRepository.delete(visitorVisitedSpot);
 	}
 	
-	@Transactional
 	public Optional<VisitorVisitedSpot> findOneByUserAndSpot(User user, Spot spot){
 		
 		return visitorVisitedSpotRepository.findOneByUserAndSpot(user, spot);
+	}
+	
+	public boolean isVisitedSpotByTheUser(Spot spot, User user) {
+		return visitorVisitedSpotRepository.isVisitedSpotByTheUser(spot, user);
 	}
 	
 }

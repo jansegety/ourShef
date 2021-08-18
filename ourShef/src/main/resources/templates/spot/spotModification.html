@@ -20,8 +20,9 @@
     </head>
     <body>
         <form
+        	th:object="${spotModificationForm}"
             action="#none"
-            th:action="''"
+            th:action
             method="post"
             enctype="multipart/form-data">
             <div class="container">
@@ -34,33 +35,32 @@
                 </div>
                 <div class="row main-row">
                     <div class="col-md-4 spot-imgs-area">
+                    	<div th:each="spotAddedImgStoreName : ${spotAddedImgStoreNames}" class="spot-img-frame">
+                    	<img th:src="@{/img/spotAdded/{storeName}(storeName=${spotAddedImgStoreName})}" class="spot-img">
+                    	</div>
                         <!-- <div class="spot-imgs-area"> <div class="spot-img-frame"><img
                         class="spot-img demo-img" alt="장소 사진"></div> </div> -->
                     </div>
                     <div class="col-md-4 main-col">
                         <div>
-                            <img class="demo-img" id="main-spot-img" alt="" onchange="loadFile(e)">
+                            <img th:src="@{/img/spotMain/{storeName}(storeName=${spotMainImgStoreName})}" th:class="''" class="demo-img" id="main-spot-img" alt="spot-main-Img" onchange="loadFile(e)">
                         </div>
                         <div>
                             <div class="img-button-frame">
                                 <input
-                                    th:name="spotMainImg"
-                                    id="input-main-img"
+                                    th:field="*{spotMainImg}"                                   
                                     type="file"
-                                    accept=".jpg, .txt"
-                                    name="main-img">
-                                <div class="text-danger" th:errors="${spotModificationForm.spotMainImg}">메인 사진 오류 메시지</div>
+                                    accept=".jpg, .txt">
+                                <div class="text-danger" th:errors="*{spotMainImg}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn-subGreen" type="button">메인 사진 변경</button>
                             </div>
                             <div class="img-button-frame">
                                 <input
-                                    th:name="spotAddedImgs"
-                                    id="input-added-imgs"
+                                    th:field="*{spotAddedImgs}"                                   
                                     type="file"
                                     accept=".jpg, .txt"
-                                    multiple="multiple"
-                                    name="added-img">
-                                <div class="text-danger" th:errors="${spotModificationForm.spotAddedImgs}">추가 사진 오류 메시지</div>
+                                    multiple="multiple">
+                                <div class="text-danger" th:errors="*{spotAddedImgs}">추가 사진 오류 메시지</div>
                                 <button id="btn-added-imgs" class="btn-subGreen" type="button">추가 사진 변경</button>
                             </div>
                         </div>
@@ -68,30 +68,28 @@
                     <div class="col-md-4">
                         <div class="spot-info-area">
                             <div class="spot-name-frame">
-                                <div class="text-danger" th:errors="${spotModificationForm.spotName}">맛집 이름 오류</div>
+                                <div class="text-danger" th:errors="*{spotName}">맛집 이름 오류</div>
                                 <input
-                                    th:value="${spotModificationForm.spotName}"
-                                    th:name="spotName"
-                                    type="text"
-                                    name="spot-name"
+                                    th:field="*{spotName}"                                    
+                                    type="text"                                    
                                     placeholder="맛집 이름을 써주세요.">
                             </div>
                             <div class="spot-introduction-frame">
-                                <div class="text-danger" th:errors="${spotModificationForm.spotIntroduction}">맛집 소개 오류</div>
-                                <textarea
-                                    th:name="spotIntroduction"
-                                    th:text="${spotModificationForm.spotIntroduction}"
-                                    name="spot-introduction"
+                                <div class="text-danger" th:errors="*{spotIntroduction}">맛집 소개 오류</div>
+                                <textarea                               
+                                    th:field="*{spotIntroduction}"
+                                    th:text="*{spotIntroduction}"                                   
                                     cols="45"
                                     rows="10"
                                     placeholder="400자 이내의 짦은 맛집 소개를 써주세요."
                                     maxlength="400"
                                     style="resize: none;"></textarea>
                             </div>
-                            <div id="startPointSystem-i1" class="starPointSystem">
-                                <div class="text-danger" th:errors="${spotModificationForm.starPoint}">별점 시스템 오류</div>
+                            <div id="starPointSystem-i1" class="starPointSystem">
+                                <div class="text-danger" th:errors="*{registrantStarPoint}">별점 시스템 오류</div>
                                 <input
-                                    th:name="starPoint"
+                                    th:field="*{registrantStarPoint}"
+                                    th:value="*{registrantStarPoint}"
                                     class="input-star-point"
                                     type="text"
                                     value="10"

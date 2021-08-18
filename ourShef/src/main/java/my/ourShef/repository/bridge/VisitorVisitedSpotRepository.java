@@ -1,12 +1,15 @@
 package my.ourShef.repository.bridge;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,7 @@ import my.ourShef.repository.UserRepository;
 
 @Slf4j
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class VisitorVisitedSpotRepository {
 
@@ -29,6 +33,14 @@ public class VisitorVisitedSpotRepository {
 	
 	public void delete(VisitorVisitedSpot visitorVisitedSpot){
 		em.remove(visitorVisitedSpot);
+	}
+	
+	public List<VisitorVisitedSpot> findByUser(User user) {
+		
+		List<VisitorVisitedSpot> resultList = em.createQuery("select vvs from VisitorVisitedSpot vvs where vvs.visitor = :visitor", VisitorVisitedSpot.class)
+		.setParameter("visitor", user).getResultList();
+		
+		return resultList;
 	}
 	
 	/*
@@ -53,6 +65,20 @@ public class VisitorVisitedSpotRepository {
 		
 		return Optional.ofNullable(resultList.get(0));
 		
+	}
+	
+	
+	public boolean isVisitedSpotByTheUser(Spot spot, User user) {
+		
+		List<VisitorVisitedSpot> vvsList = findByUser(user);
+		
+		for(VisitorVisitedSpot vvs : vvsList)
+		{
+			if(vvs.getVisitedSpot().getId() == spot.getId())
+				return true;
+		}
+		
+		return false;	
 	}
 	
 	

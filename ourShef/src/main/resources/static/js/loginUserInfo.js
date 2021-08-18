@@ -1,18 +1,20 @@
 /*####################### loginUserInfo ##############################*/
 
+showHideSystem("modify-password-frame","btn-modify-password", "summary-modify-password");
+
 // 프로필 등록 누르면 파일 선택창 뜨기
-let profileBtn = document.getElementById("joinForm-btn-profile-img");
+let profileBtn = document.getElementById("btn-profile-img");
 profileBtn.addEventListener("click", popChooseFile, false);
 
 function popChooseFile(){
-  var input = document.getElementById("joinFormProfileImgFile");
+  var input = document.getElementById("profileImgFile");
   var event = new MouseEvent('click');
   input.dispatchEvent(event);
 };
 
 // 사진 미리보기
-let input = document.getElementById("joinFormProfileImgFile");
-let preview = document.getElementById("joinForm-profile-img");
+let input = document.getElementById("profileImgFile");
+let preview = document.getElementById("profile-img");
 input.addEventListener("change", showImageFile, false);
 
 
@@ -25,7 +27,7 @@ function showImageFile(){
 
 
 //Confirmation of intent to delete account
-let deleteButton = document.getElementsByClassName("btn-delete")[0];
+let deleteButton = document.getElementsByClassName("btn-left")[0];
 deleteButton.onclick = dispatchSpotToBeDeleted;
 
 function dispatchSpotToBeDeleted(){

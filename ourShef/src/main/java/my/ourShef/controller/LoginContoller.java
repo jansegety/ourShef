@@ -60,7 +60,9 @@ public class LoginContoller {
 
 	
 	//@IntiBinder->해당 컨트롤러에만 영향을 준다. 글로벌 설정은 별도로 해야한다.
-	@InitBinder //요청이 올 때마다 dataBinder는 새로 만들어진다. //이 컨트롤러에서만 적용된다.
+	//요청이 올 때마다 dataBinder는 새로 만들어진다. 
+	//이 컨트롤러에서만 적용된다.
+	@InitBinder
 	public void init(WebDataBinder dataBinder) {
 		
 		if(dataBinder.getTarget() == null) return;
@@ -120,7 +122,7 @@ public class LoginContoller {
 			return "login/joinForm";
 		}
 		
-		return "redirect:/";
+		return "confirm/joinConfirm";
 	}
 	
 	

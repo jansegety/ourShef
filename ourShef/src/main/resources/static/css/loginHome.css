@@ -71,6 +71,13 @@
 
 .spot-info-right .spot-name {
   margin-top: 10px;
+  font-size: 18px;
+  color: gray;
+  box-sizing: border-box;
+  padding: 0 10px;
+  overflow: hidden;
+  width: 200px;
+  height: 48px;
 } 
 
 .spot-info-bottom{
@@ -83,6 +90,16 @@
 	word-break: break-all;
 	height: 120px;
 	overflow: hidden;
+}
+
+.is-visited {
+  font-size: 15px;
+  color: rgb(92, 184, 92);
+  border-radius: 5px;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
 }
 
 .head-text{

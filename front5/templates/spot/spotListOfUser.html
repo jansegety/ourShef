@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!--부트 스트랩-->
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}"
+	href="../../static/bootStrap/bootstrap-theme.css">
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}"
+	href="../../static/bootStrap/bootstrap.css">
+
+<!-- fonsawesome -->
+<link rel="stylesheet" th:href="@{/library/fontawesome/all.min.css}"
+	href="../../static/library/fontawesome/all.min.css">
+
+<!--custom-->
+<link rel="stylesheet" th:href="@{/common.css}"
+	href="../../static/common.css">
+<link rel="stylesheet" th:href="@{/css/spotListOfUser.css}"
+	href="../../static/css/spotListOfUser.css">
+
+<title>SpotList Of User</title>
+</head>
+<body class="spotListOfUser">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-md-8 col-xs-8 text-shefGreen head-text-top-frame">
+				<div th:text="|${userSpotListUserDto.nickName}의|">XXX의</div>
+				<div>맛집 리스트!</div>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-3">
+				<div class="visitor-info">
+					<div>
+						<img th:class="''"
+							th:src="@{/img/userProfile/{storeName}(storeName=${userSpotListUserDto.profileImgStoreName})}"
+							class="demo-img">
+					</div>
+					<div th:text="${userSpotListUserDto.nickName}" class="nick-name">
+						닉네임닉네임닉네임</div>
+					<div>
+						<div class="reliabilitySystem">
+							<input th:value="${userSpotListUserDto.reliability}"
+								class="input-reliability-size" type="hidden" value="-1">
+							<div class="reliabilityText">신뢰도</div>
+							<div class="gaugeBar">
+								<div class="back"></div>
+								<div class="front"></div>
+							</div>
+						</div>
+					</div>
+					<div th:text=${userSpotListUserDto.introduction}>Lorem, ipsum
+						dolor sit amet consectetur adipisicing elit. Commodi consequuntur,
+						rerum atque nemo nostrum ducimus provident expedita quaerat
+						consequatur, doloremque quae aliquam modi nam nisi veniam possimus
+						pariatur, soluta laudantium.</div>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+			<div class="col-sm-6 spot-area">
+				<div class="spots-wrapper">
+					<div th:each="spot : ${userSpotListSpotDtoList}" class="spot-info">
+						<div>
+							<a th:href="@{/spot/spot/{spotId}(spotId=${spot.id})}"> <img
+								th:src="@{/img/spotMain/{storeName}(storeName=${spot.mainImgStoreName})}"
+								th:class="''" class="demo-img" alt="장소 사진">
+							</a>
+						</div>
+						<div th:text="${spot.spotName}" class="spot-name">장소 이름</div>
+						<div
+							th:text="${#temporals.format(spot.registeredTime, 'yyyy-MM-dd')}">2010-12-12</div>
+						<div class="registrant-star-point-frame">
+							<div>등록자 평점</div>
+							<div class="starPointSystem">
+								<input th:value="${spot.registrantStarPoint}"
+									class="input-star-point" type="text" value="10"
+									required="required">
+								<div class="star-point-area">
+									<div class="star-front"></div>
+									<div class="star-back"></div>
+								</div>
+							</div>
+						</div>
+						<div th:if="${spot.usersStarPoint} == -1">방문 지인 없음</div>
+						<div th:if="${spot.usersStarPoint} != -1"
+							class="users-star-point-frame">
+							<div>지인들 평점</div>
+							<div class="starPointSystem">
+								<input th:value="${spot.usersStarPoint}"
+									class="input-star-point" type="text" value="10"
+									required="required">
+								<div class="star-point-area">
+									<div class="star-front"></div>
+									<div class="star-back"></div>
+								</div>
+							</div>
+							<div th:text="'방문 ' + ${spot.visits}">방문수</div>
+						</div>
+						<div th:text="${spot.spotIntroduction}">짧은 설명 Lorem ipsum,
+							dolor sit amet consectetur adipisicing elit. Exercitationem
+							atque, consequuntur provident dolorum ad</div>
+					</div>
+				</div>
+
+				<div class="pager-container-wrapper">
+					<div th:object="${userSpotPager}" class="pager-container">
+						<div class="pager-arrow">
+							<a
+								th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{leftPage})}">
+								<i class="fas fa-chevron-left"></i>
+							</a>
+						</div>
+						<div class="page-container">
+							<div class="page-list">
+								<a
+									th:each="page: ${#numbers.sequence(userSpotPager.startPage,userSpotPager.endPage)}"
+									th:classappend="${page} == *{currentPage}?'current-page-num'"
+									class="page-num " th:text="${page}"
+									th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=${page})}">1</a>
+							</div>
+						</div>
+						<div class="pager-arrow">
+							<a
+								th:href="@{/spot/userSpotList/{userId}(userId=${userSpotListUserDto.id},page=*{rightPage})}">
+								<i class="fas fa-chevron-right"></i>
+							</a>
+						</div>
+						<div class="pager-navigator"
+							th:text="|*{currentPage}/*{totalPageNum}|">1/10</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-1"></div>
+		</div>
+		<div class="row footer">
+			<div class="col-xs-4 col-md-1"></div>
+			<div class="col-xs-8 col-md-2">
+				<button class="btn-shefGreen" type="button"
+					onclick="location.href='/'">홈으로</button>
+			</div>
+			<div class="col-md-6"></div>
+			<div class="col-md-2"></div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<!--jQuery-->
+	<script th:src="@{/library/jquery-2.1.4.js}"
+		src="../../static/library/jquery-2.1.4.js"></script>
+	<!--부트 스트랩-->
+	<script th:src="@{/bootStrap/bootstrap.min.js}"
+		src="../../static/bootStrap/bootstrap.min.js"></script>
+	<!-- fonsawesome -->
+	<script th:src="@{/library/fontawesome/all.js}"
+		src="../../static/library/fontawesome/all.js"></script>
+	<!--custom.js-->
+	<script th:src="@{/common.js}" src="../../static/common.js"></script>
+	<!-- specific -->
+	<script th:src="@{/js/spotListOfUser.js}"></script>
+
+</body>
+</html>

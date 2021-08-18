@@ -171,6 +171,7 @@ a:link, a:visited, a:active, a:hover{
   left: 50%;
   z-index: 1;
   transform: translate(-50%, -50%);
+  width: 50px;
 }
 
 .gaugeBar {

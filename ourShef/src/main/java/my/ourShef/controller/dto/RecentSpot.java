@@ -17,4 +17,6 @@ public class RecentSpot {
 	private Long visits;
 	private float registrantStarPoint;
 	private float usersStarPoint;
+	
+	private Boolean isVisited;
 }

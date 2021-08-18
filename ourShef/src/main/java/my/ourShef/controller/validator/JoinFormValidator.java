@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 import my.ourShef.controller.form.JoinForm;
 import my.ourShef.service.UserService;
 
-
 @Component
 @RequiredArgsConstructor
 public class JoinFormValidator implements Validator {
-	
+
 	private final UserService us;
 
 	@Override
@@ -26,22 +25,22 @@ public class JoinFormValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		JoinForm joinForm = (JoinForm) target;
-		
-		//중복된 AccountId가 있는지 검증
+
+		// Validate for duplicate AccountId
 		try {
 			us.validateDuplicateAccountId(joinForm.getJoinFormAccountId());
 		} catch (Exception e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			errors.rejectValue("joinFormAccountId", "duplication");
 		}
-		
 
+		// Image file verification
 		if (joinForm.getJoinFormProfileImgFile().isEmpty()) {
-			// 프로필 이미지 파일이 들어오지 않은 경우
+			// If the profile image file does not come in
 			errors.rejectValue("joinFormProfileImgFile", "required");
 
 		} else {
-			// 프로필 이미지 파일이 이미지 파일이 아닌 경우
+			// If the profile image file is not an image file
 			String temp = joinForm.getJoinFormProfileImgFile().getOriginalFilename(); // ex 7.jpg
 			String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 			String lowerCaseExt = ext.toLowerCase();
@@ -51,29 +50,30 @@ public class JoinFormValidator implements Validator {
 			}
 
 		}
-		
-		//닉네임이 필수인데 들어오지 않은 경우
+
+		// If a nickname is required but it is not entered
 		if (!StringUtils.hasText(joinForm.getJoinFormNickName())) {
 			errors.rejectValue("joinFormNickName", "required");
 		}
 
 		if (!StringUtils.hasText(joinForm.getJoinFormPassword()) || joinForm.getJoinFormPassword().length() > 16
-				|| joinForm.getJoinFormPassword().length() < 8) {// 비밀번호가 제대로 입력되지 않은 경우
+				|| joinForm.getJoinFormPassword().length() < 8) {// If the password is not entered correctly
 			errors.rejectValue("joinFormPassword", "range", new Object[] { 8, 16 }, null);
-		} else {// 비밀번호가 입력되었지만 비밀번호 확인 번호와 다를 경우
+		} else {// If the password is entered but it is different from the password confirmation number
 			if (!joinForm.getJoinFormPassword().equals(joinForm.getJoinFormConfirmPassword())) {
 				errors.rejectValue("joinFormPassword", "notEqal", null, null);
 			}
 
 		}
-		
-		//자기소개가 100자보다 많은 경우
+
+		// Introduction Verification
+		// Self-introduction more than 100 characters
 		if (joinForm.getJoinFormSelfIntroduction().length() > 100) {
 			errors.rejectValue("joinFormSelfIntroduction", "min.java.lang.String", new Object[] { 100 }, null);
 		}
 
-		// 특정 필드가 아닌 복합 룰 검증
-		// 패스워드에 닉네임을 포함하고 있다면
+		/* Complex Rule Validation */
+		// If includes a nickName it the newPassword 
 		if (StringUtils.hasText(joinForm.getJoinFormPassword())
 				&& StringUtils.hasText(joinForm.getJoinFormNickName())) {
 			if (joinForm.getJoinFormPassword().contains(joinForm.getJoinFormNickName())) {
@@ -81,6 +81,13 @@ public class JoinFormValidator implements Validator {
 			}
 		}
 
+		// If include Account ID in the newPassword
+		if (StringUtils.hasText(joinForm.getJoinFormPassword())
+				&& StringUtils.hasText(joinForm.getJoinFormAccountId())) {
+			if (joinForm.getJoinFormPassword().contains(joinForm.getJoinFormAccountId())) {
+				errors.reject("dont.passwordContainsAccountId", null, null);
+			}
+		}
 
 	}
 
