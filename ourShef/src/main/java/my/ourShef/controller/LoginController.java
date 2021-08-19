@@ -47,7 +47,7 @@ import my.ourShef.service.UserService;
 @RequestMapping("/login")
 @Slf4j
 @RequiredArgsConstructor
-public class LoginContoller {
+public class LoginController {
 	
 	private final JoinFormValidator joinFormValidator;
 	private final LoginFormValidator loginFormValidator;
@@ -77,7 +77,7 @@ public class LoginContoller {
 			}
 		}
 
-		
+	
 	}
 	
 

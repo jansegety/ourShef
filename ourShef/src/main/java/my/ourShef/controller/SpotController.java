@@ -171,7 +171,7 @@ public class SpotController {
 		return "spot/spotListOfUser";
 	}
 
-	@javax.transaction.Transactional
+	@Transactional
 	@GetMapping("/modification/{spotId}")
 	public String createModificationForm(@PathVariable("spotId") Long spotId, Model model) {
 

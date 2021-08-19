@@ -60,13 +60,13 @@ public class InitDb {
 		//Delete Files in the ImgDir of the Application
 		initService.deleteAllImgFile();
 		//initDb
-		initService.dbInit();
+		//initService.dbInit();
 	}
 
 	@Component
 	@Transactional
 	@RequiredArgsConstructor
-	static class InitService {
+	static public class InitService {
 
 		@Value("${file.dir.userProfileImg}")
 		private String userProfileImgDirPath;
@@ -89,6 +89,29 @@ public class InitDb {
 
 			ArrayList<JoinForm> joinFormList = new ArrayList<JoinForm>();
 			for (int i = 0; i < formNum; i++) {
+
+				JoinForm joinForm = new JoinForm();
+				/*
+				 * form의 MultipartFile 타입 joinFormProfileImgFile 필드 주입
+				 */
+				joinForm.setJoinFormProfileImgFile(makeImgMultipartFile(i));
+				joinForm.setJoinFormAccountId("ACCOUNTID_" + Integer.toString(i));
+				joinForm.setJoinFormPassword(makePassword(Integer.toString(i)));
+				joinForm.setJoinFormConfirmPassword(makePassword(Integer.toString(i)));
+				joinForm.setJoinFormNickName("NICKNAME_" + Integer.toString(i));
+				joinForm.setJoinFormSelfIntroduction("저는 " + joinForm.getJoinFormNickName() + "입니다.");
+
+				joinFormList.add(joinForm);
+
+			}
+
+			return joinFormList;
+		}
+		
+		public ArrayList<JoinForm> makeJoinFormByRange(int startNum, int endNum) throws IOException {
+
+			ArrayList<JoinForm> joinFormList = new ArrayList<JoinForm>();
+			for (int i = startNum; i < endNum; i++) {
 
 				JoinForm joinForm = new JoinForm();
 				/*
