@@ -42,7 +42,7 @@ public class SpotRegisterationFormValidator implements Validator{
 		}
 		
 		//If additional images exist
-		if(!(spotRegisterationForm.getSpotAddedImgs().size()==0)) {
+		if(!spotRegisterationForm.getSpotAddedImgs().get(0).isEmpty()) {
 			
 			boolean isImg = true;
 			

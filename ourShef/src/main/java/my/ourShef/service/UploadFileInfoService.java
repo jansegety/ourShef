@@ -14,17 +14,17 @@ import my.ourShef.repository.UserRepository;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class UploadFileInfoService {
 
 	private final UploadFileInfoRepository upLoadFileInfoRepository;
 	
-	@Transactional
+	
 	public void save(UploadFileInfo upLoadFileInfo) {
 		upLoadFileInfoRepository.save(upLoadFileInfo);
 	}
 	
-	@Transactional
 	public void saves(List<UploadFileInfo> upLoadFileInfoList) {
 		for(UploadFileInfo upLoadFileInfo : upLoadFileInfoList)
 		{
@@ -38,6 +38,9 @@ public class UploadFileInfoService {
 		upLoadFileInfoRepository.delete(uploadFileInfo);
 	}
 	
+	public UploadFileInfo findById(String UUID) {
+		return upLoadFileInfoRepository.findById(UUID);
+	}
 	
 	
 }

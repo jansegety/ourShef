@@ -196,7 +196,8 @@ public class SpotController {
 	@PostMapping("/modification/{spotId}")
 	public String modifySpot(Model model, @Validated @ModelAttribute SpotModificationForm spotModificationForm,
 			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) throws IOException {
-
+		
+		
 		Spot findSpot = spotService.findById(spotId).get();
 
 		// spot Img name setting

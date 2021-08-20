@@ -31,4 +31,8 @@ public class UploadFileInfoRepository {
 		em.remove(uploadFileInfo);
 	}
 	
+	public UploadFileInfo findById(String UUID) {
+		return em.find(UploadFileInfo.class, UUID);
+	}
+	
 }

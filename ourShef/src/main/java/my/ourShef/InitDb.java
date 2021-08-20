@@ -30,6 +30,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import my.ourShef.controller.form.JoinForm;
+import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
 import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
@@ -60,7 +61,7 @@ public class InitDb {
 		//Delete Files in the ImgDir of the Application
 		initService.deleteAllImgFile();
 		//initDb
-		//initService.dbInit();
+		initService.dbInit();
 	}
 
 	@Component
@@ -210,6 +211,28 @@ public class InitDb {
 
 			return spotRegisterationFromList;
 
+		}
+		
+		
+		public List<SpotModificationForm> makeSpotModificationForm(int formNum) throws IOException{
+			
+
+			ArrayList<SpotModificationForm> spotModificationFormList = new ArrayList<SpotModificationForm>();
+			for (int i = 0; i < formNum; i++) {
+
+				SpotModificationForm SpotModificationForm = new SpotModificationForm();
+				SpotModificationForm.setSpotMainImg(makeImgMultipartFile(i));
+				SpotModificationForm.setSpotAddedImgs(makeImgMultipartFiles(i, 6)); // 2번째 파라미터는 만드는 MultipartFile 객체 수
+				Random r=new Random(); //난수 생성기
+				SpotModificationForm.setSpotName("스폿_" + r.nextInt(10000)); //랜덤한 숫자 스폿 이름 
+				SpotModificationForm.setSpotIntroduction("여기는 " + SpotModificationForm.getSpotName() + "입니다! 음식 맛이 좋아요!");
+				SpotModificationForm.setRegistrantStarPoint((r.nextInt(10)+1)*10);// 10~100, 10 20 30 40...90 100
+
+				spotModificationFormList.add(SpotModificationForm);
+			}
+
+			return spotModificationFormList;
+			
 		}
 
 		/*

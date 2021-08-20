@@ -35,7 +35,7 @@ public class SpotModificationFormValidator implements Validator {
 		}
 
 		// If additional images exist
-		if (!(spotModificationForm.getSpotAddedImgs().size() == 0)) {
+		if (!spotModificationForm.getSpotAddedImgs().get(0).isEmpty()) {
 
 			boolean isImg = true;
 
