@@ -25,6 +25,10 @@ public class VisitorVisitedSpotService {
 		return visitorVisitedSpotRepository.save(visitorVisitedSpot);
 	}
 	
+	public Optional<VisitorVisitedSpot> findById(Long visitorVisitedSpotId){
+		return visitorVisitedSpotRepository.findById(visitorVisitedSpotId);
+	}
+	
 	public void delete(VisitorVisitedSpot visitorVisitedSpot){
 		visitorVisitedSpotRepository.delete(visitorVisitedSpot);
 	}

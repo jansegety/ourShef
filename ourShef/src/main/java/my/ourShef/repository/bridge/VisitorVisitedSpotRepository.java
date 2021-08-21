@@ -31,6 +31,10 @@ public class VisitorVisitedSpotRepository {
 		return visitorVisitedSpot.getId();
 	} 
 	
+	public Optional<VisitorVisitedSpot> findById(Long visitorVisitedSpotId){
+		return Optional.ofNullable(em.find(VisitorVisitedSpot.class, visitorVisitedSpotId));
+	}
+	
 	public void delete(VisitorVisitedSpot visitorVisitedSpot){
 		em.remove(visitorVisitedSpot);
 	}

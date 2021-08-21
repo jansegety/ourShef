@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -37,16 +38,19 @@ import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
 import my.ourShef.controller.validator.SpotModificationFormValidator;
 import my.ourShef.controller.validator.SpotRegisterationFormValidator;
+import my.ourShef.domain.Comment;
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
 import my.ourShef.domain.bridge.AddedSpotImg;
+import my.ourShef.domain.bridge.VisitorVisitedSpot;
 import my.ourShef.file.FileStore;
 import my.ourShef.service.CommentService;
 import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 import my.ourShef.service.bridge.AddedSpotImgService;
+import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @SpringBootTest
 @RequiredArgsConstructor
@@ -62,11 +66,17 @@ class SpotControllerTest {
 	@Autowired
 	private SpotService spotService;
 	@Autowired
+	private CommentService commentService;
+	@Autowired
 	private InitDb.InitService initService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private UploadFileInfoService uploadFileInfoService;
+	@Autowired
+	private AddedSpotImgService addedSpotImgService;
+	@Autowired
+	private VisitorVisitedSpotService visitorVisitedSpotService;
 	@Autowired
 	private EntityManager em;
 
@@ -196,8 +206,79 @@ class SpotControllerTest {
 		
 	}
 	
+	@Order(2)
+	@Test
+	@Transactional
+	@DisplayName("장소 삭제 테스트")
+	void testDeleteSpot() {
+		
+		//Initialize the list of entities related to the Spot before the Spot is deleted.
+		User beforeUser = userService.findByAccountId("ACCOUNTID_9").get();
+		Spot beforeSpot = beforeUser.getRegisteredSpots().get(0);
+		List<AddedSpotImg> beforeAddedSpotImgs = beforeSpot.getAddedSpotImgs();
+		ArrayList<UploadFileInfo> beforeAddedSpotImgInfos = new ArrayList<UploadFileInfo>();
+		for(AddedSpotImg beforeAddedSpotImg : beforeAddedSpotImgs)
+		{
+			beforeAddedSpotImgInfos.add(beforeAddedSpotImg.getUploadFileInfo());
+		}
+		List<Comment> beforeComments = beforeSpot.getComments();
+		
+		HashSet<User> beforeVisitorSet = new HashSet<User>();
+		for(Comment beforeComment : beforeComments)
+		{
+			beforeVisitorSet.add(beforeComment.getCommentUser());
+		}
+												
+		//deleteSpot
+		spotController.deleteSpot(beforeSpot.getId());
+		
+		//before Entity Detached
+		em.flush();
+		em.clear();
+		
+		
+		//Is the main image entity deleted?
+		String beforeMainImgInfoId = beforeSpot.getMainSpotImgInfo().getId();
+		UploadFileInfo MainImgInfo = uploadFileInfoService.findById(beforeMainImgInfoId);
+		assertNull(MainImgInfo, "MainImgInfo 엔터티가 삭제되어 있어야 합니다.");
+		
+		//Are the AddedSpotImg entities deleted?
+		for(AddedSpotImg beforeAddedSpotImg : beforeAddedSpotImgs) {
+			Optional<AddedSpotImg> beforeAddedSpotImgOptioanl = addedSpotImgService.findById(beforeAddedSpotImg.getId());
+			assertTrue(beforeAddedSpotImgOptioanl.isEmpty(), "AddedSpotImg Entity가 삭제되어 있어야 합니다.");
+		}
+
+		//Are the addedSpotImgInfo entities deleted?
+		for(UploadFileInfo beforeAddedSpotImgInfo : beforeAddedSpotImgInfos)
+		{
+			assertNull(uploadFileInfoService.findById(beforeAddedSpotImgInfo.getId()),"AddedSpotImgInfo Entity가 삭제되어 있어야 합니다.");
+		}
+		
 	
+		//Has the comment entity been deleted?
+		for(Comment beforeComment : beforeComments)
+		{
+			//refresh find
+			Optional<Comment> afterCommentOptional = commentService.findById(beforeComment.getId());
+			assertTrue(afterCommentOptional.isEmpty(), "Comment Entity는 삭제되어 있어야 합니다.");
+			
+			
+		}
+		
+		//Have the visitorVisitedSpot entities been deleted?
+		for(User beforeVisitor : beforeVisitorSet)
+		{
+			Optional<VisitorVisitedSpot> vvsOptioanl = visitorVisitedSpotService.findOneByUserAndSpot(beforeVisitor, beforeSpot);
+			assertTrue(vvsOptioanl.isEmpty(), "VisitorVisitedSpot Entity는 삭제되어 있어야 합니다.");
+		}
+		
+		
+		//Is the Spot Entity deleted?
+		Optional<Spot> beforeSpotOptioanl = spotService.findById(beforeSpot.getId());
+		assertTrue(beforeSpotOptioanl.isEmpty(), "Spot Entity는 삭제되어 있어야 합니다.");
 	
+		
+	}
 	
 	
 

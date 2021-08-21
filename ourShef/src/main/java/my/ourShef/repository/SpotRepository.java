@@ -32,6 +32,10 @@ public class SpotRepository {
 		return Optional.ofNullable(em.find(Spot.class, spotId));
 	}
 	
+	public void delete(Spot spot) {
+		em.remove(spot);
+	}
+	
 	public Long getCountRegisterationSpotNum(User user) {
 		Query nativeQuery = em.createNativeQuery("select count(sp.spot_id) from Spot sp where sp.registrant_id = ?");
 		nativeQuery.setParameter(1, user.getId());

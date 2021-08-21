@@ -108,14 +108,17 @@ starPointSystem("starPointSystem-i1");
 starPointSystemByClassForView("starPointSystem");
 
 //Confirmation of intent to delete
-let deleteButton = document.getElementsByClassName("btn-delete")[0];
-deleteButton.onclick = dispatchSpotToBeDeleted;
-
-function dispatchSpotToBeDeleted(){
+function dispatchSpotToBeDeleted(form){
 
   if(confirm("정말 삭제하시겠습니까? 이 작업은 돌이킬 수 없습니다")==true)
   {
-    window.location.href="/";
+    sumitFormToDelete(form);
   }
 
 }
+
+//submit Form to Delete
+function sumitFormToDelete (form){
+	form.action="/spot/delete";
+	form.submit();
+} 

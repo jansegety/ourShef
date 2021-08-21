@@ -2,8 +2,10 @@ package my.ourShef.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,7 @@ import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
 import my.ourShef.domain.bridge.AddedSpotImg;
+import my.ourShef.domain.bridge.VisitorVisitedSpot;
 import my.ourShef.file.FilePath;
 import my.ourShef.file.FileStore;
 import my.ourShef.service.CommentService;
@@ -52,6 +55,7 @@ import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 import my.ourShef.service.bridge.AddedSpotImgService;
+import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @Slf4j
 @Controller
@@ -68,6 +72,7 @@ public class SpotController {
 	private final FileStore fileStore;
 	private final UploadFileInfoService uploadFileInfoService;
 	private final AddedSpotImgService addedSpotImgService;
+	private final VisitorVisitedSpotService visitorVisitedSpotService;
 
 	@InitBinder // 요청이 올 때마다 dataBinder는 새로 만들어진다. //이 컨트롤러에서만 적용된다.
 	public void init(WebDataBinder dataBinder) {
@@ -183,6 +188,7 @@ public class SpotController {
 		// set Form
 		SpotModificationForm spotModificationForm = new SpotModificationForm();
 
+		spotModificationForm.setSpotId(spotId);
 		spotModificationForm.setSpotName(findSpot.getSpotName());
 		spotModificationForm.setSpotIntroduction(findSpot.getSpotIntroduction());
 		spotModificationForm.setRegistrantStarPoint(findSpot.getRegistrantStarPoint());
@@ -227,7 +233,7 @@ public class SpotController {
 		}
 
 		//If AddedImgs are Exist
-		if(!(spotModificationForm.getSpotAddedImgs().size()==0))
+		if(!spotModificationForm.getSpotAddedImgs().get(0).isEmpty())
 		{
 			//deleteFiles
 			List<AddedSpotImg> oldAddedSpotImgs = findSpot.getAddedSpotImgs();			
@@ -280,6 +286,96 @@ public class SpotController {
 		
 		return "redirect:/spot/spot/"+spotId;
 	}
+	
+	
+	@Transactional
+	@PostMapping("/delete")
+	public String deleteSpot(@RequestParam(value = "spotId") Long spotId ) {
+		
+		////Checks if there is the Spot and returns home if not
+		Optional<Spot> findSpotOptioanl = spotService.findById(spotId);
+		if(findSpotOptioanl.isEmpty())
+			return "redirect:/";
+		Spot spotToBeDelted = findSpotOptioanl.get();
+		
+		////Delete all comment entities related to the spot
+		List<Comment> comments = spotToBeDelted.getComments();
+		//Check all the users who have visited by using the Set type that guarantees uniqueness
+		Set<User> visitorSet = new HashSet<User>();
+		
+		for(Comment comment : comments)
+		{		
+			
+			visitorSet.add(comment.getCommentUser());
+			
+			//delete CommentEntity in DB
+			commentService.delete(comment);				
+		}
+		
+		////Delete VisitorVisitedSpot Entity of users who have visited the spot
+		for(User visitor : visitorSet)
+		{
+			Optional<VisitorVisitedSpot> vvsOptional = visitorVisitedSpotService.findOneByUserAndSpot(visitor, spotToBeDelted);
+			if(vvsOptional.isPresent())
+			{
+				//delete VisitorVisitedSpot Entity
+				visitorVisitedSpotService.delete(vvsOptional.get());
+			}
+			
+		}
+		
+		////Registrant Reliability Updates
+		User registrant = spotToBeDelted.getRegistrant();
+		float oldReliability = registrant.getReliability();
+		int rigisteredSpotsNum = registrant.getRegisteredSpots().size();
+		float newReliability = 0;
+		
+		if(rigisteredSpotsNum > 1)
+		{
+			float oldReliabilitySum = oldReliability*rigisteredSpotsNum;
+			float reliabilityOfSpotToBeDelted= 100 - Math.abs(spotToBeDelted.getRegistrantStarPoint() - spotToBeDelted.getUsersStarPoint());
+			
+			newReliability = (oldReliabilitySum - reliabilityOfSpotToBeDelted)/(rigisteredSpotsNum - 1);
+		}
+		else
+		{
+			newReliability = -1;
+		}
+		registrant.setReliability(newReliability);
+		
+		
+		////Delete all IMG Etities associated with the spot
+		////Delete all IMG files related to the spot
+		
+		//main
+		UploadFileInfo mainSpotImgInfo = spotToBeDelted.getMainSpotImgInfo();
+		String mainSpotImgStoreName = mainSpotImgInfo.getStoreFileName();
+		//delete file 
+		fileStore.deleteFile(mainSpotImgStoreName, FilePath.SPOT_MAIN_IMG);
+		//delete Entity
+		uploadFileInfoService.delete(mainSpotImgInfo);
+		
+		//added
+		List<AddedSpotImg> addedSpotImgs = spotToBeDelted.getAddedSpotImgs();
+		for(AddedSpotImg addedSpotImg : addedSpotImgs)
+		{
+			UploadFileInfo addedSpotImgInfo = addedSpotImg.getUploadFileInfo();
+			String addedSpotImgStoreName = addedSpotImgInfo.getStoreFileName();
+			
+			//delete file 
+			fileStore.deleteFile(addedSpotImgStoreName, FilePath.SPOT_ADDED_IMG);
+			//delete Entity
+			uploadFileInfoService.delete(addedSpotImgInfo);
+			addedSpotImgService.delete(addedSpotImg);
+		}
+		
+		
+		////Delete Spot Entity
+		spotService.delete(spotToBeDelted);
+		
+		return "redirect:/confirmation/deleteSpot";
+	}
+	
 
 	// spot Img name setting
 	private void setSpotImgNames(Model model, Spot findSpot) {

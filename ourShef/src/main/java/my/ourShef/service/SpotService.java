@@ -34,6 +34,10 @@ public class SpotService {
 		return spotRepository.findById(spotId);
 	}
 	
+	public void delete(Spot spot) {
+		spotRepository.delete(spot);
+	}
+	
 	public Optional<Spot> findRecentRegisterationSpotByUserAccountId(String userAccountId) {
 		User findUser = userRepository.findByAccountId(userAccountId).get();
 		List<Spot> registeredSpots = findUser.getRegisteredSpots();

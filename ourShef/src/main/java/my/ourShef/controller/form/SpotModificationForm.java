@@ -12,6 +12,9 @@ import lombok.Data;
 
 @Data
 public class SpotModificationForm {
+	
+	//for DeleteSpot
+	private Long spotId;
 
 	private MultipartFile spotMainImg;
 	private List<MultipartFile> spotAddedImgs;

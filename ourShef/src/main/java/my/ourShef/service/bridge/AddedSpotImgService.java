@@ -2,6 +2,7 @@ package my.ourShef.service.bridge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +32,10 @@ public class AddedSpotImgService {
 		for(AddedSpotImg addesSpotImg : addesSpotImgList) {
 			save(addesSpotImg);
 		}	
+	}
+	
+	public Optional<AddedSpotImg> findById(Long addedSpotImgId){
+		return addedSpotImgRepository.findById(addedSpotImgId);
 	}
 	
 	public List<AddedSpotImg> constructWithUploadFileInfoAndSpot(List<UploadFileInfo> addedSpotImgFileInfoList, Spot spot) {

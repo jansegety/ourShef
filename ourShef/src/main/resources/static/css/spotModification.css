@@ -1,4 +1,9 @@
 /* ###################### spotModification ########################## */
+.head-text-top {
+	margin: 35px 0 20px 0;
+    font-size: 30px;
+	text-align: center;
+}
 
 .main-col div{
   text-align: center;

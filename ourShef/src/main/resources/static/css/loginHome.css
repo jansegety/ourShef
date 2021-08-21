@@ -77,7 +77,7 @@
   padding: 0 10px;
   overflow: hidden;
   width: 200px;
-  height: 48px;
+  max-height: 48px;
 } 
 
 .spot-info-bottom{

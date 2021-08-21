@@ -1,5 +1,7 @@
 package my.ourShef.repository.bridge;
 
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -22,6 +24,10 @@ public class AddedSpotImgRepository {
 		em.persist(addedSpotImg);
 		
 		return addedSpotImg.getId();
+	}
+	
+	public Optional<AddedSpotImg> findById(Long addedSpotImgId){
+		return Optional.ofNullable(em.find(AddedSpotImg.class, addedSpotImgId));
 	}
 	
 	public void delete(AddedSpotImg addedSpotImg) {
