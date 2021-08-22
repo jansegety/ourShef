@@ -88,5 +88,16 @@ public class UserRepository {
 	}
 	
 	
+	@Transactional
+	public List<User> getAcquaintanceList(User user){
+		
+		List<User> resultList = em.createQuery("SELECT ac FROM UserAcquaintance ua JOIN ua.acquaintance ac ON ua.user = :user", User.class)
+		.setParameter("user", user)
+		.getResultList();
+		
+		return resultList;
+		
+	}
+	
 	
 }

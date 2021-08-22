@@ -7,6 +7,9 @@
  form>div{
    margin-top: 20px;
  }
+ .error-message-acquaintanceAccountId {
+ 	font-size: 16px;
+ }
  .guide-text{
   font-size: 20px; 
   margin-bottom: 20px;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,13 +28,15 @@
                 </div>
                 <div class="row text-center">
                     <ul>
-                        <li>
-                            <span><img class="demo-img" alt="프로필 사진"></span>
+                        <li th:each="acquaintanceDto : ${acquaintanceDtoList}" th:object="${acquaintanceDto}">
+                            <span class="acquaintance-profile-img-frame">
+                            <img th:src="@{/img/userProfile/{storeName}(storeName = *{profileImgStoreName})}" th:class="''" class="demo-img" alt="프로필 사진">
+                            </span>
                             <span class="user-info">
                                 <div class="wrapper">
-                                    <div class="nickName">닉네임</div>
+                                    <div th:text="*{nickName}" class="nickName">닉네임</div>
                                     <div class="reliabilitySystem">
-                                        <input class="input-reliability-size" type="hidden" value="-1">
+                                        <input th:value="*{reliability}" class="input-reliability-size" type="hidden" value="-1">
                                         <div class="reliabilityText">신뢰도</div>
                                         <div class="gaugeBar">
                                             <div class="back"></div>
@@ -44,7 +46,7 @@
                                 </div>
                             </span>
                             <span class="btn-frame">
-                                <button class="btn-subGreen" type="button">맛집 보기</button>
+                                <button class="btn-subGreen" type="button" th:onclick="|location.href='@{/spot/userSpotList/{acquaintanceId}(acquaintanceId=*{id})}'|">맛집 보기</button>
                             </span>
                             <span class="input-wrapper">
                                 <input class="input-delete" type="checkbox">
@@ -54,15 +56,15 @@
                 </div>
                 <div class="row">
                     <div class="btns">
-                        <button class="btn-shefGreen" type="button">이전으로</button>
+                        <button class="btn-shefGreen" type="button" onclick="location.href='/'">홈으로</button>
                         <button class="btn-shefGreen btn-acquaintance-delete" type="button">지인삭제</button>
                         <div class="message-component-wrapeer">
                             <div class="new-message-pop">10</div>
-                            <button class="btn-shefGreen btn-message-box">
+                            <button class="btn-shefGreen btn-message-box" type="button" onclick="location.href='/acquaintance/relationshipResponseBox'">
                                 메세지함
                             </button>
                         </div>
-                        <button class="btn-shefGreen">친분맺기</button>
+                        <button class="btn-shefGreen" type="button" onclick="location.href='/acquaintance/requestForm'">친분맺기</button>
                     </div>
                 </div>
             </div>

@@ -1,31 +1,49 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acquaintance Application</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acquaintance Application</title>
 
-  <!-- common -->
-  <link rel="stylesheet" href="/static/common.css">
-  <!-- specific -->
-  <link rel="stylesheet" href="../../static/css/acquaintanceRequestForm.css">
+<style>
+.error-border {
+	border: 1px solid red;
+}
+</style>
+
+<!--부트 스트랩-->
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
+<link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
+
+<!-- common -->
+<link rel="stylesheet" th:href="@{/common.css}"
+	href="/static/common.css">
+<!-- specific -->
+<link rel="stylesheet" th:href="@{/css/acquaintanceRequestForm.css}"
+	href="../../static/css/acquaintanceRequestForm.css">
 
 </head>
 <body>
-  <form action="#none">
-    <div>
-      <img class="demo-img" style="width: 150px; border-radius: 50%;">
-    </div>
-    <div class="guide-text">지인 아이디를 입력해주세요</div>
-    <div><input type="text"></div>
-    <div> 
-      <button class="btn-shefGreen">지인신청</button> 
-      <button class="btn-shefGreen">취소</button>
-    </div>
-  </form>
+	<form th:object="${acquaintanceRequestForm}" method="post">
+		<div>
+			<img class="demo-img" style="width: 150px; border-radius: 50%;">
+		</div>
+		<div class="guide-text">지인 아이디를 입력해주세요</div>
+		<div class="error-message-acquaintanceAccountId text-danger" th:errors="*{acquaintanceAccountId}">아이디 오류 메시지</div>
+		<div>
+			<input th:field="*{acquaintanceAccountId}" type="text" maxlength="20"
+				th:errorclass="error-border">
+		</div>
+		<div>
+			<button class="btn-shefGreen" type="submit">지인신청</button>
+			<button class="btn-shefGreen"
+				type="button"
+				onclick="location.href='/acquaintance/myAcquaintanceList'">취소</button>
+		</div>
+	</form>
 
-  <!-- common -->
-  <script src="../../static/common.js"></script>
+	<!-- common -->
+	<script th:src="@{/common.js}" src="../../static/common.js"></script>
 </body>
 </html>

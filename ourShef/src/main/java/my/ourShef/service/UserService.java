@@ -79,6 +79,12 @@ public class UserService {
 		public Long getAcquaintanceSpotTotalNum(User loginUser) {
 			return userRepository.getAcquaintanceSpotTotalNum(loginUser);
 		}
+		
+		@Transactional
+		public List<User> getAcquaintanceList(User user){
+			return userRepository.getAcquaintanceList(user);
+		}
+	
 	
 
 }

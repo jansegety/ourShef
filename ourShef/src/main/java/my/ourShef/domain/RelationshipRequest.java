@@ -33,6 +33,12 @@ public class RelationshipRequest {
 	@Column(name="relationship_request_id", length = 36)
 	private String id;
 	
+	//Even if it is referenced, the counterpart entity may be deleted, so do not set it as a foreign key.
+	@Setter
+	@Column(name="opponent_id", length = 36)
+	private String opponentId;
+	
+	@Setter
 	@OneToOne
 	@JoinColumn(name="owner_user_id")
 	private User owner;

@@ -1,5 +1,7 @@
 package my.ourShef.service.bridge;
 
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
@@ -14,16 +16,23 @@ import my.ourShef.repository.bridge.UserAcquaintanceRepository;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class UserAcquaintanceService {
 	
 	private final UserAcquaintanceRepository userAcquaintanceRepository;
 
-	@Transactional
+	
 	public Long save(UserAcquaintance userAcquaintance) {
 		
 		return userAcquaintanceRepository.save(userAcquaintance);
 	}
+	
+	
+	public List<User> findByUser(User User){
+		 return userAcquaintanceRepository.findByUser(User);
+	}
+	
 	
 	/*
 	 * Verify that there is no duplicate relationship between user and acquaintance

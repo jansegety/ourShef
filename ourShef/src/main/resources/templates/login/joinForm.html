@@ -5,6 +5,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+.error-border {
+	border: 1px solid red;
+}
+</style>
+
 <!--부트 스트랩-->
 <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="../../static/bootStrap/bootstrap-theme.css">
 <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="../../static/bootStrap/bootstrap.css">
@@ -15,11 +21,6 @@
 
 <title>Sign Up</title>
 </head>
-<style>
-.error-border {
-	border: 1px solid red;
-}
-</style>
 <body class="joinForm">
 	<form action="#none" th:action method="post" th:object="${joinForm}"
 		enctype="multipart/form-data">

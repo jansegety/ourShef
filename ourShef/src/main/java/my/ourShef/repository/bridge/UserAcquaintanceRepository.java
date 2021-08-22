@@ -28,8 +28,11 @@ private final EntityManager em;
 		return userAcquaintance.getId();
 	}
 	
-	public List<User> findByUser(User User){
-		 List<User> resultList = em.createQuery("select ua.acquaintance from UserAcquaintance ua",User.class).getResultList();
+	public List<User> findByUser(User user){
+		 List<User> resultList = 
+				 em.createQuery("SELECT ac FROM UserAcquaintance ua JOIN ua.acquaintance ac ON ua.user =:user ORDER BY ac.nickName ASC",User.class)
+				 .setParameter("user", user)
+				 .getResultList();
 		 
 		 return resultList;
 	}

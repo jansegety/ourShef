@@ -171,7 +171,7 @@ public class SpotController {
 		User findUser = findUserOptional.get();
 
 		setUserSpotListUserDto(model, findUser);
-		setUserSpotListSpotDto(model, findUser, 10L, 5L, page);
+		setUserSpotListSpotDto(model, findUser, 4L, 5L, page);
 
 		return "spot/spotListOfUser";
 	}
