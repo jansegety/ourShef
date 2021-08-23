@@ -19,53 +19,46 @@
 <title>RelationshipResponseBox</title>
 </head>
 <body>
-	<form id="form-i1" action="#none">
+	<form id="form-i1" th:action="@{/acquaintance/deleteReceivedRelationshipRequest}" action="#none" method="post">
 		<div class="container">
 			<div class="row text-center text-primary">
 				<h3 class="text-shefGreen">받은 친분 요청</h3>
 			</div>
 			<div class="row">
 				<ul>
-					<li><span class="user-info">
-							<div class="nickName">맛있는집을찾아다녀요</div>
+					<li th:each="receivedRelationshipRequestDto : ${receivedRelationshipRequestDtoList}" th:object="${receivedRelationshipRequestDto}">
+					<span class="user-info">
+							<div th:text="*{fromUserNickName}" class="nickName">맛있는집을찾아다녀요</div>
 					</span> <span class="added-text-frame">
 							<div class="added-text">의 요청</div>
-					</span> <span class="btn-frame">
-							<div class="btns-response">
-								<button class="btn btn-danger btn-reject" type="button">거절</button>
-								<button class="btn btn-info btn-accept" type="button">수락</button>
-								<input class="input-delete" type="checkbox">
-							</div>
-					</span></li>
-					<li><span class="user-info">
-							<div class="nickName">맛있는집을찾아다녀요</div>
-					</span> <span class="added-text-frame">
-							<div class="added-text">의 요청</div>
-					</span> <span class="btn-frame">
-							<div class="btns-response">
-								<button class="btn btn-muted btn-rejected" type="button"
-									disabled="true">거절됨</button>
-								<input class="input-delete" type="checkbox">
-							</div>
-					</span></li>
-					<li><span class="user-info">
-							<div class="nickName">맛있는집을찾아다녀요</div>
-					</span> <span class="added-text-frame">
-							<div class="added-text">의 요청</div>
-					</span> <span class="btn-frame">
-							<div class="btns-response">
-								<button class="btn btn-success btn-accepted" type="button"
-									disabled="true">수락됨</button>
-								<input class="input-delete" type="checkbox">
-							</div>
-					</span></li>
+					</span> 
+					<span class="btn-frame">
+							<th:block th:switch="*{state}">		
+								<div th:case="${T(my.ourShef.domain.constant.RelationshipRequestState).BEFORE_CONFIRMATION}" class="btns-response">			
+									<button class="btn btn-danger btn-reject" type="button" onclick="declineRequest(this)">거절</button>
+									<button class="btn btn-info btn-accept" type="button" onclick="acceptRequest(this)">수락</button>					
+									<input th:value="*{id}" name="relationshipRequestId" class="input-delete" type="checkbox">
+								</div>
+								<div th:case="${T(my.ourShef.domain.constant.RelationshipRequestState).REJECTED}" class="btns-response">
+									<button class="btn btn-muted btn-rejected" type="button"
+										disabled="true">거절됨</button>
+									<input th:value="*{id}" name="relationshipRequestId" class="input-delete" type="checkbox">
+								</div>
+								<div th:case="${T(my.ourShef.domain.constant.RelationshipRequestState).ACCEPTED}" class="btns-response">
+									<button class="btn btn-success btn-accepted" type="button"
+										disabled="true">수락됨</button>
+									<input th:value="*{id}" name="relationshipRequestId" class="input-delete" type="checkbox">
+								</div>
+							</th:block>
+					</span>
+					</li>
 				</ul>
 			</div>
 			<div class="row">
 				<div class="btns-footer">
 					<button class="btn-shefGreen" type="button" onclick="location.href='/acquaintance/myAcquaintanceList'">리스트로</button>
 					<button class="btn-shefGreen" type="button" onclick="location.href='/acquaintance/relationshipRequestBox'">보낸 친분 요청</button>
-					<button class="btn-shefGreen btn-delete">삭제하기</button>
+					<button class="btn-shefGreen btn-delete" type="button">삭제하기</button>
 				</div>
 			</div>
 		</div>

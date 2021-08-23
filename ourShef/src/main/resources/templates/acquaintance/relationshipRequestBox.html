@@ -24,7 +24,7 @@
 <title>RelationshipRequestBox</title>
 </head>
 <body>
-	<form id="form-i1" action="#none">
+	<form id="form-i1" th:action="@{/acquaintance/deleteSendedRelationshipRequest}" action="#none" method="post">
 		<div class="container">
 			<div class="row text-center text-primary">
 				<h3 class="text-shefGreen">보낸 친분 요청</h3>
@@ -32,8 +32,8 @@
 			<div class="row">
 				<ul>
 					<li
-						th:each="sendedRelationRequestDto:${sendedRelationRequestDtoList}"
-						th:object="${sendedRelationRequestDto}"><span
+						th:each="sendedRelationshipRequestDto:${sendedRelationshipRequestDtoList}"
+						th:object="${sendedRelationshipRequestDto}"><span
 						class="user-info">
 							<div th:text="*{toUserNickName}" class="nickName">맛있는집을찾아다녀요</div>
 					</span> <span class="added-text-frame">
@@ -49,7 +49,7 @@
 									<button th:case="${T(my.ourShef.domain.constant.RelationshipRequestState).ACCEPTED}" class="btn btn-success btn-accepted"
 										type="button" disabled="true">수락됨</button>
 								</th:block>
-								<input th:value="*{id}" class="input-delete" name="relationShipRequestId" type="checkbox">
+								<input th:value="*{id}" class="input-delete" name="relationshipRequestId" type="checkbox">
 							</div>
 					</span></li>
 				</ul>
@@ -61,7 +61,7 @@
 					<button class="btn-shefGreen" type="button"
 						onclick="location.href='/acquaintance/relationshipResponseBox'">받은
 						친분 요청</button>
-					<button class="btn-shefGreen btn-delete">삭제하기</button>
+					<button class="btn-shefGreen btn-delete" type="button">삭제하기</button>
 				</div>
 			</div>
 		</div>
@@ -74,8 +74,8 @@
 	<script th:src="@{/bootStrap/bootstrap.min.js}"
 		src="../../static/bootStrap/bootstrap.min.js"></script>
 	<!-- specific -->
-	<script th:src="@{/js/relationshipResponseBox.js}"
-		src="../../static/js/relationshipResponseBox.js"></script>
+	<script th:src="@{/js/relationshipRequestBox.js}"
+		src="../../static/js/relationshipRequestBox.js"></script>
 
 </body>
 </html>

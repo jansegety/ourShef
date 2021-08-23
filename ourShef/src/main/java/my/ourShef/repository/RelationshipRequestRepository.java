@@ -42,11 +42,17 @@ public class RelationshipRequestRepository {
 	}
 	
 	public List<RelationshipRequest> getSendedRelationshipRequest(User owner, User fromUser){
-		return em.createQuery("SELECT rr FROM RelationshipRequest rr WHERE rr.owner=:owner AND rr.fromUser=:fromUser ORDER BY rr.id DESC",RelationshipRequest.class)
+		return em.createQuery("SELECT rr FROM RelationshipRequest rr WHERE rr.owner=:owner AND rr.fromUser=:fromUser",RelationshipRequest.class)
 		.setParameter("owner", owner)
 		.setParameter("fromUser", fromUser)
 		.getResultList();
 	}
 	
+	public List<RelationshipRequest> getReceivedRelationshipRequest(User owner, User toUser){
+		return em.createQuery("SELECT rr FROM RelationshipRequest rr WHERE rr.owner=:owner AND rr.toUser=:toUser",RelationshipRequest.class)
+		.setParameter("owner", owner)
+		.setParameter("toUser", toUser)
+		.getResultList();
+	}
 	
 }

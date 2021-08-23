@@ -28,13 +28,37 @@ private final EntityManager em;
 		return userAcquaintance.getId();
 	}
 	
-	public List<User> findByUser(User user){
+	public List<UserAcquaintance> findByUser(User user){
+		 List<UserAcquaintance> resultList = 
+				 em.createQuery("SELECT ua FROM UserAcquaintance ua WHERE ua.user =:user",UserAcquaintance.class)
+				 .setParameter("user", user)
+				 .getResultList();
+		 
+		 return resultList;
+	}
+	
+	public List<UserAcquaintance> findByUserAndAcquaintance(User user, User acquaintance){
+		 List<UserAcquaintance> resultList = 
+				 em.createQuery("SELECT ua FROM UserAcquaintance ua WHERE ua.user =:user AND ua.acquaintance =:acquaintance",UserAcquaintance.class)
+				 .setParameter("user", user)
+				 .setParameter("acquaintance", acquaintance)
+				 .getResultList();
+		 
+		 return resultList;
+	}
+	
+	public List<User> findAcquaintanceByUser(User user){
 		 List<User> resultList = 
 				 em.createQuery("SELECT ac FROM UserAcquaintance ua JOIN ua.acquaintance ac ON ua.user =:user ORDER BY ac.nickName ASC",User.class)
 				 .setParameter("user", user)
 				 .getResultList();
 		 
 		 return resultList;
+	}
+	
+	public void delete(UserAcquaintance userAcquaintance)
+	{
+		em.remove(userAcquaintance);
 	}
 	
 	/*

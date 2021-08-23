@@ -21,7 +21,7 @@
         <title>AcquaintanceList</title>
     </head>
     <body>
-        <form id="form-i1" action="#none">
+        <form id="form-i1" th:action="@{/acquaintance/delete}" action="#none" method="post">
             <div class="container">
                 <div class="row text-center text-shefGreen">
                     <h3>나의 지인 리스트</h3>
@@ -49,7 +49,7 @@
                                 <button class="btn-subGreen" type="button" th:onclick="|location.href='@{/spot/userSpotList/{acquaintanceId}(acquaintanceId=*{id})}'|">맛집 보기</button>
                             </span>
                             <span class="input-wrapper">
-                                <input class="input-delete" type="checkbox">
+                                <input th:value="*{id}" name="acquaintanceId" class="input-delete" type="checkbox">
                             </span>
                         </li>
                     </ul>
@@ -59,7 +59,7 @@
                         <button class="btn-shefGreen" type="button" onclick="location.href='/'">홈으로</button>
                         <button class="btn-shefGreen btn-acquaintance-delete" type="button">지인삭제</button>
                         <div class="message-component-wrapeer">
-                            <div class="new-message-pop">10</div>
+                            <div th:if="${beforeConfirmationRequestNum} > 0" th:text="${beforeConfirmationRequestNum}" class="new-message-pop">10</div>
                             <button class="btn-shefGreen btn-message-box" type="button" onclick="location.href='/acquaintance/relationshipResponseBox'">
                                 메세지함
                             </button>

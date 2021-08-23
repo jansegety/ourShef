@@ -38,4 +38,8 @@ public class RelationshipRequestService {
 		return relationshipRequestRepository.getSendedRelationshipRequest(owner, fromUser);
 	}
 	
+	public List<RelationshipRequest> getReceivedRelationshipRequest(User owner, User toUser){
+		return relationshipRequestRepository.getReceivedRelationshipRequest(owner, toUser);
+	}
+	
 }

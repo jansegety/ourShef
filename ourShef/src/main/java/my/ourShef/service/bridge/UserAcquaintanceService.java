@@ -28,11 +28,33 @@ public class UserAcquaintanceService {
 		return userAcquaintanceRepository.save(userAcquaintance);
 	}
 	
-	
-	public List<User> findByUser(User User){
-		 return userAcquaintanceRepository.findByUser(User);
+	public List<UserAcquaintance> findByUser(User user){
+		 
+		 return userAcquaintanceRepository.findByUser(user);
 	}
 	
+	public List<UserAcquaintance> findByUserAndAcquaintance(User user, User acquaintance){
+	
+		 return userAcquaintanceRepository.findByUserAndAcquaintance(user, acquaintance);
+	}
+	
+	public List<User> findAcquaintanceByUser(User User){
+		 return userAcquaintanceRepository.findAcquaintanceByUser(User);
+	}
+	
+	
+	public void delete(UserAcquaintance userAcquaintance)
+	{
+		userAcquaintanceRepository.delete(userAcquaintance);
+	}
+	
+	public void deletes(List<UserAcquaintance> userAcquaintances)
+	{
+		for(UserAcquaintance userAcquaintance : userAcquaintances)
+		{
+			delete(userAcquaintance);
+		}
+	}
 	
 	/*
 	 * Verify that there is no duplicate relationship between user and acquaintance

@@ -3,9 +3,9 @@
 let deleteMode = false;
 
 let deleteButton = document.getElementsByClassName("btn-delete")[0];
-deleteButton.onclick = dispatcherRelationshipResponseListToBeDeleted;
+deleteButton.onclick = dispatcherRelationshipRequestListToBeDeleted;
 
-function dispatcherRelationshipResponseListToBeDeleted(){
+function dispatcherRelationshipRequestListToBeDeleted(){
 
   let deleteCheckBoxList = document.getElementsByClassName("input-delete");
 
@@ -39,3 +39,47 @@ function dispatcherRelationshipResponseListToBeDeleted(){
   }
 
 } 
+
+////Accept or decline the request
+//Accept
+function acceptRequest(buttonElement){
+	let relationshipRequestId = buttonElement.parentNode.getElementsByClassName("input-delete")[0].value;
+	
+	 var form = document.createElement("form");
+         form.setAttribute("charset", "UTF-8");
+         form.setAttribute("method", "Post");
+         form.setAttribute("action", "/acquaintance/acceptRelationshipRequest"); 
+
+
+    var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "relationshipRequestId");
+        hiddenField.setAttribute("value", relationshipRequestId);
+
+        form.appendChild(hiddenField);
+	
+		document.body.appendChild(form);
+
+		form.submit();	
+}
+//Decline
+function declineRequest(buttonElement){
+	let relationshipRequestId = buttonElement.parentNode.getElementsByClassName("input-delete")[0].value;
+	
+	 var form = document.createElement("form");
+         form.setAttribute("charset", "UTF-8");
+         form.setAttribute("method", "Post");
+         form.setAttribute("action", "/acquaintance/declineRelationshipRequest"); 
+
+
+    var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", "relationshipRequestId");
+        hiddenField.setAttribute("value", relationshipRequestId);
+
+        form.appendChild(hiddenField);
+
+		document.body.appendChild(form);
+
+		form.submit();	
+}

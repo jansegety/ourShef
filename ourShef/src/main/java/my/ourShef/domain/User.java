@@ -80,4 +80,23 @@ public class User {
 		this.registeredTime = LocalDateTime.now();
 	}
 	
+	
+	@Override
+	public int hashCode() {
+	    return 0;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		User user = (User)obj;
+		
+		if(this.id == user.id)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 }
