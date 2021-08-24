@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import my.ourShef.controller.CommentController;
 import my.ourShef.controller.form.JoinForm;
 import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
@@ -82,6 +83,7 @@ public class InitDb {
 		private final UploadFileInfoService uploadFileInfoService;
 		private final AddedSpotImgService addedSpotImgService;
 		private final UserService userService;
+		private final CommentController commentController;
 		private final CommentService commentService;
 		private final VisitorVisitedSpotService visitorVisitedSpotService;
 		private final UserAcquaintanceService userAcquaintanceService;
@@ -327,6 +329,9 @@ public class InitDb {
 
 			// initUser
 			allUserList = initUsers(10);
+			
+			//init UserAcquaintance
+			initAcquaintance(allUserList);
 
 			// initSpot
 			for (User user : allUserList) {
@@ -337,9 +342,42 @@ public class InitDb {
 			//init Comment And VisitorVisitedSpot
 			initCommentAndVisitorVisitedSpot(allUserList, allSpotList);
 			
-			//init UserAcquantance
-			initUserAcquaintance(allUserList);
+			
 
+		}
+		
+		/*
+		 * Randomly form acquaintance relationships
+		 */
+		public void initAcquaintance(List<User> userList) {
+			
+			Random r=new Random(); 
+			
+			for(User user : userList)
+			{
+				for(int i=0; i<userList.size() ;i++)
+				{
+					User acquaintance = userList.get(r.nextInt(userList.size()));
+					//If the acquaintance is user, it will pass.
+					if(user == acquaintance)
+						continue;
+					
+					List<UserAcquaintance> uaByUserAndAcquaintanceList = userAcquaintanceService.findByUserAndAcquaintance(user, acquaintance);
+					List<UserAcquaintance> uaByAcquaintanceAndUserList= userAcquaintanceService.findByUserAndAcquaintance(acquaintance, user);
+					//Unless they are acquaintances
+					if(uaByUserAndAcquaintanceList.isEmpty()&&uaByAcquaintanceAndUserList.isEmpty())
+					{
+						UserAcquaintance uaOfUA = new UserAcquaintance(user,acquaintance);
+						UserAcquaintance uaOfAU = new UserAcquaintance(acquaintance,user);
+						userAcquaintanceService.save(uaOfUA);
+						userAcquaintanceService.save(uaOfAU);
+					}
+					
+					
+				}
+				
+			}
+			
 		}
 
 		
@@ -397,7 +435,14 @@ public class InitDb {
 				for(int i = 0; i < 30; i++) {
 					
 					//Pick a random spot.
-					Spot visitedSpot = spotList.get(r.nextInt(spotListSize)); 
+					Spot visitedSpot = spotList.get(r.nextInt(spotListSize));
+					User registrant = visitedSpot.getRegistrant();
+					
+					//Do not comment unless they are acquaintances.
+					if(!userAcquaintanceService.isPresentByUserAndAcquaintance(visitor, registrant))
+						continue;
+					
+					
 					
 					//comment
 					Comment newComment = new Comment(visitor, visitedSpot);
@@ -423,6 +468,10 @@ public class InitDb {
 					
 					//visits + 1
 					visitedSpot.setVisits(visitedSpot.getVisits() + 1);
+					
+					//update Spot Reliability
+					float spotReliability = 100 - Math.abs(visitedSpot.getRegistrantStarPoint()-visitedSpot.getUsersStarPoint());
+					visitedSpot.setReliability(spotReliability);
 					
 					//Registrant's reliability updates every time a comment is posted
 					//Average userStarPoint should be updated.
@@ -504,26 +553,7 @@ public class InitDb {
 		 *Registrant's reliability updates every time a comment is posted
 		 */
 		private void updateRegistrantReliability(Spot spot) {
-			User registrant = spot.getRegistrant();
-			//If the registrant has never received a comment
-			if(registrant.getReliability() == -1)
-			{
-				float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
-				registrant.setReliability(newReliability);
-			}
-			else
-			{
-				
-				Long registerationSpotNum = spotService.getCountRegisterationSpotNum(registrant);
-				float oldReliability= registrant.getReliability();
-				float oldReliabilitySum = (registerationSpotNum-1) * oldReliability;
-				
-				float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
-				
-				float newAverageReliability = (oldReliabilitySum + newReliability) / registerationSpotNum;
-				
-				registrant.setReliability(newAverageReliability);
-			}
+			commentController.updateRegistrantReliability(spot);
 			
 		}
 		

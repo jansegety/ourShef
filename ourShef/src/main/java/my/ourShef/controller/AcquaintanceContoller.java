@@ -50,6 +50,7 @@ public class AcquaintanceContoller {
 	private final UserService userService;
 	private final SpotService spotService;
 	private final CommentService commentService;
+	private final CommentController commentController;
 	private final VisitorVisitedSpotService visitorVisitedSpotService;
 	private final UserAcquaintanceService userAcquaintanceService;
 	private final RelationshipRequestService relationshipRequestService;
@@ -114,11 +115,13 @@ public class AcquaintanceContoller {
 				if(loginUserAcquaintanceSet.contains(acquaintance))
 				{
 					
-					//Delete Comment Entity from spot & TODO Spot user average star rating update
-					//TODO The Spot Registrant Reliability Updates
+					//Delete Comment Entity from spot & Spot user average star rating update
+					//The Spot Registrant Reliability Updates
 					//Delete VisitorVisited Entity
 					/*
 					 * 1. Delete all user A's comments from user B's spot.
+					 * 1-2. Spot user average star rating update
+					 * 1-3. The Spot Registrant Reliability Updates
 					 * 2. Delete user A's visitedSpot information for user B's spot.
 					 */
 					deleteDataOfAFromB(loginUser,acquaintance);
@@ -145,23 +148,56 @@ public class AcquaintanceContoller {
 	
 	/*
 	 * 1. Delete all user A's comments from user B's spot.
+	 * 1-2. Spot user average star rating update
+	 * 1-3. The Spot Registrant Reliability Updates
 	 * 2. Delete user A's visitedSpot information for user B's spot.
 	 */
 	public void deleteDataOfAFromB(User userA, User userB)
 	{
 		//Delete Comment Entity
 		//Delete all user A's comments from user B's spot.
+		//and Recalculation of user average star rating
 		List<Spot> registeredSpotsByUserB = spotService.getAllRegisteredSpotsByUser(userB);
 		for(Spot registeredSpotByUserB : registeredSpotsByUserB)
 		{
 			List<Comment> comments = registeredSpotByUserB.getComments();
+			float oldUsersStarPoint = registeredSpotByUserB.getUsersStarPoint();
+			float totalUserSpotPoint = 0;
+			float leftCommentsNum = 0;
+			boolean isUserACommentExist = false;
 			for(Comment comment : comments)
 			{
 				if(comment.getCommentUser()==userA)
 				{
+					//delete Commnet Entity
 					commentService.delete(comment);
+					
+					if(isUserACommentExist==false)
+						isUserACommentExist=true;
 				}
+				else
+				{
+					totalUserSpotPoint = totalUserSpotPoint + comment.getStarPoint();
+					leftCommentsNum++;
+				}	
 			}
+			
+			if(isUserACommentExist==true)
+			{
+				//Update user average star rating
+				if(leftCommentsNum == 0) {
+					registeredSpotByUserB.setUsersStarPoint(-1);
+				}
+				else
+				{
+					registeredSpotByUserB.setUsersStarPoint(totalUserSpotPoint/leftCommentsNum);
+				}
+				
+				//Update registrant's reliability
+				commentController.updateRegistrantReliability(registeredSpotByUserB);
+				
+			}
+				
 			
 			//Delete VisitorVisited Entity
 			//Delete user A's visitedSpot information for user B's spot.
@@ -416,7 +452,29 @@ public class AcquaintanceContoller {
 			Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(relationshipRequestId);
 			if(relationshipRequestOptional.isPresent())
 			{
-				relationshipRequestService.delete(relationshipRequestOptional.get());
+				RelationshipRequest relationshipRequest = relationshipRequestOptional.get();
+				
+				/*
+				 * If the owner and the receiver are same in the request, 
+				 * if the request is deleted before confirmation, 
+				 * the status of the opponent relationshipRequest is set to Rejected.
+				 */
+				if(relationshipRequest.getToUser() == relationshipRequest.getOwner())
+				{
+					if(relationshipRequest.getState()==RelationshipRequestState.BEFORE_CONFIRMATION)
+					{
+						
+						Optional<RelationshipRequest> opponentRelationshipRequestOptional
+						= relationshipRequestService.findById(relationshipRequest.getOpponentId());
+						if(opponentRelationshipRequestOptional.isPresent())
+						{
+							opponentRelationshipRequestOptional.get().setState(RelationshipRequestState.REJECTED);
+						}
+						
+					}
+				}
+				
+				relationshipRequestService.delete(relationshipRequest);
 			}
 			
 		}

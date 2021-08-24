@@ -13,9 +13,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ConfirmationController {
 	
+	@GetMapping("/createAccount")
+	public String confirmationCreateAccount() {
+		return "/confirm/joinConfirm";
+	}
+	
 	@GetMapping("/deleteSpot")
 	public String confirmationDeleteSpot() {
 		return "/confirm/spotDeleteConfirm";
+	}
+	
+	@GetMapping("/deleteAccount")
+	public String confirmationDeleteAccount() {
+		return "/confirm/accountDeleteConfirm";
 	}
 
 }

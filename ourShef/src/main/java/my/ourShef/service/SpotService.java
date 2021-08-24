@@ -51,8 +51,8 @@ public class SpotService {
 			
 	}
 	
-	public Long getCountRegisterationSpotNum(User user) {
-		return spotRepository.getCountRegisterationSpotNum(user);
+	public List<Float> getRegisterationSpotReliabilityListExcludingNotVisited(User user) {
+		return spotRepository.getRegisterationSpotReliabilityListExcludingNotVisited(user);
 	}
 	
 	public List<Spot> getAllRegisteredSpotsByUser(User user) {

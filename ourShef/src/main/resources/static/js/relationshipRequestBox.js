@@ -21,13 +21,17 @@ function dispatcherRelationshipRequestListToBeDeleted(){
   else{
    
     // Send if any one is checked
+	var isChecked = false;
     for (let i = 0; i < deleteCheckBoxList.length; i++){
       if(deleteCheckBoxList[i].checked == true){
-        if(confirm("정말 삭제하시겠습니까?")==true)
-        {
-          document.getElementById("form-i1").submit();
-        }
+       isChecked = true;
+		break;
       }
+    }
+
+	if(isChecked && confirm("정말 삭제하시겠습니까?")==true)
+    {
+      document.getElementById("form-i1").submit();
     }
 
     //all init to deleteMode false

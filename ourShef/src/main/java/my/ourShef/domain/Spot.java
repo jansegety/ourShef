@@ -87,7 +87,11 @@ public class Spot {
     @Setter
 	private Long visits;
 	
-	
+	//-1 if there is no visitor
+    @Setter
+    @Column(name="reliability")
+	private float reliability;
+    
 	
 	protected Spot() {
 		
@@ -99,6 +103,7 @@ public class Spot {
 		this.registeredTime = LocalDateTime.now();
 		this.visits = 0L;
 		this.usersStarPoint = -1;
+		this.reliability = -1;
 	}
 		
 	

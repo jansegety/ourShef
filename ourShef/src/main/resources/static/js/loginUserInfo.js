@@ -34,7 +34,7 @@ function dispatchSpotToBeDeleted(){
 
   if(confirm("정말 계정을 삭제하시겠습니까? 이 작업은 돌이킬 수 없습니다")==true)
   {
-    window.location.href="/";
+    window.location.href="/login/withdraw";
   }
 
 }

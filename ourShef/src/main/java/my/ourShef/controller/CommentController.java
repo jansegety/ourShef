@@ -1,7 +1,9 @@
 package my.ourShef.controller;
 
+import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,7 @@ public class CommentController {
 	private final SpotService spotService;
 	private final CommentService commentService;
 	private final VisitorVisitedSpotService visitorVisitedSpotService;
+	private final EntityManager em;
 
 	@Transactional
 	@PostMapping("/post")
@@ -78,7 +81,13 @@ public class CommentController {
 		// update visits
 		commentedSpot.setVisits(oldVisits + 1);
 		// update usersStarPoint
-		commentedSpot.setUsersStarPoint(averageStarPoint);
+		commentedSpot.setUsersStarPoint(averageStarPoint); 
+		//update reliability of spot
+		if(commentedSpot.getUsersStarPoint() != -1)
+		{
+			float newRelability = 100-Math.abs(commentedSpot.getRegistrantStarPoint() - commentedSpot.getUsersStarPoint());
+			commentedSpot.setReliability(newRelability); 
+		}
 
 		// Registrant's reliability updates every time a comment is posted
 		// Average userStarPoint should be updated.
@@ -107,6 +116,7 @@ public class CommentController {
 		Comment commentToBeDeleted = commentService.findById(commentId).get();
 		//Remove from persistence context
 		commentService.delete(commentToBeDeleted);
+		em.flush();
 		
 		Spot commentedSpot = commentToBeDeleted.getCommentedSpot();
 
@@ -120,6 +130,7 @@ public class CommentController {
 		if(oldVisits==1)
 		{
 			averageStarPoint = -1;
+			commentedSpot.setReliability(-1);
 			
 		}
 		else
@@ -134,6 +145,13 @@ public class CommentController {
 		commentedSpot.setVisits(oldVisits - 1);
 		// update usersStarPoint
 		commentedSpot.setUsersStarPoint(averageStarPoint);
+		//update reliabilit of spot
+		if(commentedSpot.getUsersStarPoint() != -1)
+		{
+			float newRelability = 100-Math.abs(commentedSpot.getRegistrantStarPoint() - commentedSpot.getUsersStarPoint());
+			commentedSpot.setReliability(newRelability); 
+		}
+		
 
 		// Registrant's reliability updates every time a comment is posted
 		// Average userStarPoint should be updated.
@@ -192,6 +210,12 @@ public class CommentController {
 		commentedSpot.setVisits(newVisits);
 		// update usersStarPoint
 		commentedSpot.setUsersStarPoint(newAverageStarPoint);
+		//updaate reliabilit of spot
+		if(commentedSpot.getUsersStarPoint() != -1)
+		{
+			float newRelability = 100-Math.abs(commentedSpot.getRegistrantStarPoint() - commentedSpot.getUsersStarPoint());
+			commentedSpot.setReliability(newRelability); 
+		}
 
 		// Registrant's reliability updates every time a comment is posted
 		// Average userStarPoint should be updated.
@@ -208,23 +232,25 @@ public class CommentController {
 	 */
 	public void updateRegistrantReliability(Spot spot) {
 		User registrant = spot.getRegistrant();
-		// If the registrant has never received a comment
-		if (registrant.getReliability() == -1) {
-			float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
-			registrant.setReliability(newReliability);
-		} else {
-
-			Long registerationSpotNum = spotService.getCountRegisterationSpotNum(registrant);
-			float oldReliability = registrant.getReliability();
-			float oldReliabilitySum = (registerationSpotNum - 1) * oldReliability;
-
-			float newReliability = (100 - Math.abs(spot.getRegistrantStarPoint() - spot.getUsersStarPoint()));
-
-			float newAverageReliability = (oldReliabilitySum + newReliability) / registerationSpotNum;
-
-			registrant.setReliability(newAverageReliability);
+		List<Float> registerationSpotReliabilityListExcludingNotVisited = spotService.getRegisterationSpotReliabilityListExcludingNotVisited(registrant);
+		if(registerationSpotReliabilityListExcludingNotVisited.isEmpty())
+		{
+			registrant.setReliability(-1);
 		}
-
+		else
+		{
+			float tatalReliability=0;
+			float visitedspotNum=0;
+			for(float reliabilityOfSpot : registerationSpotReliabilityListExcludingNotVisited)
+			{
+				tatalReliability = tatalReliability+reliabilityOfSpot;
+				visitedspotNum++;
+			}
+			float newReliability = tatalReliability/visitedspotNum;
+			registrant.setReliability(newReliability);
+		}
+		
+		
 	}
 
 }

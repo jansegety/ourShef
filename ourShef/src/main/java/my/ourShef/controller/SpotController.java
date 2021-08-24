@@ -271,11 +271,18 @@ public class SpotController {
 			addedSpotImgService.saves(addedSpotImgList);
 		}
 		
+		float oldRegistrantStarPoint = findSpot.getRegistrantStarPoint();
 
 		//update spot
 		findSpot.setSpotName(spotModificationForm.getSpotName());
 		findSpot.setSpotIntroduction(spotModificationForm.getSpotIntroduction());
 		findSpot.setRegistrantStarPoint(spotModificationForm.getRegistrantStarPoint());
+		
+		if(findSpot.getUsersStarPoint() != -1)
+		{
+			float newRelability = 100-Math.abs(spotModificationForm.getRegistrantStarPoint() - findSpot.getUsersStarPoint());
+			findSpot.setReliability(newRelability); 
+		}
 		
 		
 		//update Registrant's Reliability
@@ -325,23 +332,7 @@ public class SpotController {
 		}
 		
 		////Registrant Reliability Updates
-		User registrant = spotToBeDelted.getRegistrant();
-		float oldReliability = registrant.getReliability();
-		int rigisteredSpotsNum = registrant.getRegisteredSpots().size();
-		float newReliability = 0;
-		
-		if(rigisteredSpotsNum > 1)
-		{
-			float oldReliabilitySum = oldReliability*rigisteredSpotsNum;
-			float reliabilityOfSpotToBeDelted= 100 - Math.abs(spotToBeDelted.getRegistrantStarPoint() - spotToBeDelted.getUsersStarPoint());
-			
-			newReliability = (oldReliabilitySum - reliabilityOfSpotToBeDelted)/(rigisteredSpotsNum - 1);
-		}
-		else
-		{
-			newReliability = -1;
-		}
-		registrant.setReliability(newReliability);
+		commentController.updateRegistrantReliability(spotToBeDelted);
 		
 		
 		////Delete all IMG Etities associated with the spot

@@ -36,10 +36,11 @@ public class SpotRepository {
 		em.remove(spot);
 	}
 	
-	public Long getCountRegisterationSpotNum(User user) {
-		Query nativeQuery = em.createNativeQuery("select count(sp.spot_id) from Spot sp where sp.registrant_id = ?");
-		nativeQuery.setParameter(1, user.getId());
-		return ((BigInteger)nativeQuery.getResultList().get(0)).longValue();
+	public List<Float> getRegisterationSpotReliabilityListExcludingNotVisited(User user) {
+		List<Float> resultList = em.createQuery("SELECT sp.reliability FROM Spot sp WHERE sp.registrant =:user AND sp.reliability != -1", Float.class)
+		.setParameter("user", user).getResultList();
+		
+		return resultList;
 	}
 	
 	public List<Spot> getAllRegisteredSpotsByUser(User user) {

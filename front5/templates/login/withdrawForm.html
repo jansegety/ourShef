@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--부트 스트랩-->
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap-theme.css}" href="/static/bootStrap/bootstrap-theme.css">
+        <link rel="stylesheet" th:href="@{/bootStrap/bootstrap.css}" href="/static/bootStrap/bootstrap.css">
+
+        <!--font awesome-->
+        <link rel="stylesheet" th:href="@{/library/fontawesome/all.min.css}" href="/static/library/fontawesome/all.min.css">
+
+        <!--custom-->
+        <link rel="stylesheet" th:href="@{/common.css}" href="/static/common.css">
+        <link rel="stylesheet" th:href="@{/css/withdrawForm.css}" href="/static/css/withdrawForm.css">
+
+        <title>Sign In</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <h1 class="text-center text-shefGreen">OurShef</h1>
+                <h2 class="text-center text-success text-head2">마지막으로<br>비밀번호를 입력해주세요</h2>
+            </div>
+            <div class="row">
+                <div class="form text-center">
+                    <form action th:object="${widthdrawForm}" method="post">
+                       	<div class="text-danger" th:errors="*{password}"></div>
+                        <div>
+                            <input maxlength="16" id="password" type="password" placeholder="password" name="" th:field="*{password}">
+                            <label for="password">
+                                <i class="fas fa-key"></i>
+                            </label>
+                        </div>
+                        <div>
+                          <button class="btn-shefGreen" type="submit">탈퇴하기</button>
+                        </div>
+                        <div>
+                          <button class="btn-shefGreen" type="button" onclick="location.href='/'">취소</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row"></div>
+        </div>
+        <!-- jQuery -->
+        <script th:src="@{/library/jquery-2.1.4.js}" src="/static/library/jquery-2.1.4.js"></script>
+        <!--부트 스트랩-->
+        <script th:src="@{/bootStrap/bootstrap.min.js}" src="/static/bootStrap/bootstrap.min.js"></script>
+        <!-- fontawesome -->
+        <script th:src="@{/library/fontawesome/all.js}" src="/static/library/fontawesome/all.js"></script>
+    </body>
+</html>
