@@ -1,5 +1,6 @@
 package my.ourShef.service.bridge;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class VisitorVisitedSpotService {
 	
 	public Optional<VisitorVisitedSpot> findById(Long visitorVisitedSpotId){
 		return visitorVisitedSpotRepository.findById(visitorVisitedSpotId);
+	}
+	
+	public List<VisitorVisitedSpot> findByUser(User user) {
+		
+		return visitorVisitedSpotRepository.findByUser(user);
 	}
 	
 	public void delete(VisitorVisitedSpot visitorVisitedSpot){

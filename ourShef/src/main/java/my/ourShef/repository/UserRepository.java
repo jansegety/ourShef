@@ -21,6 +21,7 @@ import my.ourShef.domain.User;
 
 @Slf4j
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class UserRepository {
 
@@ -36,6 +37,11 @@ public class UserRepository {
 	
 	public Optional<User> findById(Long id) {
 		return Optional.ofNullable(em.find(User.class, id));
+	}
+	
+	public void delete(User user)
+	{
+		em.remove(user);
 	}
 	
 	public Optional<User> findByAccountId(String accountId){
@@ -56,7 +62,6 @@ public class UserRepository {
 	 * 
 	 * @return  Object[0] type:User name:acquaintance, Object[1] type:Spot name:registeredSpot
 	 */
-	@Transactional
 	public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, Long limit, Long offset){
 		
 		String sql="select ac.*, sp.* from \r\n"
@@ -75,7 +80,7 @@ public class UserRepository {
 		
 	}
 	
-	@Transactional
+	
 	public Long getAcquaintanceSpotTotalNum(User loginUser) {
 		
 		String sql="select count(sp.spot_id) from \r\n"
@@ -88,7 +93,7 @@ public class UserRepository {
 	}
 	
 	
-	@Transactional
+	
 	public List<User> getAcquaintanceList(User user){
 		
 		List<User> resultList = em.createQuery("SELECT ac FROM UserAcquaintance ua JOIN ua.acquaintance ac ON ua.user = :user", User.class)

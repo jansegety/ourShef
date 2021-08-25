@@ -3,9 +3,11 @@ package my.ourShef.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -45,7 +47,7 @@ import my.ourShef.service.bridge.VisitorVisitedSpotService;
 @RequestMapping("/acquaintance")
 @Slf4j
 @RequiredArgsConstructor
-public class AcquaintanceContoller {
+public class AcquaintanceController {
 
 	private final UserService userService;
 	private final SpotService spotService;
@@ -54,6 +56,7 @@ public class AcquaintanceContoller {
 	private final VisitorVisitedSpotService visitorVisitedSpotService;
 	private final UserAcquaintanceService userAcquaintanceService;
 	private final RelationshipRequestService relationshipRequestService;
+	private final EntityManager em;
 
 	@GetMapping("/myAcquaintanceList")
 	public String myAcquaintanceList(
@@ -160,17 +163,23 @@ public class AcquaintanceContoller {
 		List<Spot> registeredSpotsByUserB = spotService.getAllRegisteredSpotsByUser(userB);
 		for(Spot registeredSpotByUserB : registeredSpotsByUserB)
 		{
+			//삭제된 엔터티를 리프레시 할 수 없다며 오류가 발생한다.
+			//em.refresh(registeredSpotByUserB);
 			List<Comment> comments = registeredSpotByUserB.getComments();
-			float oldUsersStarPoint = registeredSpotByUserB.getUsersStarPoint();
 			float totalUserSpotPoint = 0;
-			float leftCommentsNum = 0;
+			Long leftCommentsNum = 0L;
 			boolean isUserACommentExist = false;
-			for(Comment comment : comments)
+			
+			Iterator<Comment> commentsIterator = comments.iterator();
+			while(commentsIterator.hasNext())
 			{
+				Comment comment = commentsIterator.next();
+				
 				if(comment.getCommentUser()==userA)
 				{
-					//delete Commnet Entity
+					//delete Comment Entity
 					commentService.delete(comment);
+					commentsIterator.remove();
 					
 					if(isUserACommentExist==false)
 						isUserACommentExist=true;
@@ -178,11 +187,12 @@ public class AcquaintanceContoller {
 				else
 				{
 					totalUserSpotPoint = totalUserSpotPoint + comment.getStarPoint();
+					System.out.println("코멘트 작성자 : " + comment.getCommentUser().getNickName());
 					leftCommentsNum++;
 				}	
 			}
 			
-			if(isUserACommentExist==true)
+			if(isUserACommentExist)
 			{
 				//Update user average star rating
 				if(leftCommentsNum == 0) {
@@ -192,6 +202,10 @@ public class AcquaintanceContoller {
 				{
 					registeredSpotByUserB.setUsersStarPoint(totalUserSpotPoint/leftCommentsNum);
 				}
+				//Update visits of Spot
+				System.out.println("남은 코멘트 수 : "+leftCommentsNum);
+				System.out.println("코멘트 사이즈 : " + comments.size());
+				registeredSpotByUserB.setVisits(leftCommentsNum);
 				
 				//Update registrant's reliability
 				commentController.updateRegistrantReliability(registeredSpotByUserB);

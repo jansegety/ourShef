@@ -39,6 +39,10 @@ public class CommentRepository {
 		em.remove(comment);
 	}
 	
+	public List<Comment> getAllCommentListByUser(User user){
+		return em.createQuery("SELECT cm FROM Comment cm WHERE cm.commentUser =:user").setParameter("user", user).getResultList();
+	}
+	
 	public List<Comment> getCommentListBySpot(Spot spot, Long limit, Long offset){
 		Query query = em.createNativeQuery("select * from comment c where c.commented_spot_id = ? order by c.comment_id desc limit ? offset ?", Comment.class);
 		query.setParameter(1, spot.getId()).setParameter(2, limit).setParameter(3, offset);

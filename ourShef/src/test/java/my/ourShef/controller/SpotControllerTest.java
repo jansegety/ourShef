@@ -12,6 +12,8 @@ import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -36,20 +38,25 @@ import my.ourShef.InitDb;
 import my.ourShef.controller.form.JoinForm;
 import my.ourShef.controller.form.SpotModificationForm;
 import my.ourShef.controller.form.SpotRegisterationForm;
+import my.ourShef.controller.form.WithdrawForm;
 import my.ourShef.controller.validator.SpotModificationFormValidator;
 import my.ourShef.controller.validator.SpotRegisterationFormValidator;
 import my.ourShef.domain.Comment;
+import my.ourShef.domain.RelationshipRequest;
 import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
+import my.ourShef.domain.UserAcquaintance;
 import my.ourShef.domain.bridge.AddedSpotImg;
 import my.ourShef.domain.bridge.VisitorVisitedSpot;
 import my.ourShef.file.FileStore;
 import my.ourShef.service.CommentService;
+import my.ourShef.service.RelationshipRequestService;
 import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
 import my.ourShef.service.bridge.AddedSpotImgService;
+import my.ourShef.service.bridge.UserAcquaintanceService;
 import my.ourShef.service.bridge.VisitorVisitedSpotService;
 
 @SpringBootTest
@@ -71,6 +78,10 @@ class SpotControllerTest {
 	private InitDb.InitService initService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RelationshipRequestService relationshipRequestService;
+	@Autowired
+	private UserAcquaintanceService userAcquaintanceService;
 	@Autowired
 	private UploadFileInfoService uploadFileInfoService;
 	@Autowired
@@ -280,6 +291,114 @@ class SpotControllerTest {
 		
 	}
 	
+	@Order(3)
+	@Test
+	@Transactional
+	@DisplayName("유저 삭제 테스트")
+	void testDeleteUser(@Mock BindingResult bindingResult, @Mock Model model, @Mock HttpServletRequest request,@Mock HttpSession httpSession)
+	{
+		/*
+		 * check list
+		 * 1. loginUser's Comments
+		 * 2. loginUser's VitorVisitedSpot
+		 * 3. loginUser's UserAcquaintance
+		 * 4. loginUser's Spot
+		 * 5. loginUser's UploadFileInfo
+		 * 6. loginUser's AddedSpotImg
+		 * 7. loginUser's RelationshipRequestService
+		 * 8. loginUser's User
+		 */
+		//Init Before Datas
+		
+		//8
+		User beforeUser = userService.findByAccountId("ACCOUNTID_8").get();
+		//1
+		List<Comment> beforeCommentList= commentService.getAllCommentListByUser(beforeUser);
+		//2
+		List<VisitorVisitedSpot> beforeVisitorVisitedSpotList = visitorVisitedSpotService.findByUser(beforeUser);
+		//3
+		List<UserAcquaintance> beforeUserAcquaintanceList = userAcquaintanceService.findByUser(beforeUser);
+		//4
+		List<Spot> beforeSpotList = spotService.getAllRegisteredSpotsByUser(beforeUser);
+		//5
+		ArrayList<UploadFileInfo> beforeUploadFileInfoList = new ArrayList<UploadFileInfo>();
+		//6
+		ArrayList<AddedSpotImg> beforeAddedSpotImgList = new ArrayList<AddedSpotImg>();
+		//5-6
+		for(Spot beforeSpot : beforeSpotList)
+		{
+			UploadFileInfo mainSpotImgInfo = beforeSpot.getMainSpotImgInfo();
+			beforeUploadFileInfoList.add(mainSpotImgInfo);
+			
+			List<AddedSpotImg> addedSpotImgList = beforeSpot.getAddedSpotImgs();
+			for(AddedSpotImg addedSpotImg : addedSpotImgList)
+			{
+				beforeAddedSpotImgList.add(addedSpotImg);
+				beforeUploadFileInfoList.add(addedSpotImg.getUploadFileInfo());
+			}
+		}
+		//7
+		ArrayList<RelationshipRequest> beforeRelationshipRequestList = new ArrayList<RelationshipRequest>();
+		
+		relationshipRequestService.getReceivedRelationshipRequest(beforeUser, beforeUser).stream().forEach(beforeRelationshipRequestList::add);
+		relationshipRequestService.getSendedRelationshipRequest(beforeUser, beforeUser).stream().forEach(beforeRelationshipRequestList::add);
+		
+		WithdrawForm withdrawForm = new WithdrawForm();
+		withdrawForm.setPassword(beforeUser.getPassword());
+		
+		when(request.getSession(false)).thenReturn(httpSession);
+		
+		//delete User
+		loginController.withdraw(beforeUser.getAccountId(),withdrawForm,bindingResult, model,request);
+		
+		
+		
+		//validate
+		
+		//1
+		for(Comment  beforeComment : beforeCommentList)
+		{
+			assertNull(em.find(Comment.class, beforeComment.getId()), "Comment는 DB에서 삭제되어 있어야 합니다.");
+		}
+		//2
+		for(VisitorVisitedSpot beforeVisitorVisitedSpot : beforeVisitorVisitedSpotList)
+		{
+			assertNull(em.find(VisitorVisitedSpot.class, beforeVisitorVisitedSpot.getId()), "VisitorVisitedSpot는 DB에서 삭제되어 있어야 합니다.");
+		}
+		//3
+		for(UserAcquaintance beforeUserAcquaintance : beforeUserAcquaintanceList)
+		{
+			assertNull(em.find(UserAcquaintance.class, beforeUserAcquaintance.getId()), "UserAcquaintance는 DB에서 삭제되어 있어야 합니다.");
+
+		}
+		//4
+		for(Spot beforeSpot : beforeSpotList)
+		{
+			assertNull(em.find(Spot.class, beforeSpot.getId()),"Spot는 DB에서 삭제되어 있어야 합니다.");
+		}
+		//5
+		for(UploadFileInfo beforeUploadFileInfo : beforeUploadFileInfoList)
+		{
+			assertNull(em.find(UploadFileInfo.class, beforeUploadFileInfo.getId()),"UploadFileInfo는 DB에서 삭제되어 있어야 합니다.");
+		}
+		//6
+		for(AddedSpotImg beforeAddedSpotImg : beforeAddedSpotImgList)
+		{
+			assertNull(em.find(AddedSpotImg.class, beforeAddedSpotImg.getId()),"AddedSpotImg는 DB에서 삭제되어 있어야 합니다.");
+
+		}
+		//7
+		for(RelationshipRequest beforeRelationshipRequest : beforeRelationshipRequestList)
+		{
+			assertNull(em.find(RelationshipRequest.class, beforeRelationshipRequest.getId()),"RelationshipRequest는 DB에서 삭제되어 있어야 합니다.");
+
+		}
+		//8
+		assertNull(em.find(User.class, beforeUser.getId()),"User는 DB에서 삭제되어 있어야 합니다.");
+				
+	}
+	
+
 	
 
 }

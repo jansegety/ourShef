@@ -48,6 +48,10 @@ public class CommentService {
 		return commentRepository.getAllCommentsNumBySpot(spot);
 	}
 	
+	public List<Comment> getAllCommentListByUser(User user){
+		return commentRepository.getAllCommentListByUser(user);
+	}
+	
 	/*
 	 * true if there is no comment for the spot written by the user
 	 */

@@ -19,7 +19,7 @@ import my.ourShef.SessionConst;
 @Slf4j
 public class LoginCheckFilter implements Filter{
 	
-	private static final String[] whitelist = {"/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount"};
+	private static final String[] whitelist = {"/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount","/confirmation/deleteAccount"};
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

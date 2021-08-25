@@ -15,6 +15,7 @@ import my.ourShef.repository.UserRepository;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 	
@@ -22,7 +23,7 @@ public class UserService {
 	private final UploadFileInfoRepository uploadFileInfoRepository;
 	
 	
-		@Transactional
+		
 		public Long join(User user) throws Exception{
 			validateDuplicateAccountId(user.getAccountId());
 			
@@ -44,6 +45,11 @@ public class UserService {
 			return userRepository.findAll();
 		}
 		
+		public void delete(User user)
+		{
+			userRepository.delete(user);
+		}
+		
 		public Optional<User> findById(Long userId) {
 			return userRepository.findById(userId);
 		}
@@ -53,7 +59,7 @@ public class UserService {
 		}
 		
 
-		@Transactional
+		
 		public void update(Long id, String nickName, String password, UploadFileInfo profileImgInfo ) {
 			try {
 			User findUser = userRepository.findById(id).orElseThrow(()->(new IllegalStateException("존재하지 않는 ID입니다.")));
@@ -70,17 +76,17 @@ public class UserService {
 	
 		}
 		
-		@Transactional
+		
 		public List<Object[]> getRecentAcquaintanceSpotList(User loginUser, Long limit, Long offset){
 			return userRepository.getRecentAcquaintanceSpotList(loginUser, limit, offset);
 		}
 		
-		@Transactional
+		
 		public Long getAcquaintanceSpotTotalNum(User loginUser) {
 			return userRepository.getAcquaintanceSpotTotalNum(loginUser);
 		}
 		
-		@Transactional
+		
 		public List<User> getAcquaintanceList(User user){
 			return userRepository.getAcquaintanceList(user);
 		}

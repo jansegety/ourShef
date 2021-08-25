@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -34,14 +36,20 @@ import my.ourShef.controller.form.UserInfoChangeForm;
 import my.ourShef.controller.form.WithdrawForm;
 import my.ourShef.controller.validator.JoinFormValidator;
 import my.ourShef.controller.validator.LoginFormValidator;
+import my.ourShef.domain.RelationshipRequest;
+import my.ourShef.domain.Spot;
 import my.ourShef.domain.UploadFileInfo;
 import my.ourShef.domain.User;
+import my.ourShef.domain.constant.RelationshipRequestState;
 import my.ourShef.file.FilePath;
 import my.ourShef.file.FileStore;
 import my.ourShef.repository.UserRepository;
 import my.ourShef.service.LoginService;
+import my.ourShef.service.RelationshipRequestService;
+import my.ourShef.service.SpotService;
 import my.ourShef.service.UploadFileInfoService;
 import my.ourShef.service.UserService;
+import my.ourShef.service.bridge.UserAcquaintanceService;
 
 @Controller
 @RequestMapping("/login")
@@ -52,9 +60,15 @@ public class LoginController {
 	private final JoinFormValidator joinFormValidator;
 	private final LoginFormValidator loginFormValidator;
 	private final FileStore fileStore;
-
+	
+	private final AcquaintanceController acquaintanceController;
+	private final SpotController spotController;
+	
 	private final UploadFileInfoService uploadFileInfoService;
+	private final UserAcquaintanceService userAcquaintanceService;
 	private final UserService userService;
+	private final SpotService spotService;
+	private final RelationshipRequestService relationshipRequestService;
 
 	// @IntiBinder->해당 컨트롤러에만 영향을 준다. 글로벌 설정은 별도로 해야한다.
 	// 요청이 올 때마다 dataBinder는 새로 만들어진다.
@@ -83,6 +97,8 @@ public class LoginController {
 		return "login/joinForm";
 	}
 
+	
+	@Transactional
 	@PostMapping("/join")
 	public String create(@Valid @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws IOException {
 
@@ -124,6 +140,7 @@ public class LoginController {
 		return "login/loginForm";
 	}
 
+	
 	@PostMapping("/login")
 	public String login(@Validated @ModelAttribute LoginForm loginform, BindingResult bindingResult,
 			HttpServletRequest request, @RequestParam(defaultValue = "/") String redirectURL) {
@@ -170,10 +187,10 @@ public class LoginController {
 		return "login/withdrawForm";
 	}
 	
-	
+	@Transactional
 	@PostMapping("/withdraw")
 	public String withdraw(@SessionAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID) String LoginUserAccountId,
-			@Valid @ModelAttribute WithdrawForm withdrawForm, BindingResult bindingResult, Model model) {
+			@Valid @ModelAttribute WithdrawForm withdrawForm, BindingResult bindingResult, Model model, HttpServletRequest request) {
 		
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		
@@ -188,6 +205,56 @@ public class LoginController {
 			return "login/withdrawForm";
 		}
 	
+		//TODO List
+		////1. Delete all acquaintance relationship data///////////
+		//Delete Comment Entity from spot & Spot user average star rating update
+		//The Spot Registrant Reliability Updates
+		//Delete VisitorVisited Entity
+		//Delete UserAcquaintance Entity
+		////////////////////////////////////////////////////////
+		List<User> findAcquaintanceList = userAcquaintanceService.findAcquaintanceByUser(loginUser);
+		List<Long> findAcquaintanceIds = findAcquaintanceList.stream().map(e->e.getId()).collect(Collectors.toList());
+		acquaintanceController.deleteAcquaintance(LoginUserAccountId, findAcquaintanceIds);
+		
+		
+		////2. Delete all loginUser's spot relationship data/////////
+		//Delete all comment entities related to the spot
+		//Delete VisitorVisitedSpot Entity of users who have visited the spot
+		//Delete all IMG Etities associated with the spot
+		//Delete all IMG files related to the spot
+		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
+		for(Spot spotToBeDeleted : allRegisteredSpotsByUser)
+		{
+			spotController.deleteSpot(spotToBeDeleted.getId());
+		}
+		
+		//3. Delete all relationshipRequest Entity
+		List<RelationshipRequest> sendedRelationshipRequestList = relationshipRequestService.getSendedRelationshipRequest(loginUser, loginUser);
+		sendedRelationshipRequestList.stream().forEach(relationshipRequestService::delete);
+		List<RelationshipRequest> receivedRelationshipRequestList = relationshipRequestService.getReceivedRelationshipRequest(loginUser, loginUser);
+		for(RelationshipRequest receivedRelationshipRequest : receivedRelationshipRequestList)
+		{
+			if(receivedRelationshipRequest.getState()==RelationshipRequestState.BEFORE_CONFIRMATION)
+			{
+				String opponentRequestId = receivedRelationshipRequest.getOpponentId();
+				Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(LoginUserAccountId);
+				if(relationshipRequestOptional.isPresent())
+				{
+					relationshipRequestOptional.get().setState(RelationshipRequestState.REJECTED);
+				}
+			}
+			relationshipRequestService.delete(receivedRelationshipRequest);
+		}
+			
+		//4. Delete User Entity
+		userService.delete(loginUser);
+		
+		//5. Session Invalidation
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		
 		
 		return "redirect:/confirmation/deleteAccount";
 	}

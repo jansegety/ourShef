@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,7 +57,7 @@ public class Spot {
 	@Column(columnDefinition = "TEXT")
 	private String spotIntroduction;
 
-	@OneToMany(mappedBy="commentedSpot")
+	@OneToMany(mappedBy="commentedSpot", cascade=CascadeType.REFRESH)
 	private List<Comment> comments =new ArrayList<>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
