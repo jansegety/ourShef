@@ -111,9 +111,19 @@ public class CommentController {
 	@PostMapping("/delete")
 	public String deleteComment(
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
-			@RequestParam("commentId") Long commentId) {
-
+			@RequestParam("commentId") Long commentId) {	
+		
 		Comment commentToBeDeleted = commentService.findById(commentId).get();
+		
+		//permission check
+		//Confirm that logingUser is the person who wrote the comment
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		if(!commentService.getAllCommentListByUser(loginUser).contains(commentToBeDeleted))
+		{
+			return "/error/doNotHavePermission";
+		}
+		
+		
 		//Remove from persistence context
 		commentService.delete(commentToBeDeleted);
 		em.flush();
@@ -178,7 +188,10 @@ public class CommentController {
 	
 	@Transactional
 	@PostMapping("/modify")
-	public String modifyComment(@Valid @ModelAttribute CommentModificationForm commentModificationForm, BindingResult bindingResult) {
+	public String modifyComment(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId
+			,@Valid @ModelAttribute CommentModificationForm commentModificationForm, BindingResult bindingResult) {
+		
+		
 		
 		//검증에 실패하면 다시 입력 폼으로
 		if(bindingResult.hasErrors()) {
@@ -186,11 +199,23 @@ public class CommentController {
 			return "redirect:/spot/spot/" + commentModificationForm.getSpotId();
 		}
 		
+		
+		
+		
+		
 		//성공 로직
 		
 		Spot commentedSpot = spotService.findById(commentModificationForm.getSpotId()).get();
 
 		Comment commentToBeModified = commentService.findById(commentModificationForm.getCommentId()).get();
+		
+		//permission check
+		//Confirm that logingUser is the person who wrote the comment
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		if(!commentService.getAllCommentListByUser(loginUser).contains(commentToBeModified))
+		{
+			return "/error/doNotHavePermission";
+		}
 
 		commentToBeModified.setComment(commentModificationForm.getComment());
 		commentToBeModified.setStarPoint(commentModificationForm.getNewStarPoint());

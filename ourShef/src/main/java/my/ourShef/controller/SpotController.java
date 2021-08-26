@@ -145,15 +145,39 @@ public class SpotController {
 	@Transactional
 	@GetMapping("/spot/{spotId}")
 	public String spotDetail(
-			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
-			@RequestParam(value = "page", defaultValue = "1") Long page, @PathVariable("spotId") String spotId,
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam(value = "page", defaultValue = "1") Long page, @PathVariable("spotId") Long spotId,
 			Model model) {
 
-		Optional<Spot> findSpotOptional = spotService.findById(Long.parseLong(spotId));
+		
+	
+		
+		Optional<Spot> findSpotOptional = spotService.findById(spotId);
 		Spot spot = findSpotOptional.get();
-
-		Optional<User> loginUserOptional = userService.findByAccountId(LoginUserAccountId);
-		model.addAttribute("loginUserId", loginUserOptional.get().getId());
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		
+		////Permission check
+		//It must be a spot registered by me or a spot registered by an acquaintance.
+		HashSet<Spot> accessibleSpotSet = new HashSet<Spot>();
+		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
+		for(User acquaintance : acquaintanceList)
+		{
+			//Add all Spots registered by acquaintances
+			List<Spot> allRegisteredSpotsByAcquaintance = spotService.getAllRegisteredSpotsByUser(acquaintance);
+			accessibleSpotSet.addAll(allRegisteredSpotsByAcquaintance);
+		}
+		//Add all Spots registered by loginUser
+		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
+		accessibleSpotSet.addAll(allRegisteredSpotsByUser);
+		
+		if(!accessibleSpotSet.contains(spot))
+		{
+			return "/error/doNotHavePermission";
+		}
+		
+		
+		////success logic
+		model.addAttribute("loginUserId",loginUser.getId());
 
 		setRegistrantDto(model, spot.getRegistrant());
 		setSpotDetailDto(model, spot);
@@ -164,12 +188,27 @@ public class SpotController {
 
 	@Transactional
 	@GetMapping("/userSpotList/{userId}")
-	public String userSpotListByPage(@RequestParam(value = "page", defaultValue = "1") Long page,
+	public String userSpotListByPage(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam(value = "page", defaultValue = "1") Long page,
 			@PathVariable("userId") Long userId, Model model) {
+		
+		////Permission check
+		//{userId} Must be Id of an acquaintance or loginUser
+		HashSet<User> accessibleUserSet = new HashSet<User>();
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
+		accessibleUserSet.add(loginUser);
+		accessibleUserSet.addAll(acquaintanceList);
 
 		Optional<User> findUserOptional = userService.findById(userId);
 		User findUser = findUserOptional.get();
+		
+		if(!accessibleUserSet.contains(findUser))
+		{
+			return "/error/doNotHavePermission";
+		}
 
+		////Success Logic
 		setUserSpotListUserDto(model, findUser);
 		setUserSpotListSpotDto(model, findUser, 4L, 5L, page);
 
@@ -178,10 +217,32 @@ public class SpotController {
 
 	@Transactional
 	@GetMapping("/modification/{spotId}")
-	public String createModificationForm(@PathVariable("spotId") Long spotId, Model model) {
+	public String createModificationForm(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@PathVariable("spotId") Long spotId, Model model) {
 
 		Spot findSpot = spotService.findById(spotId).get();
-
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+	
+		////Permission check
+		//It must be a spot registered by loginUser or a spot registered by an acquaintance.
+		HashSet<Spot> accessibleSpotSet = new HashSet<Spot>();
+		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
+		for(User acquaintance : acquaintanceList)
+		{
+			//Add all Spots registered by acquaintances
+			List<Spot> allRegisteredSpotsByAcquaintance = spotService.getAllRegisteredSpotsByUser(acquaintance);
+			accessibleSpotSet.addAll(allRegisteredSpotsByAcquaintance);
+		}
+		//Add all Spots registered by loginUser
+		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
+		accessibleSpotSet.addAll(allRegisteredSpotsByUser);
+		
+		if(!accessibleSpotSet.contains(findSpot))
+		{
+			return "/error/doNotHavePermission";
+		}
+		
+		////Success Logic
 		// spot Img name setting
 		setSpotImgNames(model, findSpot);
 
@@ -200,20 +261,44 @@ public class SpotController {
 
 	@Transactional
 	@PostMapping("/modification/{spotId}")
-	public String modifySpot(Model model, @Validated @ModelAttribute SpotModificationForm spotModificationForm,
+	public String modifySpot(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			Model model, @Validated @ModelAttribute SpotModificationForm spotModificationForm,
 			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) throws IOException {
 		
-		
-		Spot findSpot = spotService.findById(spotId).get();
-
-		// spot Img name setting
-		setSpotImgNames(model, findSpot);
-
+		////Check Error
 		if (bindingResult.hasErrors()) {
 			return "spot/spotModification";
 		}
+		
+		
+		Spot findSpot = spotService.findById(spotId).get();
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		
+		////Permission check
+		//It must be a spot registered by loginUser or a spot registered by an acquaintance.
+		HashSet<Spot> accessibleSpotSet = new HashSet<Spot>();
+		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
+		for(User acquaintance : acquaintanceList)
+		{
+			//Add all Spots registered by acquaintances
+			List<Spot> allRegisteredSpotsByAcquaintance = spotService.getAllRegisteredSpotsByUser(acquaintance);
+			accessibleSpotSet.addAll(allRegisteredSpotsByAcquaintance);
+		}
+		//Add all Spots registered by loginUser
+		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
+		accessibleSpotSet.addAll(allRegisteredSpotsByUser);
+		
+		if(!accessibleSpotSet.contains(findSpot))
+		{
+			return "/error/doNotHavePermission";
+		}
 
-		// 성공 로직
+		
+		
+
+		//// Success Logic
+		// spot Img name setting
+			setSpotImgNames(model, findSpot);
 		//If MainImg is Exist
 		if (!spotModificationForm.getSpotMainImg().isEmpty()) {
 			// delete Img file
@@ -297,13 +382,26 @@ public class SpotController {
 	
 	@Transactional
 	@PostMapping("/delete")
-	public String deleteSpot(@RequestParam(value = "spotId") Long spotId ) {
+	public String deleteSpot(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam(value = "spotId") Long spotId ) {
+
 		
 		////Checks if there is the Spot and returns home if not
 		Optional<Spot> findSpotOptioanl = spotService.findById(spotId);
 		if(findSpotOptioanl.isEmpty())
 			return "redirect:/";
 		Spot spotToBeDelted = findSpotOptioanl.get();
+		
+		
+		////Permission Check
+		//The spot should be the loginUser's spot.
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<Spot> RegisteredSpotsByLoginUser = spotService.getAllRegisteredSpotsByUser(loginUser);
+		if(!RegisteredSpotsByLoginUser.contains(spotToBeDelted))
+		{
+			return "/error/doNotHavePermission";
+		}
+			
 		
 		////Delete all comment entities related to the spot
 		List<Comment> comments = spotToBeDelted.getComments();

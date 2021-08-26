@@ -225,7 +225,7 @@ public class LoginController {
 		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
 		for(Spot spotToBeDeleted : allRegisteredSpotsByUser)
 		{
-			spotController.deleteSpot(spotToBeDeleted.getId());
+			spotController.deleteSpot(LoginUserAccountId,spotToBeDeleted.getId());
 		}
 		
 		//3. Delete all relationshipRequest Entity

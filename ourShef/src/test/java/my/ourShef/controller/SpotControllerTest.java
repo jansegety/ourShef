@@ -182,7 +182,7 @@ class SpotControllerTest {
 		
 		//spot Modification
 		SpotModificationForm spotModificationForm = initService.makeSpotModificationForm(1).get(0);
-		spotController.modifySpot(model, spotModificationForm, bindingResult, beforeSpot.getId(), redirectAttributes);
+		spotController.modifySpot(beforeUser.getAccountId(), model, spotModificationForm, bindingResult, beforeSpot.getId(), redirectAttributes);
 		
 		em.flush();
 		em.clear();
@@ -241,7 +241,7 @@ class SpotControllerTest {
 		}
 												
 		//deleteSpot
-		spotController.deleteSpot(beforeSpot.getId());
+		spotController.deleteSpot(beforeUser.getAccountId(), beforeSpot.getId());
 		
 		//before Entity Detached
 		em.flush();

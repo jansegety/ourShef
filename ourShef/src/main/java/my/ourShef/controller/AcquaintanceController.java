@@ -386,6 +386,7 @@ public class AcquaintanceController {
 	@PostMapping("/deleteSendedRelationshipRequest")
 	public String deleteSendedRelationshipRequest(@RequestParam("relationshipRequestId") List<String> relationshipRequestIds)
 	{
+		
 		deleteRelationshipRequest(relationshipRequestIds);
 		return "redirect:/acquaintance/relationshipRequestBox";
 	}
