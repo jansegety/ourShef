@@ -49,7 +49,7 @@ public class Spot {
 	
 	@Setter
 	@OneToOne
-	@JoinColumn(name="main_spot_img_info")
+	@JoinColumn(name="main_spot_img_info_id")
 	private UploadFileInfo mainSpotImgInfo;
 	
 

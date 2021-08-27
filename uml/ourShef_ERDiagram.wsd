@@ -1,0 +1,117 @@
+@startuml ERDiagram
+
+entity User {
+*id : bigint (PK)
+--
+accountId : vchar
+nickName : vchar
+registeredTime : datetime
+password : vchar
+introduction : vchar
+reliability: float
+profile_img_info_id: vchar(UUID)(FK) 
+
+}
+
+entity Visitor_VisitedSpot {
+  *id : bigint (PK)
+  --
+  visitor_id : bigint (FK)
+  visited_spot_id : bigint (FK)
+}
+
+entity Spot {
+  *id : bigint (PK)
+  --
+  registeredTime : datetime
+  spotName : vchar
+  main_spot_img_info_id : vchar(UUID)(FK)
+  spotIntroduction : text
+  registrant_id : bigint (FK)
+  registrantStarPoint : float
+  usersStarPoint : float 
+  visits: bigint
+  reliability : float
+}
+
+
+entity UploadFileInfo {
+*id : (VCHAR)UUDI (PK)
+--
+  uploadFileName : vchar
+  storeFileName : vchar
+}
+
+entity added_spot_img {
+ *id : bigint (PK)
+ --
+ spot_id : bigint (FK)
+  upload_file_info_id : vchar(UUID)(FK)
+}
+
+entity Comment {
+*id : bigint (PK)
+--
+registeredTime : datetime
+comment_user_id : bigint (FK)
+startPoint: float
+comment: text
+commented_spot_id : bigint (FK)
+}
+
+entity UserAcquaintance {
+  *id : bigint (PK)
+  --
+  user_id: bigint (FK)
+  acquaintance_id: bigint (FK)
+}
+
+entity RelationshipRequest{
+  *id : vchar (UUID)(PK)
+  --
+  <Even if opponentId is referenced, 
+  the counterpart RelationshipRequest 
+  may be deleted, 
+  so do not set it as a foreign key>
+  opponent_id : vchar(UUID) 
+  owner_user_id : bigint (FK)
+  from_user_id : bigint (FK)
+  to_user_id : bigint (FK) 
+  state : vchar(enum)
+}
+
+
+User ||..|{ Visitor_VisitedSpot
+note on link : visitedSpots & visitors
+
+User ||..o{ Spot
+note on link : registeredSpots & registrant
+
+Visitor_VisitedSpot }|..|| Spot
+note on link : visitedSpots & visitors
+
+User ||..|| UploadFileInfo
+note on link : profileImg
+
+Spot ||..|| UploadFileInfo
+note on link : mainSpotImg
+
+Spot ||..o{ added_spot_img
+
+UploadFileInfo ||..|| added_spot_img
+
+User ||..o{ Comment
+
+Spot ||..o{ Comment
+
+User ||..o{ UserAcquaintance
+User ||..o{ UserAcquaintance
+
+User ||..o| RelationshipRequest
+note on link : User & owner
+User ||..o| RelationshipRequest
+note on link : User & fromUser
+User ||..o| RelationshipRequest
+note on link : User & toUser
+
+@enduml

@@ -55,7 +55,7 @@ public class User {
 	private String introduction;
 	
 	@Setter
-	@JoinColumn(name="profile_img_info")
+	@JoinColumn(name="profile_img_info_id")
 	@OneToOne
 	private UploadFileInfo profileImgInfo;
 	
