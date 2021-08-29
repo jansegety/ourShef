@@ -15,17 +15,17 @@ public class ConfirmationController {
 	
 	@GetMapping("/createAccount")
 	public String confirmationCreateAccount() {
-		return "/confirm/joinConfirm";
+		return "confirm/joinConfirm";
 	}
 	
 	@GetMapping("/deleteSpot")
 	public String confirmationDeleteSpot() {
-		return "/confirm/spotDeleteConfirm";
+		return "confirm/spotDeleteConfirm";
 	}
 	
 	@GetMapping("/deleteAccount")
 	public String confirmationDeleteAccount() {
-		return "/confirm/accountDeleteConfirm";
+		return "confirm/accountDeleteConfirm";
 	}
 
 }

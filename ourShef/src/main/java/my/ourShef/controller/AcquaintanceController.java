@@ -88,7 +88,7 @@ public class AcquaintanceController {
 		model.addAttribute("beforeConfirmationRequestNum", beforeConfirmationRequestNum);
 		model.addAttribute("acquaintanceDtoList", acquaintanceDtoList);
 
-		return "/acquaintance/acquaintanceList";
+		return "acquaintance/acquaintanceList";
 	}
 	
 	@Transactional
@@ -295,7 +295,7 @@ public class AcquaintanceController {
 		AcquaintanceRequestForm acquaintanceRequestForm = new AcquaintanceRequestForm();
 		model.addAttribute("acquaintanceRequestForm", acquaintanceRequestForm);
 
-		return "/acquaintance/acquaintanceRequestForm";
+		return "acquaintance/acquaintanceRequestForm";
 	}
 
 	@Transactional
@@ -315,7 +315,7 @@ public class AcquaintanceController {
 
 		if (bindingResult.hasErrors()) {
 			log.info("errors={} ", bindingResult);
-			return "/acquaintance/acquaintanceRequestForm";
+			return "acquaintance/acquaintanceRequestForm";
 		}
 
 		User toUser = accquaintanceOptional.get();
@@ -339,7 +339,7 @@ public class AcquaintanceController {
 
 		if (bindingResult.hasErrors()) {
 			log.info("errors={} ", bindingResult);
-			return "/acquaintance/acquaintanceRequestForm";
+			return "acquaintance/acquaintanceRequestForm";
 		}
 
 		//// Success Logic

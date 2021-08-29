@@ -120,7 +120,7 @@ public class CommentController {
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		if(!commentService.getAllCommentListByUser(loginUser).contains(commentToBeDeleted))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 		
 		
@@ -214,7 +214,7 @@ public class CommentController {
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		if(!commentService.getAllCommentListByUser(loginUser).contains(commentToBeModified))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 
 		commentToBeModified.setComment(commentModificationForm.getComment());

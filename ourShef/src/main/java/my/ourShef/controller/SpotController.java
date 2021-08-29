@@ -172,7 +172,7 @@ public class SpotController {
 		
 		if(!accessibleSpotSet.contains(spot))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 		
 		
@@ -205,7 +205,7 @@ public class SpotController {
 		
 		if(!accessibleUserSet.contains(findUser))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 
 		////Success Logic
@@ -239,7 +239,7 @@ public class SpotController {
 		
 		if(!accessibleSpotSet.contains(findSpot))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 		
 		////Success Logic
@@ -290,7 +290,7 @@ public class SpotController {
 		
 		if(!accessibleSpotSet.contains(findSpot))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 
 		
@@ -399,7 +399,7 @@ public class SpotController {
 		List<Spot> RegisteredSpotsByLoginUser = spotService.getAllRegisteredSpotsByUser(loginUser);
 		if(!RegisteredSpotsByLoginUser.contains(spotToBeDelted))
 		{
-			return "/error/doNotHavePermission";
+			return "error/doNotHavePermission";
 		}
 			
 		

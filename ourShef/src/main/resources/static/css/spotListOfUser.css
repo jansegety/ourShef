@@ -43,11 +43,11 @@
 
 .spot-info {
   float: left;
-  width: 170px;
+  width: 160px;
   padding: 10px;
 }
 .spot-info img{
-  width: 150px;
+  width: 140px;
   display: block;
   margin: auto;
 }
