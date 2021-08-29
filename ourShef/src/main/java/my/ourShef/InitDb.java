@@ -76,6 +76,8 @@ public class InitDb {
 		private String spotMainImgDirPath;
 		@Value("${file.dir.spotAddedImg}")
 		private String spotAddedImgDirPath;
+		@Value("${file.dir.testImg}")
+		private String testImgDirPath;
 
 		private final EntityManager em;
 		private final FileStore fileStore;
@@ -189,7 +191,7 @@ public class InitDb {
 		 */
 		public String getTestImgFilePath(int i) {
 			int fileName = i % 5 + 1;
-			return "/OurShefTestImg/" + fileName + ".jpg";
+			return testImgDirPath + fileName + ".jpg";
 		}
 
 		/*

@@ -31,4 +31,4 @@ logging:
   
   
 file:
-  dir:     userProfileImg: C:/OurShefUserProfileImg/    spotMainImg: C:/OurShefSpotMainImg/    spotAddedImg: C:/OurShefSpotAddedImg/      file:      demoImg: /static/img/shefmark.jpg
+  dir:     userProfileImg: C:/OurShefUserProfileImg/    spotMainImg: C:/OurShefSpotMainImg/    spotAddedImg: C:/OurShefSpotAddedImg/    testImg: C:/OurShefTestImg/# It is injected from the Img controller, # but when there is no img by javascript in the client, # the logo in resources is directly requested without going through the controller, # so it is not the path used in the current version.      file:      demoImg: C:/OurShefDemoImg/shefmark.png

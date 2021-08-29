@@ -76,6 +76,10 @@ public class ImgController {
 		Optional<Spot> findRecentRegisterationSpot = spotService.findRecentRegisterationSpotByUserAccountId(LoginUserAccountId);
 		
 		//If there is no recently registered spot image
+		/*
+		 * However, this logic is not used because the demo img path is assigned 
+		 * if there is no img by javascript in the browser.
+		 */
 		if(findRecentRegisterationSpot.isEmpty())
 		{
 			File file = new File(demoImgPath);
