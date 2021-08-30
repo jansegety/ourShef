@@ -11,15 +11,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.PatternMatchUtils;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.ourShef.SessionConst;
+import my.ourShef.repository.UploadFileInfoRepository;
+import my.ourShef.repository.UserRepository;
+import my.ourShef.service.UserService;
 
 @Slf4j
 public class LoginCheckFilter implements Filter{
 	
 	private static final String[] whitelist = {"/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount","/confirmation/deleteAccount"};
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -36,13 +44,15 @@ public class LoginCheckFilter implements Filter{
 //				log.info("인증 체크 로직 실행 {}", requestURI);
 				HttpSession session = httpRequest.getSession(false);
 				
-				//세션이 없거나 세션에 사용자 계정 정보가 없으면
+				//If there is no session or the session does not contain user account information
 				if(session == null || session.getAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID) == null) {
 //					log.info("미인증 사용자 요청 {}", requestURI);
 					//로그인으로 redirect
 					httpResponse.sendRedirect("/login/login?redirectURL=" + requestURI);
 					return;
 				}
+						
+				
 			}
 			
 			chain.doFilter(request, response);
