@@ -115,7 +115,7 @@ public class CommentController {
 		
 		Comment commentToBeDeleted = commentService.findById(commentId).get();
 		
-		//permission check
+		////permission check
 		//Confirm that logingUser is the person who wrote the comment
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		if(!commentService.getAllCommentListByUser(loginUser).contains(commentToBeDeleted))

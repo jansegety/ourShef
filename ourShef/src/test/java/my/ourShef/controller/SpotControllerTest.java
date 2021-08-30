@@ -337,6 +337,8 @@ class SpotControllerTest {
 				beforeUploadFileInfoList.add(addedSpotImg.getUploadFileInfo());
 			}
 		}
+		//add ProfileImg UploadFileInfo Entity
+		beforeUploadFileInfoList.add(beforeUser.getProfileImgInfo());
 		//7
 		ArrayList<RelationshipRequest> beforeRelationshipRequestList = new ArrayList<RelationshipRequest>();
 		

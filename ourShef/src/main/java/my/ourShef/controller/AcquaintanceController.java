@@ -114,6 +114,7 @@ public class AcquaintanceController {
 			{
 				User acquaintance = acquaintanceOptional.get();
 				
+				////Permission Check
 				//If the user is registered as an acquaintance of the login user
 				if(loginUserAcquaintanceSet.contains(acquaintance))
 				{
@@ -140,6 +141,10 @@ public class AcquaintanceController {
 					userAcquaintanceService.deletes(userAcquaintanceListByLoginUserAndAcquaintance);
 					userAcquaintanceService.deletes(userAcquaintanceListByAcquaintanceAndLoginUser);
 										
+				}
+				else
+				{
+					return "error/doNotHavePermission";
 				}
 			}
 		}
@@ -375,8 +380,28 @@ public class AcquaintanceController {
 	
 	@Transactional
 	@PostMapping("/deleteReceivedRelationshipRequest")
-	public String deleteReceivedRelationshipRequest(@RequestParam("relationshipRequestId") List<String> relationshipRequestIds)
+	public String deleteReceivedRelationshipRequest(
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam("relationshipRequestId") List<String> relationshipRequestIds)
 	{
+		////Permission Check
+		//The entity that requested deletion must be the relationship request entity of the logged-in user
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<RelationshipRequest> receivedRelationshipRequestListOfLoginUser = relationshipRequestService.getReceivedRelationshipRequest(loginUser, loginUser);
+		
+		for(String relationshipRequestId : relationshipRequestIds)
+		{
+			Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(relationshipRequestId);
+			if(relationshipRequestOptional.isPresent())
+			{
+				if(!receivedRelationshipRequestListOfLoginUser.contains(relationshipRequestOptional.get()))
+				{
+					return "error/doNotHavePermission";
+				}
+			}
+		}
+		
+		////delete
 		deleteRelationshipRequest(relationshipRequestIds);
 		
 		return "redirect:/acquaintance/relationshipResponseBox";
@@ -384,9 +409,29 @@ public class AcquaintanceController {
 	
 	@Transactional
 	@PostMapping("/deleteSendedRelationshipRequest")
-	public String deleteSendedRelationshipRequest(@RequestParam("relationshipRequestId") List<String> relationshipRequestIds)
+	public String deleteSendedRelationshipRequest(
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam("relationshipRequestId") List<String> relationshipRequestIds)
 	{
 		
+		////Permission Check
+		//The entity that requested deletion must be the relationship request entity of the logged-in user
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<RelationshipRequest> receivedRelationshipRequestListOfLoginUser = relationshipRequestService.getSendedRelationshipRequest(loginUser, loginUser);
+		
+		for(String relationshipRequestId : relationshipRequestIds)
+		{
+			Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(relationshipRequestId);
+			if(relationshipRequestOptional.isPresent())
+			{
+				if(!receivedRelationshipRequestListOfLoginUser.contains(relationshipRequestOptional.get()))
+				{
+					return "error/doNotHavePermission";
+				}
+			}
+		}
+		
+		////delete
 		deleteRelationshipRequest(relationshipRequestIds);
 		return "redirect:/acquaintance/relationshipRequestBox";
 	}
@@ -394,40 +439,75 @@ public class AcquaintanceController {
 	
 	@Transactional
 	@PostMapping("/acceptRelationshipRequest")
-	public String acceptRelationshipRequest(@RequestParam("relationshipRequestId") String relationshipRequestId) {
-	
-	//update RelationshipRequest State
-	if(updateRelationshipRequestState(relationshipRequestId, RelationshipRequestState.ACCEPTED))
-	{
-		RelationshipRequest relationshipRequest = relationshipRequestService.findById(relationshipRequestId).get();
+	public String acceptRelationshipRequest(
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam("relationshipRequestId") String relationshipRequestId) {
 		
-		User toUser = relationshipRequest.getToUser();
-		User fromUser = relationshipRequest.getFromUser();
-		//If acquaintances have not been added to each other
-		if(userAcquaintanceService.findAcquaintanceByUser(toUser).stream().filter(ac -> (ac == fromUser)).findFirst().isEmpty()&&
-				userAcquaintanceService.findAcquaintanceByUser(fromUser).stream().filter(ac -> (ac == toUser)).findFirst().isEmpty())
+		////Permission Check
+		//The entity that requested accept must be the relationship request entity of the logged-in user
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<RelationshipRequest> receivedRelationshipRequestListOfLoginUser = relationshipRequestService.getReceivedRelationshipRequest(loginUser, loginUser);	
+		
+		Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(relationshipRequestId);
+		if(relationshipRequestOptional.isPresent())
 		{
-			//Perpetuation of acquaintance relationships
-			UserAcquaintance uaToUserFromUser = new UserAcquaintance(toUser, fromUser);
-			UserAcquaintance uaFromUserToUser = new UserAcquaintance(fromUser, toUser);
-			//persist
-			userAcquaintanceService.save(uaToUserFromUser);
-			userAcquaintanceService.save(uaFromUserToUser);
+			if(!receivedRelationshipRequestListOfLoginUser.contains(relationshipRequestOptional.get()))
+			{
+				return "error/doNotHavePermission";
+			}
 		}
-	}
 		
-	return "redirect:/acquaintance/relationshipResponseBox";
+		
+		////update RelationshipRequest State
+		if(updateRelationshipRequestState(relationshipRequestId, RelationshipRequestState.ACCEPTED))
+		{
+			RelationshipRequest relationshipRequest = relationshipRequestService.findById(relationshipRequestId).get();
+			
+			User toUser = relationshipRequest.getToUser();
+			User fromUser = relationshipRequest.getFromUser();
+			//If acquaintances have not been added to each other
+			if(userAcquaintanceService.findAcquaintanceByUser(toUser).stream().filter(ac -> (ac == fromUser)).findFirst().isEmpty()&&
+					userAcquaintanceService.findAcquaintanceByUser(fromUser).stream().filter(ac -> (ac == toUser)).findFirst().isEmpty())
+			{
+				//Perpetuation of acquaintance relationships
+				UserAcquaintance uaToUserFromUser = new UserAcquaintance(toUser, fromUser);
+				UserAcquaintance uaFromUserToUser = new UserAcquaintance(fromUser, toUser);
+				//persist
+				userAcquaintanceService.save(uaToUserFromUser);
+				userAcquaintanceService.save(uaFromUserToUser);
+			}
+		}
+			
+		return "redirect:/acquaintance/relationshipResponseBox";
 	}
 
 	
 	@Transactional
 	@PostMapping("/declineRelationshipRequest")
-	public String declineRelationshipRequest(@RequestParam("relationshipRequestId") String relationshipRequestId) {
+	public String declineRelationshipRequest(
+			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
+			@RequestParam("relationshipRequestId") String relationshipRequestId) {
 		
-		//update RelationshipRequest State
+		////Permission Check
+		//The entity that requested accept must be the relationship request entity of the logged-in user
+		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
+		List<RelationshipRequest> receivedRelationshipRequestListOfLoginUser = relationshipRequestService.getReceivedRelationshipRequest(loginUser, loginUser);	
+		
+		Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(relationshipRequestId);
+		if(relationshipRequestOptional.isPresent())
+		{
+			if(!receivedRelationshipRequestListOfLoginUser.contains(relationshipRequestOptional.get()))
+			{
+				return "error/doNotHavePermission";
+			}
+		}
+		
+		
+		
+		////update RelationshipRequest State
 		updateRelationshipRequestState(relationshipRequestId, RelationshipRequestState.REJECTED);	
 		
-	return "redirect:/acquaintance/relationshipResponseBox";
+		return "redirect:/acquaintance/relationshipResponseBox";
 	}
 	
 	

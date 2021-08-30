@@ -224,15 +224,9 @@ public class SpotController {
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 	
 		////Permission check
-		//It must be a spot registered by loginUser or a spot registered by an acquaintance.
+		//It must be a spot registered by loginUser
 		HashSet<Spot> accessibleSpotSet = new HashSet<Spot>();
-		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
-		for(User acquaintance : acquaintanceList)
-		{
-			//Add all Spots registered by acquaintances
-			List<Spot> allRegisteredSpotsByAcquaintance = spotService.getAllRegisteredSpotsByUser(acquaintance);
-			accessibleSpotSet.addAll(allRegisteredSpotsByAcquaintance);
-		}
+	
 		//Add all Spots registered by loginUser
 		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
 		accessibleSpotSet.addAll(allRegisteredSpotsByUser);
@@ -275,15 +269,9 @@ public class SpotController {
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		
 		////Permission check
-		//It must be a spot registered by loginUser or a spot registered by an acquaintance.
+		//It must be a spot registered by loginUser
 		HashSet<Spot> accessibleSpotSet = new HashSet<Spot>();
-		List<User> acquaintanceList = userService.getAcquaintanceList(loginUser);
-		for(User acquaintance : acquaintanceList)
-		{
-			//Add all Spots registered by acquaintances
-			List<Spot> allRegisteredSpotsByAcquaintance = spotService.getAllRegisteredSpotsByUser(acquaintance);
-			accessibleSpotSet.addAll(allRegisteredSpotsByAcquaintance);
-		}
+		
 		//Add all Spots registered by loginUser
 		List<Spot> allRegisteredSpotsByUser = spotService.getAllRegisteredSpotsByUser(loginUser);
 		accessibleSpotSet.addAll(allRegisteredSpotsByUser);

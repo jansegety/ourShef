@@ -246,7 +246,12 @@ public class LoginController {
 			relationshipRequestService.delete(receivedRelationshipRequest);
 		}
 			
-		//4. Delete User Entity
+		//4. Delete User MainProfileImg File and UploadFileInfo Entity and User Entity
+		UploadFileInfo userProfileImgInfo = loginUser.getProfileImgInfo();
+		String userProfileImgStoreName = userProfileImgInfo.getStoreFileName();
+		fileStore.deleteFile(userProfileImgStoreName, FilePath.USER_PROFILE_IMG);
+		uploadFileInfoService.delete(userProfileImgInfo);
+		
 		userService.delete(loginUser);
 		
 		//5. Session Invalidation
