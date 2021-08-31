@@ -51,7 +51,7 @@
                                 <input
                                     th:field="*{spotMainImg}"                                   
                                     type="file"
-                                    accept=".jpg, .txt">
+                                    accept=".jpg, .jpeg, .png, .heic">
                                 <div class="text-danger" th:errors="*{spotMainImg}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn-subGreen" type="button">메인 사진 변경</button>
                             </div>
@@ -59,7 +59,7 @@
                                 <input
                                     th:field="*{spotAddedImgs}"                                   
                                     type="file"
-                                    accept=".jpg, .txt"
+                                    accept=".jpg, .jpeg, .png, .heic"
                                     multiple="multiple">
                                 <div class="text-danger" th:errors="*{spotAddedImgs}">추가 사진 오류 메시지</div>
                                 <button id="btn-added-imgs" class="btn-subGreen" type="button">추가 사진 변경</button>

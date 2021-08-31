@@ -47,7 +47,7 @@
                                     th:name="spotMainImg"
                                     id="input-main-img"
                                     type="file"
-                                    accept=".jpg, .txt"
+                                    accept=".jpg, .jpeg, .png, .heic"
                                     name="main-img">
                                 <div class="text-danger" th:errors="${spotRegisterationForm.spotMainImg}">메인 사진 오류 메시지</div>
                                 <button id="btn-main-img" class="btn-subGreen" type="button">메인 사진 등록</button>
@@ -57,7 +57,7 @@
                                     th:name="spotAddedImgs"
                                     id="input-added-imgs"
                                     type="file"
-                                    accept=".jpg, .txt"
+                                    accept=".jpg, .jpeg, .png, .heic"
                                     multiple="multiple"
                                     name="added-img">
                                 <div class="text-danger" th:errors="${spotRegisterationForm.spotAddedImgs}">추가 사진 오류 메시지</div>

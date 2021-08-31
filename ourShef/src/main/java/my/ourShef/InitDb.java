@@ -60,9 +60,9 @@ public class InitDb {
 	public void init() throws Exception {
 		
 		//Delete Files in the ImgDir of the Application
-		initService.deleteAllImgFile();
+		//initService.deleteAllImgFile();
 		//initDb
-		initService.dbInit();
+		//initService.dbInit();
 	}
 
 	@Component

@@ -28,7 +28,7 @@ public class UserInfoChangeFormValidator implements Validator {
 			String temp = userInfoChangeForm.getProfileImgFile().getOriginalFilename(); // ex 7.jpg
 			String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 			String lowerCaseExt = ext.toLowerCase();
-			if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("png")) {
+			if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("jpeg") && !lowerCaseExt.equals("png") && !lowerCaseExt.equals("heic")) {
 				errors.rejectValue("profileImgFile", "only.img.org.springframework.web.multipart.MultipartFile");
 			}
 
