@@ -21,7 +21,7 @@ function preViewImg(event) {
     var preViewElement = document.getElementById("spotMainImg");
     var imgFile = preViewElement.files[0];
 
-    if (fileExtensionCheck(imgFile, ["jpg", "png"])) {
+    if (fileExtensionCheck(imgFile, ["jpg", "jpeg", "png", "heic"])) {
         mainImg.src = URL.createObjectURL(imgFile);
         mainImg
             .classList
@@ -74,7 +74,7 @@ function preViewImg2(event) {
     }
 
     for (var i = 0; i < files.length; i++) {
-        if (fileExtensionCheck(files[i], ["jpg", "png"])) {
+        if (fileExtensionCheck(files[i], ["jpg", "jpeg", "png", "heic"])) {
             //프레임 태그 생성
             var newDiv = document.createElement("div");
             newDiv.setAttribute("class", "spot-img-frame");
