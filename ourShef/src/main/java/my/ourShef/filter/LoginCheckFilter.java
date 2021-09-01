@@ -24,7 +24,9 @@ import my.ourShef.service.UserService;
 @Slf4j
 public class LoginCheckFilter implements Filter{
 	
-	private static final String[] whitelist = {"/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount","/confirmation/deleteAccount"};
+	private static final String[] whitelist = {"/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*",
+			"/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount",
+			"/confirmation/deleteAccount","/error"};
 	
 	@Autowired
 	private UserService userService;

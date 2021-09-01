@@ -25,7 +25,9 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addInterceptor(userExistCheckInterceptor())
 		.order(1)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/","/login/join","/login/login","/login/logout","/img/*","/css/*","/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css","/confirmation/createAccount","/confirmation/deleteAccount");
+		.excludePathPatterns("/","/login/join","/login/login","/login/logout","/img/*","/css/*",
+				"/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css",
+				"/confirmation/createAccount","/confirmation/deleteAccount","/error");
 	}
 	
 	@Bean
