@@ -141,7 +141,6 @@ public class FileStore {
 				//by width
 				if(resizeStandard.equals("W")) {
 					ratio = (double)withSetting/(double)originalImageWidth;
-					System.out.println("여기 실행 : ratio = " + ratio);
 					newWidth = (int)(originalImageWidth*ratio);
 					newHeight = (int)(originalImageHeight*ratio);	
 				}
