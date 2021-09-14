@@ -40,7 +40,7 @@ class LoginControllerTest {
 	
 	@Test
 	@DisplayName("유저 가입 테스트")
-	void testCreate() throws IOException {
+	void testCreate() throws Exception {
 		
 		//ACCOUNTID_100~ACCOUNTID_109
 		ArrayList<JoinForm> joinFormList = initService.makeJoinFormByRange(100, 110);

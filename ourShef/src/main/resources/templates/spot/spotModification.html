@@ -19,6 +19,10 @@
         <title>Spot Modification</title>
     </head>
     <body>
+	    <div class="loader">
+			<div class="loader-circle"></div>
+			<div class="loader-back"></div>
+		</div>
         <form
         	th:object="${spotModificationForm}"
             action="#none"
@@ -35,7 +39,7 @@
                     <div class="col-xs-2"></div>
                 </div>
                 <div class="row main-row">
-                    <div class="col-md-4 spot-imgs-area">
+                    <div class="col-md-4" id="spot-imgs-area">
                     	<div th:each="spotAddedImgStoreName : ${spotAddedImgStoreNames}" class="spot-img-frame">
                     	<img th:src="@{/img/spotAdded/{storeName}(storeName=${spotAddedImgStoreName})}" class="spot-img">
                     	</div>
@@ -133,12 +137,13 @@
         </form>
         <!--JQuery-->
         <script th:src="@{/library/jquery-2.1.4.js}" src="../../library/jquery-2.1.4.js"></script>
-        <!--fontawesome-->
-        <script th:src="@{/library/fontawesome/all.js}" src="../../library/fontawesome/all.js"></script>
         <!--부트 스트랩-->
         <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
         <!--cummon.js-->
         <script th:src="@{/common.js}" src="../../static/common.js"></script>
+        <!-- imgFileUpload -->
+		<script th:src="@{/library/heic2any/heic2any.min.js}"></script>
+		<script th:src="@{/js/imgFileUpload.js}"></script>
         <!--specific-->
         <script th:src="@{/js/spotModification.js}" src="../../static/js/spotModification.js"></script>
     </body>

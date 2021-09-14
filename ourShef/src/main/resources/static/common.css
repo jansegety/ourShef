@@ -269,3 +269,37 @@ a:link, a:visited, a:active, a:hover{
   color: gray;
 }
 /*######################### Pager End ##########################*/
+/*######################### Loader Start ##########################*/
+.loader {
+	opacity: 0;
+	visibility: hidden;
+	transition: 1s;
+}
+.loader-circle {
+	border: 16px solid rgb(211, 235, 215);
+	border-top: 16px solid rgb(63, 167, 87);
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
+	position:fixed;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	z-index: 500;
+}
+
+@keyframes spin {
+	0% {transform:translate(-50%, -50%) rotate(0deg);}
+	100% {transform:translate(-50%, -50%) rotate(360deg);}
+}
+
+.loader-back {
+	position:fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 400;
+}
+
+/*######################### Loader End ##########################*/

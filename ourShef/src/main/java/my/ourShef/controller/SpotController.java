@@ -103,7 +103,7 @@ public class SpotController {
 	public String registerSpot(
 			@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = false) String LoginUserAccountId,
 			@Validated @ModelAttribute SpotRegisterationForm spotRegisterationForm, BindingResult bindingResult)
-			throws IOException {
+			throws Exception {
 
 		if (bindingResult.hasErrors()) {
 			return "spot/spotRegisteration";
@@ -257,7 +257,7 @@ public class SpotController {
 	@PostMapping("/modification/{spotId}")
 	public String modifySpot(@SessionAttribute(name = SessionConst.LOGIN_USER_ACCOUNT_ID, required = true) String LoginUserAccountId,
 			Model model, @Validated @ModelAttribute SpotModificationForm spotModificationForm,
-			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) throws IOException {
+			BindingResult bindingResult, @PathVariable("spotId") Long spotId, RedirectAttributes redirectAttributes) throws Exception {
 		
 		////Check Error
 		if (bindingResult.hasErrors()) {

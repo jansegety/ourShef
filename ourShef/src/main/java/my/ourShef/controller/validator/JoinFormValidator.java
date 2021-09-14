@@ -14,6 +14,7 @@ import my.ourShef.service.UserService;
 public class JoinFormValidator implements Validator {
 
 	private final UserService us;
+	private final FileExtValidator fileExtValidator;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -44,7 +45,7 @@ public class JoinFormValidator implements Validator {
 			String temp = joinForm.getJoinFormProfileImgFile().getOriginalFilename(); // ex 7.jpg
 			String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 			String lowerCaseExt = ext.toLowerCase();
-			if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("jpeg") && !lowerCaseExt.equals("png") && !lowerCaseExt.equals("heic")) {
+			if (fileExtValidator.isNotImgFile(lowerCaseExt)) {
 				errors.rejectValue("joinFormProfileImgFile",
 						"only.img.org.springframework.web.multipart.MultipartFile");
 			}
@@ -90,5 +91,7 @@ public class JoinFormValidator implements Validator {
 		}
 
 	}
+
+	
 
 }

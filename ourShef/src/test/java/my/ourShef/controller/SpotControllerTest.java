@@ -97,7 +97,7 @@ class SpotControllerTest {
 	@Test
 	@Transactional
 	@DisplayName("장소 등록 테스트")
-	void spotRegisterationTest(@Mock BindingResult bindingResult, @Mock Model model) throws IOException {
+	void spotRegisterationTest(@Mock BindingResult bindingResult, @Mock Model model) throws Exception {
 		
 		int check = 0;
 		
@@ -163,7 +163,7 @@ class SpotControllerTest {
 	@Test
 	@Transactional
 	@DisplayName("장소 수정 테스트")
-	void testModifySpot(@Mock BindingResult bindingResult, @Mock Model model, @Mock RedirectAttributes redirectAttributes) throws IOException {
+	void testModifySpot(@Mock BindingResult bindingResult, @Mock Model model, @Mock RedirectAttributes redirectAttributes) throws Exception {
 		
 		User beforeUser = userService.findByAccountId("ACCOUNTID_100").get();
 		Spot beforeSpot = beforeUser.getRegisteredSpots().get(0);

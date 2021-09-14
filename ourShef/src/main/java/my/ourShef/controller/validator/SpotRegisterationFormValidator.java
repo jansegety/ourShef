@@ -7,11 +7,16 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.RequiredArgsConstructor;
 import my.ourShef.controller.form.SpotRegisterationForm;
+import my.ourShef.service.UserService;
 
 
 @Component
+@RequiredArgsConstructor
 public class SpotRegisterationFormValidator implements Validator{
+	
+	private final FileExtValidator fileExtValidator;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -34,7 +39,7 @@ public class SpotRegisterationFormValidator implements Validator{
 			String temp = spotRegisterationForm.getSpotMainImg().getOriginalFilename(); // ex 7.jpg
 			String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 			String lowerCaseExt = ext.toLowerCase();
-			if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("jpeg") && !lowerCaseExt.equals("png") && !lowerCaseExt.equals("heic")) {
+			if (fileExtValidator.isNotImgFile(lowerCaseExt)) {
 				errors.rejectValue("spotMainImg",
 						"only.img.org.springframework.web.multipart.MultipartFile");
 			}
@@ -52,7 +57,7 @@ public class SpotRegisterationFormValidator implements Validator{
 				String temp = spotAddedImg.getOriginalFilename(); // ex 7.jpg
 				String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 				String lowerCaseExt = ext.toLowerCase();
-				if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("jpeg") && !lowerCaseExt.equals("png") && !lowerCaseExt.equals("heic")) {
+				if (fileExtValidator.isNotImgFile(lowerCaseExt)) {
 					isImg = false;
 				}
 			}

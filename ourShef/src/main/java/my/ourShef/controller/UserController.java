@@ -91,7 +91,7 @@ public class UserController {
 	@Transactional
 	@PostMapping("/myInfo")
 	public String modifyMyInfo(@SessionAttribute(SessionConst.LOGIN_USER_ACCOUNT_ID) String LoginUserAccountId,
-			@Valid @ModelAttribute UserInfoChangeForm userInfoChangeForm, BindingResult bindingResult, Model model) throws IOException {
+			@Valid @ModelAttribute UserInfoChangeForm userInfoChangeForm, BindingResult bindingResult, Model model) throws Exception {
 
 		User loginUser = userService.findByAccountId(LoginUserAccountId).get();
 		// Registration date setting

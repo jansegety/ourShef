@@ -5,10 +5,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import lombok.RequiredArgsConstructor;
 import my.ourShef.controller.form.UserInfoChangeForm;
 
 @Component
+@RequiredArgsConstructor
 public class UserInfoChangeFormValidator implements Validator {
+	
+	private final FileExtValidator fileExtValidator;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -28,7 +32,7 @@ public class UserInfoChangeFormValidator implements Validator {
 			String temp = userInfoChangeForm.getProfileImgFile().getOriginalFilename(); // ex 7.jpg
 			String ext = temp.substring(temp.lastIndexOf(".") + 1); // 확장자 얻기
 			String lowerCaseExt = ext.toLowerCase();
-			if (!lowerCaseExt.equals("jpg") && !lowerCaseExt.equals("jpeg") && !lowerCaseExt.equals("png") && !lowerCaseExt.equals("heic")) {
+			if (fileExtValidator.isNotImgFile(lowerCaseExt)) {
 				errors.rejectValue("profileImgFile", "only.img.org.springframework.web.multipart.MultipartFile");
 			}
 

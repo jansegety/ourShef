@@ -2,7 +2,7 @@
   servlet:    session:      tracking-modes: cookie      timeout: 1800 #기본은 1800초(30분), 60초보다 작은 값은 설정 불가      
 spring:
   messages:
-    basename: errors      servlet:    multipart:      max-file-size: 5MB      max-request-size: 35MB              
+    basename: errors      servlet:    multipart:      max-file-size: 1MB      max-request-size: 6MB              
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,7 +27,7 @@ spring:
 
 logging:
   level:
-   org.hibernate.SQL: debug
+   org.hibernate.SQL: debug   loginCheck:  whiteList: /, /login/join, /login/login, /login/logout, /img/*,/css/*,	/js/*, /bootStrap/*,/library/*,	/library/*/*,	/library/fontawesome/*,/common.js,/common.css,	/confirmation/createAccount,	/confirmation/deleteAccount,	/error
   
   
 file:

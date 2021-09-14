@@ -12,19 +12,13 @@ function popChooseFile(){
   input.dispatchEvent(event);
 };
 
-// 사진 미리보기
-let input = document.getElementById("profileImgFile");
-let preview = document.getElementById("profile-img");
-input.addEventListener("change", showImageFile, false);
-
-
-function showImageFile(){
-  const selectedFile = input.files[0];
-  const showImg = preview;
-  const url = URL.createObjectURL(input.files[0]);
-  showImg.src = url;
-};
-
+//////////Loading System + Image File Processing///////////
+////loading while Image processing to be uploaded (validation -> change extension -> resizing)
+//@param1 : inputId
+//@Param2 : type (ex : "profile", "addedSpot", "mainSpot"), 
+//@Param3 : previewId(when type=addedSpot Enter spotAreaId instead)
+//@Param4 : loaderEl Class
+loadingWhenImageFileProcessing("profileImgFile", "profile", "profile-img", "loader");
 
 //Confirmation of intent to delete account
 let deleteButton = document.getElementsByClassName("btn-left")[0];

@@ -1,29 +1,24 @@
+
 // shef 이미지 초기화
 const demoImageElements = document.getElementsByClassName("demo-img");
 for (var i = 0; i < demoImageElements.length; i++) {
-	demoImageElements[i].src = "/img/shefMark.png";
+	demoImageElements[i].src = "/img/shefMark.jpg";
 }
 
-// 확장자 검사기 file extension check, if file's extentsion exist in list, the
-// function retrun true ex: fileExtensionCheck(fileObj, ["jpg", "png"])
-function fileExtensionCheck(fileObj, extensionList) {
-	var fileName = fileObj.name;
-	var dotIndex = fileName.lastIndexOf('.');
-
-	//확장자 명만 추출한 후 소문자로 변경
-	var fileExt = fileName
-		.substring(dotIndex + 1)
-		.toLowerCase();
-	console.log(fileExt);
-
-	//리스트중 하나라도 확장자가 같다면 true 반환
-	var check = false;
-	for (var i = 0; i < extensionList.length; i++) {
-		if (extensionList[i] == fileExt)
-			check = true;
-	}
-	return check
+const demoImage300Elements = document.getElementsByClassName("demo-img-300");
+for (var i = 0; i < demoImage300Elements.length; i++) {
+	demoImage300Elements[i].src = "/img/shefMark_300.jpg";
 }
+
+
+// shefEoor 이미지 초기화
+const errorImageElements = document.getElementsByClassName("error-img");
+for (var i = 0; i < errorImageElements.length; i++) {
+	errorImageElements[i].src = "/img/shefMarkError.jpg";
+}
+
+
+
 
 /////// StarPointSystem Function start/////// ///By Id/////
 function starPointSystem(starPointSystemId) {
@@ -169,27 +164,27 @@ function reliabilitySystemByClass(reliablilitySystemClass) {
 // /////////////reliabilitySystem End//////////////
 // ////////////////showHideSystem///////////////////
 function showHideSystem(wrapperClass, buttonClass, summaryClass) {
-	
+
 	let wrapperClassElementList = document.getElementsByClassName(wrapperClass);
 
-	for (let i=0; i < wrapperClassElementList.length; i++) {
+	for (let i = 0; i < wrapperClassElementList.length; i++) {
 
 		let wrapperClassElement = wrapperClassElementList[i];
 
 		let buttonClassElement = wrapperClassElement.getElementsByClassName(buttonClass)[0];
-		
-		
-		
+
+
+
 		//check if there is no button
 		if (buttonClassElement == null)
 			continue;
-		
+
 		buttonClassElement.onclick = showHideWrapperFunction(wrapperClassElement);
 
 		function showHideWrapperFunction(wrapperClassElement) {
 			return function showHide() {
-				
-				
+
+
 				wrapperClassElement
 					.getElementsByClassName(summaryClass)[0]
 					.click();

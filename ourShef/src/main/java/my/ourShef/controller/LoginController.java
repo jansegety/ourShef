@@ -100,7 +100,7 @@ public class LoginController {
 	
 	@Transactional
 	@PostMapping("/join")
-	public String create(@Valid @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws IOException {
+	public String create(@Valid @ModelAttribute JoinForm joinForm, BindingResult bindingResult) throws Exception {
 
 		// 검증에 실패하면 다시 입력 폼으로
 		if (bindingResult.hasErrors()) {

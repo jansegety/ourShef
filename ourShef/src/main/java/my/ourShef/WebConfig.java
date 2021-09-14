@@ -1,8 +1,12 @@
 package my.ourShef;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import my.ourShef.filter.LogFilter;
-import my.ourShef.filter.LoginCheckFilter;
+import my.ourShef.interceptor.LoginCheckInterceptor;
 import my.ourShef.interceptor.UserExistCheckInterceptor;
 
 /*
@@ -18,16 +22,27 @@ import my.ourShef.interceptor.UserExistCheckInterceptor;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer{
+	
+	@Value("${loginCheck.whiteList}")
+	private String[] whiteList;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		registry.addInterceptor(userExistCheckInterceptor())
+		registry.addInterceptor(loginCheckInterceptor())
 		.order(1)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/","/login/join","/login/login","/login/logout","/img/*","/css/*",
-				"/js/*","/bootStrap/*","/library/*","/library/fontawesome/*","/common.js","/common.css",
-				"/confirmation/createAccount","/confirmation/deleteAccount","/error");
+		.excludePathPatterns(whiteList);
+		
+		registry.addInterceptor(userExistCheckInterceptor())
+		.order(2)
+		.addPathPatterns("/**")
+		.excludePathPatterns(whiteList);
+	}
+	
+	@Bean 
+	public LoginCheckInterceptor loginCheckInterceptor() {
+		return new LoginCheckInterceptor();
 	}
 	
 	@Bean
@@ -45,16 +60,7 @@ public class WebConfig implements WebMvcConfigurer{
 		return filterRegistrationBean;	
 	}
 	
-	@Bean
-	public FilterRegistrationBean loginCheckFilter() {
-		FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean();
-		filterRegistrationBean.setFilter(new LoginCheckFilter());
-		filterRegistrationBean.setOrder(2);
-		filterRegistrationBean.addUrlPatterns("/*");
-		filterRegistrationBean.setDispatcherTypes(DispatcherType.REQUEST);
-		
-		return filterRegistrationBean;	
-	}
+	
 	
 	
 }

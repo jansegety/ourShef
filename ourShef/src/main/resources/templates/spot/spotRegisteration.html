@@ -19,6 +19,10 @@
         <title>Spot Registeration</title>
     </head>
     <body class="spotRegisteration">
+    	<div class="loader">
+			<div class="loader-circle"></div>
+			<div class="loader-back"></div>
+		</div>
         <form
             action="#none"
             th:action="@{/spot/registeration}"
@@ -33,13 +37,13 @@
                     <div class="col-xs-2"></div>
                 </div>
                 <div class="row main-row">
-                    <div class="col-md-4 spot-imgs-area">
+                    <div class="col-md-4" id="spot-imgs-area">
                         <!-- <div class="spot-imgs-area"> <div class="spot-img-frame"><img
                         class="spot-img demo-img" alt="장소 사진"></div> </div> -->
                     </div>
                     <div class="col-md-4 main-col">
                         <div>
-                            <img class="demo-img" id="main-spot-img" alt="" onchange="loadFile(e)">
+                            <img class="demo-img-300" id="main-spot-img" alt="" onchange="loadFile(e)">
                         </div>
                         <div>
                             <div class="img-button-frame">
@@ -133,13 +137,15 @@
         </form>
         <!--JQuery-->
         <script th:src="@{/library/jquery-2.1.4.js}" src="../../library/jquery-2.1.4.js"></script>
-        <!--fontawesome-->
-        <script th:src="@{/library/fontawesome/all.js}" src="../../library/fontawesome/all.js"></script>
         <!--부트 스트랩-->
         <script th:src="@{/bootStrap/bootstrap.min.js}" src="../../static/bootStrap/bootstrap.min.js"></script>
         <!--cummon.js-->
         <script th:src="@{/common.js}" src="../../static/common.js"></script>
+        <!-- imgFileUpload -->
+		<script th:src="@{/js/imgFileUpload.js}"></script>
+		<script th:src="@{/library/heic2any/heic2any.min.js}"></script>
         <!--specific-->
         <script th:src="@{/js/spotRegisteration.js}" src="../../static/js/spotRegisteration.js"></script>
+       
     </body>
 </html>

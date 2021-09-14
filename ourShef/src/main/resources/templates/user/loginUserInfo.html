@@ -25,6 +25,10 @@
 }
 </style>
 <body>
+	<div class="loader">
+		<div class="loader-circle"></div>
+		<div class="loader-back"></div>
+	</div>
 	<form id="form-i1" action="#none" th:action method="post"
 		th:object="${userInfoChangeForm}" enctype="multipart/form-data">
 		<div class="container">
@@ -122,6 +126,9 @@
 		src="../../static/bootStrap/bootstrap.min.js"></script>
 	<!--common.js-->
 	<script th:src="@{/common.js}" src="../../static/common.js"></script>
+	<!-- imgFileUpload -->
+	<script th:src="@{/library/heic2any/heic2any.min.js}"></script>
+	<script th:src="@{/js/imgFileUpload.js}"></script>
 	<!-- specific -->
 	<script th:src="@{/js/loginUserInfo.js}"
 		src="../static/js/loginUserInfo.js"></script>

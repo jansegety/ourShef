@@ -279,7 +279,7 @@ public class InitDb {
 		 * @param registrant Spot들과 맵핑된 유저
 		 */
 		@Transactional
-		public ArrayList<Spot> initSpotsByOneUser(int num, User registrant) throws IOException {
+		public ArrayList<Spot> initSpotsByOneUser(int num, User registrant) throws Exception {
 			ArrayList<Spot> spotList = new ArrayList<Spot>();
 
 			ArrayList<SpotRegisterationForm> spotRegisterationFormList = makeSpotRegisterationForm(num);
