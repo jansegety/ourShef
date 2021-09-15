@@ -42,4 +42,8 @@ public class RelationshipRequestService {
 		return relationshipRequestRepository.getReceivedRelationshipRequest(owner, toUser);
 	}
 	
+	public List<RelationshipRequest> getAllRelationshipRequestAssociatedWithTheUser(User user){
+		return relationshipRequestRepository.getAllRelationshipRequestAssociatedWithTheUser(user);
+	}
+	
 }

@@ -228,23 +228,10 @@ public class LoginController {
 			spotController.deleteSpot(LoginUserAccountId,spotToBeDeleted.getId());
 		}
 		
-		//3. Delete all relationshipRequest Entity
-		List<RelationshipRequest> sendedRelationshipRequestList = relationshipRequestService.getSendedRelationshipRequest(loginUser, loginUser);
+		//3. Delete all relationshipRequest Entity associated with the user to be deleted
+		List<RelationshipRequest> sendedRelationshipRequestList = relationshipRequestService.getAllRelationshipRequestAssociatedWithTheUser(loginUser);
 		sendedRelationshipRequestList.stream().forEach(relationshipRequestService::delete);
-		List<RelationshipRequest> receivedRelationshipRequestList = relationshipRequestService.getReceivedRelationshipRequest(loginUser, loginUser);
-		for(RelationshipRequest receivedRelationshipRequest : receivedRelationshipRequestList)
-		{
-			if(receivedRelationshipRequest.getState()==RelationshipRequestState.BEFORE_CONFIRMATION)
-			{
-				String opponentRequestId = receivedRelationshipRequest.getOpponentId();
-				Optional<RelationshipRequest> relationshipRequestOptional = relationshipRequestService.findById(LoginUserAccountId);
-				if(relationshipRequestOptional.isPresent())
-				{
-					relationshipRequestOptional.get().setState(RelationshipRequestState.REJECTED);
-				}
-			}
-			relationshipRequestService.delete(receivedRelationshipRequest);
-		}
+		
 			
 		//4. Delete User MainProfileImg File and UploadFileInfo Entity and User Entity
 		UploadFileInfo userProfileImgInfo = loginUser.getProfileImgInfo();

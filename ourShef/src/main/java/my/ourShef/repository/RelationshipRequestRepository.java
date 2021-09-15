@@ -55,5 +55,11 @@ public class RelationshipRequestRepository {
 		.getResultList();
 	}
 	
+	public List<RelationshipRequest> getAllRelationshipRequestAssociatedWithTheUser(User user){
+		return em.createQuery("SELECT rr FROM RelationshipRequest rr WHERE rr.fromUser=:user OR rr.toUser=:user",RelationshipRequest.class)
+				.setParameter("user", user)
+				.getResultList();
+	}	
+	
 	
 }
