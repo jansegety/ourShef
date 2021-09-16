@@ -261,14 +261,16 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 
   You can request a relationship by entering an acquaintance's ID. If you enter an ID that does not exist, or if you enter the ID of an acquaintance who is already an acquaintance, an error is displayed.
 
+<br><br>
 
   <div style="text-align:center" align="center">
       <img src="./readmeImg/relationshipRequest4.jpg">
   </div>
 
+<br><br>
 
   If the acquaintance request is successful, it is moved to the relationship request box, and you can check the acquaintance request message sent. If your acquaintance has not checked the message, you can check the status before checking.
-<br><br><br>
+<br><br><br><br><br>
   
 
 * Message box
