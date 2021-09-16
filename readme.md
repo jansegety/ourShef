@@ -106,6 +106,7 @@ Create a list of restaurants that fit your taste by forming a community with hig
 <br><br>
 ---
 <br>
+
 * Home
 
 <br>
@@ -121,6 +122,7 @@ If you do not have an ID, press the upper button to enter the Join page.
 
 
 <br>
+
 * Join
 
 <br>
@@ -169,7 +171,9 @@ This is a beautiful login screen. A pretty green light appears when you hover th
 
 
 <br>
+
 * Login home
+
 <br>
 
   <div style="text-align:center" align="center">
@@ -209,7 +213,7 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 <br><br>
 ---
 
-<br>
+<br><br>
 
 * Acquaintance List
 
@@ -223,7 +227,7 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 
   At the bottom, there are a go to home button, a delete acquaintance button, a message box button, and a make an acquaintance button.
 
-<br>  
+<br><br>  
 
   * acquaintance delete
 <br>
@@ -263,7 +267,7 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 
 
   If the acquaintance request is successful, it is moved to the relationship request box, and you can check the acquaintance request message sent. If your acquaintance has not checked the message, you can check the status before checking.
-<br>
+<br><br><br>
   
 
 * Message box
@@ -294,7 +298,8 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 
   
 
-<br>
+<br><br><br>
+
   * Accept & Reject
 <br>
     <div style="text-align:center" align="center">
@@ -303,7 +308,7 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 <br>
     you can reject and accept the message in the relationship response box. If accepted, the user is added to the acquaintance list and the status of the message changes to Accepted. If it is rejected, it changes to a rejected state, and the user can check whether his or her request message has been accepted, rejected, or before confirmation, just like you.<br><br>And the message before confirmation is displayed at the top.
 
- <br>   
+ <br><br><br>  
 
   * Delete message
 <br>
@@ -326,6 +331,7 @@ If you leave ourShef, all messages related to you will disappear even in your ac
 
 
 <br>
+
 * Spot
 
 <br>
@@ -395,7 +401,7 @@ If you leave ourShef, all messages related to you will disappear even in your ac
 <br>
 	
   You can edit your registered spot information by entering the spot edit page. The star point saved during registration can also be edited. When the star point is modified, not only the registrant's star point is modified, but also the reliability of the registrant is updated.
-<br>
+<br><br>
   
 
   * Spot delete
@@ -465,6 +471,7 @@ If you enter incorrect information, an error will appear and you will be asked t
 
 
 <br>
+
 * Withdraw 
   
 <br>
@@ -520,7 +527,8 @@ If there is an error in the server, you will see this screen. If you see this sc
 ## Diagram
 
 ### 	Entity Relationship diagram
-
+<br>
+<br>
 <div style="text-align:center" align="center">
     <img src="./uml/out/ourShef_ERDiagram/ERDiagram.png">
 </div>
@@ -528,13 +536,18 @@ If there is an error in the server, you will see this screen. If you see this sc
 
 
 
+<br>
+<br>
+<br>
 
 ## Client Side Image Processing
+<br>
 <br>
 <div style="text-align:center" align="center">
     <img src="./readmeImg/loading.jpg">
 </div>
 <br>
+
 * Apple's _HEIC_ format support
 
 * Reduce large size images
@@ -550,3 +563,5 @@ All this process takes place on the client, so the load on the server can be red
 ## Thanks
 
 Thanks to everyone who read the long post :)
+<br>
+<br>
