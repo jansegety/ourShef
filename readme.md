@@ -282,12 +282,13 @@ At the bottom of the login user's recent spot information, a friendly guide to r
 
   If you press the message box button on the acquaintance list page, it moves to the message box page. The message box page consists of a relationship request box page and a relationship response box page.
 
-  
+<br>  
 <br>
   <div style="text-align:center" align="center">
       <img src="./readmeImg/messageBox2.jpg">
       <img src="./readmeImg/messageBox3.jpg">
   </div>
+<br>
 <br>
   
 
@@ -307,11 +308,13 @@ At the bottom of the login user's recent spot information, a friendly guide to r
         <img src="./readmeImg/responseBox1.jpg">
     </div>
 <br>
+<br>
     you can reject and accept the message in the relationship response box. If accepted, the user is added to the acquaintance list and the status of the message changes to Accepted. If it is rejected, it changes to a rejected state, and the user can check whether his or her request message has been accepted, rejected, or before confirmation, just like you.<br><br>And the message before confirmation is displayed at the top.
 
  <br><br><br>  
 
   * Delete message
+<br>
 <br>
     <div style="text-align:center" align="center">
         <img src="./readmeImg/requestBoxDelete1.jpg">
@@ -319,6 +322,7 @@ At the bottom of the login user's recent spot information, a friendly guide to r
         <br><br>
         <img src="./readmeImg/requestBoxDelete3.jpg">
     </div>
+<br>
 <br>
 You can also delete acquaintance requests and response messages. There is a delete button in the lower right corner of the message box. When you click the button, a check box appears. If you check next to the message you want to delete and click the Delete button again, a pop-up appears asking that you really want to delete it. Click the OK button to delete the message.
 
