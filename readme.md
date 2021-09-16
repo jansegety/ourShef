@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Title](#Title)
-* [Short Description](#Short Description)
+* [Short Description](#Short-Description)
 * [Icon](#Icon)
 * [Purpose](#Purpose)
 * [Technology Used](#Technology-Used)
