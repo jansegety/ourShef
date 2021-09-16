@@ -90,10 +90,11 @@ Create a list of restaurants that fit your taste by forming a community with hig
 
 ## Long Description
 
-
+<br>
 
 * Generalization
 
+<br>
 
   Have you ever wasted valuable money and time by being deceived by restaurant advertisements or false information? Do not worry. With _OurShef_, you don't have to! Get restaurant recommendations from trusted acquaintances.
 
